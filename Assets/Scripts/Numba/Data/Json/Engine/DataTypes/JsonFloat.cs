@@ -50,7 +50,17 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         public override string ToString()
         {
-            return Value == null ? "null" : Value.Value.ToString("R", CultureInfo.InvariantCulture);
+            if (Value == null)
+            {
+                return "null";
+            }
+
+            if (float.IsInfinity(Value.Value) || float.IsNaN(Value.Value))
+            {
+                return string.Format("\"{0}\"", Value.Value);
+            }
+
+            return Value.Value.ToString("R", CultureInfo.InvariantCulture);
         }
         #endregion
 
