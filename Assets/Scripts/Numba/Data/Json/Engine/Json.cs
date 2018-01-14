@@ -439,6 +439,128 @@ namespace Numba.Data.Json.Engine
 
             return JsonType.Unknown;
         }
+
+        public static JsonDataType GetDataType(object value, out IJsonValue valueWrapper)
+        {
+            if (value is bool || value is JsonBool)
+            {
+                valueWrapper = value is bool ? new JsonBool((bool)value) : (JsonBool)value;
+                return JsonDataType.Bool;
+            }
+
+            if (value is byte || value is JsonByte)
+            {
+                valueWrapper = value is byte ? new JsonByte((byte)value) : (JsonByte)value;
+                return JsonDataType.Byte;
+            }
+
+            if (value is char || value is JsonChar)
+            {
+                valueWrapper = value is char ? new JsonChar((char)value) : (JsonChar)value;
+                return JsonDataType.Char;
+            }
+
+            if (value is decimal || value is JsonDecimal)
+            {
+                valueWrapper = value is decimal ? new JsonDecimal((decimal)value) : (JsonDecimal)value;
+                return JsonDataType.Decimal;
+            }
+
+            if (value is double || value is JsonDouble)
+            {
+                valueWrapper = value is double ? new JsonDouble((double)value) : (JsonDouble)value;
+                return JsonDataType.Double;
+            }
+
+            if (value is float || value is JsonFloat)
+            {
+                valueWrapper = value is float ? new JsonFloat((float)value) : (JsonFloat)value;
+                return JsonDataType.Float;
+            }
+
+            if (value is int || value is JsonInt)
+            {
+                valueWrapper = value is int ? new JsonInt((int)value) : (JsonInt)value;
+                return JsonDataType.Int;
+            }
+
+            if (value is long || value is JsonLong)
+            {
+                valueWrapper = value is long ? new JsonLong((long)value) : (JsonLong)value;
+                return JsonDataType.Long;
+            }
+
+            if (value == null || value is JsonNull)
+            {
+                if (value == null)
+                {
+                    valueWrapper = new JsonNull();
+                }
+                else
+                {
+                    valueWrapper = (JsonNull)value;
+                }
+                
+                return JsonDataType.Null;
+            }
+
+            if (value is JsonNumber)
+            {
+                valueWrapper = (JsonNumber)value;
+                return JsonDataType.Number;
+            }
+
+            if (value is sbyte || value is JsonSByte)
+            {
+                valueWrapper = value is sbyte ? new JsonSByte((sbyte)value) : (JsonSByte)value;
+                return JsonDataType.SByte;
+            }
+
+            if (value is short || value is JsonShort)
+            {
+                valueWrapper = value is short ? new JsonShort((short)value) : (JsonShort)value;
+                return JsonDataType.Short;
+            }
+
+            if (value is string || value is JsonString)
+            {
+                valueWrapper = value is string ? new JsonString((string)value) : (JsonString)value;
+                return JsonDataType.String;
+            }
+
+            if (value is uint || value is JsonUInt)
+            {
+                valueWrapper = value is uint ? new JsonUInt((uint)value) : (JsonUInt)value;
+                return JsonDataType.UInt;
+            }
+
+            if (value is ulong || value is JsonULong)
+            {
+                valueWrapper = value is ulong ? new JsonULong((ulong)value) : (JsonULong)value;
+                return JsonDataType.ULong;
+            }
+
+            if (value is ushort || value is JsonUShort)
+            {
+                valueWrapper = value is ushort ? new JsonUShort((ushort)value) : (JsonUShort)value;
+                return JsonDataType.UShort;
+            }
+
+            if (value is JsonObject)
+            {
+                valueWrapper = (JsonObject)value;
+                return JsonDataType.Object;
+            }
+
+            if (value is JsonArray)
+            {
+                valueWrapper = (JsonArray)value;
+                return JsonDataType.Array;
+            }
+
+            valueWrapper = null;
+            return JsonDataType.Unknown;
+        }
         #endregion
 
         #region Event Handlers

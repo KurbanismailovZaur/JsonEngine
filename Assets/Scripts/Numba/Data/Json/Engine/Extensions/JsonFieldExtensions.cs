@@ -37,7 +37,7 @@ namespace Numba.Data.Json.Engine.Extentions
         #endregion
 
         #region Methods
-        public static JsonField<T> As<T>(this JsonField field) where T : IJsonValue
+        public static JsonField<T> AsField<T>(this JsonField field) where T : IJsonValue
         {
             if (!(field is JsonField<T>))
             {
@@ -47,94 +47,94 @@ namespace Numba.Data.Json.Engine.Extentions
             return (JsonField<T>)field;
         }
 
-        public static JsonField<JsonBool> AsBool(this JsonField field)
+        public static JsonField<JsonBool> AsBoolField(this JsonField field)
         {
-            return As<JsonBool>(field);
+            return AsField<JsonBool>(field);
         }
 
-        public static JsonField<JsonByte> AsByte(this JsonField field)
+        public static JsonField<JsonByte> AsByteField(this JsonField field)
         {
-            return As<JsonByte>(field);
+            return AsField<JsonByte>(field);
         }
 
-        public static JsonField<JsonChar> AsChar(this JsonField field)
+        public static JsonField<JsonChar> AsCharField(this JsonField field)
         {
-            return As<JsonChar>(field);
+            return AsField<JsonChar>(field);
         }
 
-        public static JsonField<JsonDecimal> AsDecimal(this JsonField field)
+        public static JsonField<JsonDecimal> AsDecimalField(this JsonField field)
         {
-            return As<JsonDecimal>(field);
+            return AsField<JsonDecimal>(field);
         }
 
-        public static JsonField<JsonDouble> AsDouble(this JsonField field)
+        public static JsonField<JsonDouble> AsDoubleField(this JsonField field)
         {
-            return As<JsonDouble>(field);
+            return AsField<JsonDouble>(field);
         }
 
-        public static JsonField<JsonFloat> AsFloat(this JsonField field)
+        public static JsonField<JsonFloat> AsFloatField(this JsonField field)
         {
-            return As<JsonFloat>(field);
+            return AsField<JsonFloat>(field);
         }
 
-        public static JsonField<JsonInt> AsInt(this JsonField field)
+        public static JsonField<JsonInt> AsIntField(this JsonField field)
         {
-            return As<JsonInt>(field);
+            return AsField<JsonInt>(field);
         }
 
-        public static JsonField<JsonLong> AsLong(this JsonField field)
+        public static JsonField<JsonLong> AsLongField(this JsonField field)
         {
-            return As<JsonLong>(field);
+            return AsField<JsonLong>(field);
         }
 
-        public static JsonField<JsonNull> AsNull(this JsonField field)
+        public static JsonField<JsonNull> AsNullField(this JsonField field)
         {
-            return As<JsonNull>(field);
+            return AsField<JsonNull>(field);
         }
 
-        public static JsonField<JsonNumber> AsNumber(this JsonField field)
+        public static JsonField<JsonNumber> AsNumberField(this JsonField field)
         {
-            return As<JsonNumber>(field);
+            return AsField<JsonNumber>(field);
         }
 
-        public static JsonField<JsonSByte> AsSByte(this JsonField field)
+        public static JsonField<JsonSByte> AsSByteField(this JsonField field)
         {
-            return As<JsonSByte>(field);
+            return AsField<JsonSByte>(field);
         }
 
-        public static JsonField<JsonShort> AsShort(this JsonField field)
+        public static JsonField<JsonShort> AsShortField(this JsonField field)
         {
-            return As<JsonShort>(field);
+            return AsField<JsonShort>(field);
         }
 
-        public static JsonField<JsonString> AsString(this JsonField field)
+        public static JsonField<JsonString> AsStringField(this JsonField field)
         {
-            return As<JsonString>(field);
+            return AsField<JsonString>(field);
         }
 
-        public static JsonField<JsonUInt> AsUInt(this JsonField field)
+        public static JsonField<JsonUInt> AsUIntField(this JsonField field)
         {
-            return As<JsonUInt>(field);
+            return AsField<JsonUInt>(field);
         }
 
-        public static JsonField<JsonULong> AsULong(this JsonField field)
+        public static JsonField<JsonULong> AsULongField(this JsonField field)
         {
-            return As<JsonULong>(field);
+            return AsField<JsonULong>(field);
         }
 
-        public static JsonField<JsonUShort> AsUShort(this JsonField field)
+        public static JsonField<JsonUShort> AsUShortField(this JsonField field)
         {
-            return As<JsonUShort>(field);
+            return AsField<JsonUShort>(field);
         }
 
-        public static JsonField<JsonObject> AsObject(this JsonField field)
+        public static JsonField<JsonObject> AsObjectField(this JsonField field)
         {
-            return As<JsonObject>(field);
+            return AsField<JsonObject>(field);
         }
 
-        public static JsonField<JsonArray> AsArray(this JsonField field)
+        public static JsonField<JsonArray> AsArrayField(this JsonField field)
         {
-            return As<JsonArray>(field);
+            return AsField<JsonArray>(field);
         }
         #endregion
         #endregion
