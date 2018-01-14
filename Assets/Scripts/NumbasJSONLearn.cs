@@ -11,11 +11,14 @@ public class NumbasJSONLearn : MonoBehaviour
     private void Start()
     {
         JsonObject jObject = new JsonObject();
-        jObject["name"] = "Zaur";
-        jObject["age"] = 25;
+        jObject["name"] = 0;
+        jObject["name"] = 1;
+        jObject["name"] = true;
+        jObject.Add("age", 25);
+        jObject.Add(new JsonField("married", true));
+        jObject.Insert(1, "other", new JsonObject() { { "OTHER", "!!!" } });
 
-        string name = jObject["name"];
-        int age = jObject["age"];
+        bool married = jObject["married"];
 
         print(jObject);
     }

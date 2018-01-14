@@ -211,16 +211,6 @@ namespace Numba.Data.Json.Engine
             _value = new JsonLong(value);
         }
 
-        public void SetValue(JsonNull value)
-        {
-            _value = value;
-        }
-
-        public void SetValue(JsonNumber value)
-        {
-            _value = value;
-        }
-
         public void SetValue(sbyte value)
         {
             _value = new JsonSByte(value);
@@ -249,16 +239,6 @@ namespace Numba.Data.Json.Engine
         public void SetValue(ushort value)
         {
             _value = new JsonUShort(value);
-        }
-
-        public void SetValue(JsonObject value)
-        {
-            _value = new JsonObject(value);
-        }
-
-        public void SetValue(JsonArray value)
-        {
-            _value = new JsonArray(value);
         }
         #endregion
 
