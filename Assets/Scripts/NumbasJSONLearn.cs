@@ -17,18 +17,21 @@ public class NumbasJSONLearn : MonoBehaviour
             { "married", true },
             { "car", new JsonObject() {
                 { "brand", "Audi" } } },
-            { "number", new JsonNumber("1234.5678") },
+            { "number", new JsonNumber(1234.56789f) },
             { "null", new JsonNull() }
         };
 
-        string name = (string)jObject["name"];
-        int? age = (int?)jObject["age"];
-        bool? married = (bool?)jObject["married"];
-        JsonObject car = (JsonObject)jObject["car"];
-        JsonNumber number = (JsonNumber)jObject["number"];
-        JsonNull jNull = (JsonNull)jObject["null"];
+        string name = jObject["name"];
+        int age = jObject["age"];
+        bool married = jObject["married"];
+        JsonObject car = jObject["car"];
+        JsonNumber number = jObject["number"];
+        JsonNull jNull = jObject["null"];
 
-        JsonField<IJsonValue> jField = new JsonField<IJsonValue>("", null);
-        print(jField.Value );
+        jObject["name"] = "Zemfira";
+        jObject["age"] = 24;
+        jObject["married"] = "Yes";
+
+        print(jObject);
     }
 }

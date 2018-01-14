@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonFloat : IJsonValue, IJsonDataType<float?>
+    public struct JsonFloat : IJsonValue, IJsonDataType<float>
     {
         #region Entities
         #region Enums
@@ -34,33 +34,28 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region Properties
         public JsonType Type { get { return JsonType.Number; } }
 
-        public float? Value { get; set; }
+        public float Value { get; set; }
         #endregion
 
         #region Methods
-        public JsonFloat(float? value)
+        public JsonFloat(float value)
         {
             Value = value;
         }
 
-        public static implicit operator JsonFloat(float? value)
+        public static implicit operator JsonFloat(float value)
         {
             return new JsonFloat(value);
         }
 
         public override string ToString()
         {
-            if (Value == null)
+            if (float.IsInfinity(Value) || float.IsNaN(Value))
             {
-                return "null";
+                return string.Format("\"{0}\"", Value);
             }
 
-            if (float.IsInfinity(Value.Value) || float.IsNaN(Value.Value))
-            {
-                return string.Format("\"{0}\"", Value.Value);
-            }
-
-            return Value.Value.ToString("R", CultureInfo.InvariantCulture);
+            return Value.ToString("R", CultureInfo.InvariantCulture);
         }
         #endregion
 

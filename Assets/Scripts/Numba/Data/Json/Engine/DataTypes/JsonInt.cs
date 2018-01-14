@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonInt : IJsonValue, IJsonDataType<int?>
+    public struct JsonInt : IJsonValue, IJsonDataType<int>
     {
         #region Entities
         #region Enums
@@ -33,23 +33,23 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region Properties
         public JsonType Type { get { return JsonType.Number; } }
 
-        public int? Value { get; set; }
+        public int Value { get; set; }
         #endregion
 
         #region Methods
-        public JsonInt(int? value)
+        public JsonInt(int value)
         {
             Value = value;
         }
 
-        public static implicit operator JsonInt(int? value)
+        public static implicit operator JsonInt(int value)
         {
             return new JsonInt(value);
         }
 
         public override string ToString()
         {
-            return Value == null ? "null" : Value.Value.ToString().ToLower();
+            return Value.ToString().ToLower();
         }
         #endregion
 

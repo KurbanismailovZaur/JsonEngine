@@ -1,20 +1,11 @@
 ﻿using Numba.Data.Json.Engine.DataTypes;
-using Numba.Data.Json.Engine.Exceptions;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
-    public abstract class JsonField
-    {
-        public abstract JsonString Name { get; set; }
-
-        public abstract IJsonValue BaseValue { get; }
-    }
-
-    public class JsonField<T> : JsonField where T : IJsonValue
+    public class JsonField
     {
         #region Entities
         #region Enums
@@ -34,9 +25,9 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Fields
-        private JsonString _name;
+        private string _name;
 
-        private T _value;
+        private IJsonValue _value;
         #endregion
 
         #region Events
@@ -44,45 +35,240 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public override JsonString Name
+        public string Name
         {
             get { return _name; }
-
-            set
-            {
-                _name = value;
-            }
+            set { _name = value; }
         }
 
-        public override IJsonValue BaseValue { get { return Value; } }
-
-        public T Value
+        public IJsonValue Value
         {
             get { return _value; }
             set { _value = value; }
         }
         #endregion
 
-        #region Methods
-        public JsonField(string name, T value)
+        #region Constructors
+        public JsonField(string name, IJsonValue value)
         {
-            Name = name;
-            Value = value;
+            _name = name;
+            _value = value;
         }
 
-        public JsonField(JsonString name, T value)
+        public JsonField(string name, bool value)
         {
-            Name = name;
-            Value = value;
+            _name = name;
+            _value = new JsonBool(value);
         }
 
-        public override string ToString()
+        public JsonField(string name, byte value)
         {
-            return string.Format("{0}:{1}", _name, _value == null ? "null" : _value.ToString());
+            _name = name;
+            _value = new JsonByte(value);
+        }
+
+        public JsonField(string name, char value)
+        {
+            _name = name;
+            _value = new JsonChar(value);
+        }
+
+        public JsonField(string name, decimal value)
+        {
+            _name = name;
+            _value = new JsonDecimal(value);
+        }
+
+        public JsonField(string name, double value)
+        {
+            _name = name;
+            _value = new JsonDouble(value);
+        }
+
+        public JsonField(string name, float value)
+        {
+            _name = name;
+            _value = new JsonFloat(value);
+        }
+
+        public JsonField(string name, int value)
+        {
+            _name = name;
+            _value = new JsonInt(value);
+        }
+
+        public JsonField(string name, long value)
+        {
+            _name = name;
+            _value = new JsonLong(value);
+        }
+
+        public JsonField(string name, JsonNull value)
+        {
+            _name = name;
+            _value = value;
+        }
+
+        public JsonField(string name, JsonNumber value)
+        {
+            _name = name;
+            _value = value;
+        }
+
+        public JsonField(string name, sbyte value)
+        {
+            _name = name;
+            _value = new JsonSByte(value);
+        }
+
+        public JsonField(string name, short value)
+        {
+            _name = name;
+            _value = new JsonShort(value);
+        }
+
+        public JsonField(string name, string value)
+        {
+            _name = name;
+            _value = new JsonString(value);
+        }
+
+        public JsonField(string name, uint value)
+        {
+            _name = name;
+            _value = new JsonUInt(value);
+        }
+
+        public JsonField(string name, ulong value)
+        {
+            _name = name;
+            _value = new JsonULong(value);
+        }
+
+        public JsonField(string name, ushort value)
+        {
+            _name = name;
+            _value = new JsonUShort(value);
+        }
+
+        public JsonField(string name, JsonObject value)
+        {
+            _name = name;
+            _value = value;
+        }
+
+        public JsonField(string name, JsonArray value)
+        {
+            _name = name;
+            _value = value;
         }
         #endregion
 
-        #region Event Handlers
+        #region Methods
+        #region Set value
+        public void SetValue(IJsonValue value)
+        {
+            _value = value;
+        }
+
+        public void SetValue(bool value)
+        {
+            _value = new JsonBool(value);
+        }
+
+        public void SetValue(byte value)
+        {
+            _value = new JsonByte(value);
+        }
+
+        public void SetValue(char value)
+        {
+            _value = new JsonChar(value);
+        }
+
+        public void SetValue(decimal value)
+        {
+            _value = new JsonDecimal(value);
+        }
+
+        public void SetValue(double value)
+        {
+            _value = new JsonDouble(value);
+        }
+
+        public void SetValue(float value)
+        {
+            _value = new JsonFloat(value);
+        }
+
+        public void SetValue(int value)
+        {
+            _value = new JsonInt(value);
+        }
+
+        public void SetValue(long value)
+        {
+            _value = new JsonLong(value);
+        }
+
+        public void SetValue(JsonNull value)
+        {
+            _value = value;
+        }
+
+        public void SetValue(JsonNumber value)
+        {
+            _value = value;
+        }
+
+        public void SetValue(sbyte value)
+        {
+            _value = new JsonSByte(value);
+        }
+
+        public void SetValue(short value)
+        {
+            _value = new JsonShort(value);
+        }
+
+        public void SetValue(string value)
+        {
+            _value = new JsonString(value);
+        }
+
+        public void SetValue(uint value)
+        {
+            _value = new JsonUInt(value);
+        }
+
+        public void SetValue(ulong value)
+        {
+            _value = new JsonULong(value);
+        }
+
+        public void SetValue(ushort value)
+        {
+            _value = new JsonUShort(value);
+        }
+
+        public void SetValue(JsonObject value)
+        {
+            _value = new JsonObject(value);
+        }
+
+        public void SetValue(JsonArray value)
+        {
+            _value = new JsonArray(value);
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            return string.Format("\"{0}\":{1}", _name ?? "", _value == null ? "null" : _value.ToString());
+        }
+        #endregion
+
+        #region Events handlers
         #endregion
         #endregion
     }

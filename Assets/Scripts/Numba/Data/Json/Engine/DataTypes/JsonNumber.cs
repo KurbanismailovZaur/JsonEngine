@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
@@ -35,12 +36,64 @@ namespace Numba.Data.Json.Engine.DataTypes
         public JsonType Type { get { return JsonType.Number; } }
         #endregion
 
-        #region Methods
-        public JsonNumber(string number)
+        #region Constructors
+        public JsonNumber(byte number)
         {
-            _number = number;
+            _number = number.ToString();
         }
 
+        public JsonNumber(decimal number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(double number)
+        {
+            _number = number.ToString("R", CultureInfo.InvariantCulture);
+        }
+
+        public JsonNumber(float number)
+        {
+            _number = number.ToString("R", CultureInfo.InvariantCulture);
+        }
+
+        public JsonNumber(int number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(long number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(sbyte number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(short number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(uint number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(ulong number)
+        {
+            _number = number.ToString();
+        }
+
+        public JsonNumber(ushort number)
+        {
+            _number = number.ToString();
+        }
+        #endregion
+
+        #region Methods
         #region Set number
         public void SetNumber(byte number)
         {
@@ -54,12 +107,12 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         public void SetNumber(double number)
         {
-            _number = number.ToString("R");
+            _number = number.ToString("R", CultureInfo.InvariantCulture);
         }
 
         public void SetNumber(float number)
         {
-            _number = number.ToString("R");
+            _number = number.ToString("R", CultureInfo.InvariantCulture);
         }
 
         public void SetNumber(int number)
@@ -154,6 +207,7 @@ namespace Numba.Data.Json.Engine.DataTypes
             return ushort.Parse(_number);
         }
         #endregion
+
         public override string ToString()
         {
             return _number;

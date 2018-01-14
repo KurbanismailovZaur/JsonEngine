@@ -145,42 +145,42 @@ namespace Numba.Data.Json.Engine.Extentions
             return (T)value;
         }
 
-        public static bool? AsBool(this IJsonValue value)
+        public static bool AsBool(this IJsonValue value)
         {
             return As<JsonBool>(value).Value;
         }
 
-        public static byte? AsByte(this IJsonValue value)
+        public static byte AsByte(this IJsonValue value)
         {
             return As<JsonByte>(value).Value;
         }
 
-        public static char? AsChar(this IJsonValue value)
+        public static char AsChar(this IJsonValue value)
         {
             return As<JsonChar>(value).Value;
         }
 
-        public static decimal? AsDecimal(this IJsonValue value)
+        public static decimal AsDecimal(this IJsonValue value)
         {
             return As<JsonDecimal>(value).Value;
         }
 
-        public static double? AsDouble(this IJsonValue value)
+        public static double AsDouble(this IJsonValue value)
         {
             return As<JsonDouble>(value).Value;
         }
 
-        public static float? AsFloat(this IJsonValue value)
+        public static float AsFloat(this IJsonValue value)
         {
             return As<JsonFloat>(value).Value;
         }
 
-        public static int? AsInt(this IJsonValue value)
+        public static int AsInt(this IJsonValue value)
         {
             return As<JsonInt>(value).Value;
         }
 
-        public static long? AsLong(this IJsonValue value)
+        public static long AsLong(this IJsonValue value)
         {
             return As<JsonLong>(value).Value;
         }
@@ -195,12 +195,12 @@ namespace Numba.Data.Json.Engine.Extentions
             return As<JsonNumber>(value);
         }
 
-        public static sbyte? AsSByte(this IJsonValue value)
+        public static sbyte AsSByte(this IJsonValue value)
         {
             return As<JsonSByte>(value).Value;
         }
 
-        public static short? AsShort(this IJsonValue value)
+        public static short AsShort(this IJsonValue value)
         {
             return As<JsonShort>(value).Value;
         }
@@ -210,17 +210,17 @@ namespace Numba.Data.Json.Engine.Extentions
             return As<JsonString>(value).Value;
         }
 
-        public static uint? AsUInt(this IJsonValue value)
+        public static uint AsUInt(this IJsonValue value)
         {
             return As<JsonUInt>(value).Value;
         }
 
-        public static ulong? AsULong(this IJsonValue value)
+        public static ulong AsULong(this IJsonValue value)
         {
             return As<JsonULong>(value).Value;
         }
 
-        public static ushort? AsUShort(this IJsonValue value)
+        public static ushort AsUShort(this IJsonValue value)
         {
             return As<JsonUShort>(value).Value;
         }
