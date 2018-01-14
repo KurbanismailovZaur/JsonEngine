@@ -139,7 +139,7 @@ namespace Numba.Data.Json.Engine.Extentions
         {
             if (!value.Is<T>())
             {
-                throw new JsonInvalidCastException();
+                throw new JsonInvalidCastException(string.Format("Source type (\"{0}\") can not be casted to \"{1}\"", value.GetType().Name, typeof(T).Name));
             }
 
             return (T)value;

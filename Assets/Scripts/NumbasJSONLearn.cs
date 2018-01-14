@@ -10,27 +10,12 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonObject jObject = new JsonObject()
-        {
-            { "name", "Zaur" },
-            { "age", 25 },
-            { "married", true },
-            { "car", new JsonObject() {
-                { "brand", "Audi" } } },
-            { "number", new JsonNumber(1234.56789f) },
-            { "null", new JsonNull() }
-        };
+        JsonObject jObject = new JsonObject();
+        jObject["name"] = "Zaur";
+        jObject["age"] = 25;
 
         string name = jObject["name"];
         int age = jObject["age"];
-        bool married = jObject["married"];
-        JsonObject car = jObject["car"];
-        JsonNumber number = jObject["number"];
-        JsonNull jNull = jObject["null"];
-
-        jObject["name"] = "Zemfira";
-        jObject["age"] = 24;
-        jObject["married"] = "Yes";
 
         print(jObject);
     }

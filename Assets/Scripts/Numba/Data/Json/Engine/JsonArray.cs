@@ -35,7 +35,9 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Array; } }
+        public JsonType Category { get { return JsonType.Array; } }
+
+        public JsonDataType Type { get { return JsonDataType.Array; } }
 
         public int Count { get { return _values.Count; } }
         #endregion
@@ -64,7 +66,7 @@ namespace Numba.Data.Json.Engine
 
         #region Add
         #region Add
-        public void Add<T>(T value) where T : IJsonValue
+        public void Add(IJsonValue value)
         {
             _values.Add(value);
         }
@@ -144,84 +146,84 @@ namespace Numba.Data.Json.Engine
         {
             foreach (IJsonValue value in values)
             {
-                Add(value ?? new JsonNull());
+                _values.Add(value ?? new JsonNull());
             }
         }
 
         #region Insert
-        public void Insert<T>(int index, T value) where T : IJsonValue
+        public void Insert(int index, IJsonValue value)
         {
             _values.Insert(index, value);
-        }
 
+        }
         public void Insert(int index, bool value)
         {
-            Insert<JsonBool>(index, value);
+            _values.Insert(index, new JsonBool(value));
         }
 
         public void Insert(int index, byte value)
         {
-            Insert<JsonByte>(index, value);
+            _values.Insert(index, new JsonByte(value));
         }
 
         public void Insert(int index, char value)
         {
-            Insert<JsonChar>(index, value);
+            _values.Insert(index, new JsonChar(value));
         }
 
         public void Insert(int index, decimal value)
         {
-            Insert<JsonDecimal>(index, value);
+            _values.Insert(index, new JsonDecimal(value));
         }
 
         public void Insert(int index, double value)
         {
-            Insert<JsonDouble>(index, value);
+            _values.Insert(index, new JsonDouble(value));
         }
 
         public void Insert(int index, float value)
         {
-            Insert<JsonFloat>(index, value);
+            _values.Insert(index, new JsonFloat(value));
         }
 
         public void Insert(int index, int value)
         {
-            Insert<JsonInt>(index, value);
+            _values.Insert(index, new JsonInt(value));
         }
 
         public void Insert(int index, long value)
         {
-            Insert<JsonLong>(index, value);
+            _values.Insert(index, new JsonLong(value));
         }
 
         public void Insert(int index, sbyte value)
         {
-            Insert<JsonSByte>(index, value);
+            _values.Insert(index, new JsonSByte(value));
         }
 
         public void Insert(int index, short value)
         {
-            Insert<JsonShort>(index, value);
+            _values.Insert(index, new JsonShort(value));
         }
 
         public void Insert(int index, string value)
         {
-            Insert<JsonString>(index, value);
+            _values.Insert(index, new JsonString(value));
         }
 
         public void Insert(int index, uint value)
         {
-            Insert<JsonUInt>(index, value);
+            _values.Insert(index, new JsonUInt(value));
         }
 
         public void Insert(int index, ulong value)
         {
-            Insert<JsonULong>(index, value);
+            _values.Insert(index, new JsonULong(value));
         }
 
         public void Insert(int index, ushort value)
         {
-            Insert<JsonUShort>(index, value);
+            _values.Insert(index, new JsonUShort(value));
         }
         #endregion
 
@@ -229,93 +231,86 @@ namespace Numba.Data.Json.Engine
         {
             foreach (IJsonValue value in values)
             {
-                Insert(index++, value ?? new JsonNull());
+                _values.Insert(index++, value ?? new JsonNull());
             }
         }
         #endregion
 
         #region Remove
         #region Remove
-        public void Remove<T>(T value) where T : IJsonValue
+        public void Remove(IJsonValue value)
         {
             _values.Remove(value);
         }
 
-        private void RemovePrimitive<T1>(T1 value) where T1 : IJsonDataType
-        {
-            IJsonValue primitive = _values.Find((x) => { return x.Equals(value); });
-
-            Remove(primitive);
-        }
-
         public void Remove(bool value)
         {
-            RemovePrimitive<JsonBool>(value);
+            Remove(new JsonBool(value));
         }
 
         public void Remove(byte value)
         {
-            RemovePrimitive<JsonByte>(value);
+            Remove(new JsonByte(value));
         }
 
         public void Remove(char value)
         {
-            RemovePrimitive<JsonChar>(value);
+            Remove(new JsonChar(value));
         }
 
         public void Remove(decimal value)
         {
-            RemovePrimitive<JsonDecimal>(value);
+            Remove(new JsonDecimal(value));
         }
 
         public void Remove(double value)
         {
-            RemovePrimitive<JsonDouble>(value);
+            Remove(new JsonDouble(value));
         }
 
         public void Remove(float value)
         {
-            RemovePrimitive < JsonFloat>(value);
+            Remove(new JsonFloat(value));
         }
 
         public void Remove(int value)
         {
-            RemovePrimitive<JsonInt>(value);
+            Remove(new JsonInt(value));
         }
 
         public void Remove(long value)
         {
-            RemovePrimitive<JsonLong>(value);
+            Remove(new JsonLong(value));
         }
 
         public void Remove(sbyte value)
         {
-            RemovePrimitive<JsonSByte>(value);
+            Remove(new JsonSByte(value));
         }
 
         public void Remove(short value)
         {
-            RemovePrimitive<JsonShort>(value);
+            Remove(new JsonShort(value));
         }
 
         public void Remove(string value)
         {
-            RemovePrimitive<JsonString>(value);
+            Remove(new JsonString(value));
         }
 
         public void Remove(uint value)
         {
-            RemovePrimitive<JsonUInt>(value);
+            Remove(new JsonUInt(value));
         }
 
         public void Remove(ulong value)
         {
-            RemovePrimitive<JsonULong>(value);
+            Remove(new JsonULong(value));
         }
 
         public void Remove(ushort value)
         {
-            RemovePrimitive<JsonUShort>(value);
+            Remove(new JsonUShort(value));
         }
         #endregion
 
@@ -329,6 +324,11 @@ namespace Numba.Data.Json.Engine
             _values.RemoveAll(predicate);
         }
 
+        public void RemoveRange(int index, int count)
+        {
+            _values.RemoveRange(index, count);
+        }
+
         public void Clear()
         {
             _values.Clear();
@@ -336,6 +336,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Get
+        #region Find
         public IJsonValue Find(Predicate<IJsonValue> predicate)
         {
             return _values.Find(predicate);
@@ -345,6 +346,22 @@ namespace Numba.Data.Json.Engine
         {
             return _values.FindAll(predicate);
         }
+
+        public int FindIndex(Predicate<IJsonValue> predicate)
+        {
+            return _values.FindIndex(predicate);
+        }
+
+        public IJsonValue FindLast(Predicate<IJsonValue> predicate)
+        {
+            return _values.FindLast(predicate);
+        }
+
+        public int FindLastIndex(Predicate<IJsonValue> predicate)
+        {
+            return _values.FindLastIndex(predicate);
+        }
+        #endregion
 
         public bool Contains(IJsonValue value)
         {

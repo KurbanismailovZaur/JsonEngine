@@ -30,7 +30,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Number; } }
+        public JsonType Category { get { return JsonType.Number; } }
+
+        public JsonDataType Type { get { return JsonDataType.Byte; } }
 
         public byte Value { get; set; }
         #endregion

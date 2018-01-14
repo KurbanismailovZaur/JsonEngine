@@ -6,6 +6,7 @@ namespace Numba.Data.Json.Engine
 {
     public interface IJsonValue
     {
-        JsonType Type { get; }
+        JsonType Category { get; }
+        JsonDataType Type { get; }
     }
 }

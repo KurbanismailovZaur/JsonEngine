@@ -33,7 +33,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Number; } }
+        public JsonType Category { get { return JsonType.Number; } }
+
+        public JsonDataType Type { get { return JsonDataType.Number; } }
         #endregion
 
         #region Constructors
@@ -154,63 +156,63 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region To methods
         public byte ToByte()
         {
-            return byte.Parse(_number);
+            return _number == null ? (byte)0 : byte.Parse(_number);
         }
 
         public decimal ToDecimal()
         {
-            return decimal.Parse(_number, System.Globalization.NumberStyles.Float);
+            return _number == null ? 0m : decimal.Parse(_number, NumberStyles.Float);
         }
 
         public double ToDouble()
         {
-            return double.Parse(_number, System.Globalization.NumberStyles.Float);
+            return _number == null ? 0d : double.Parse(_number, NumberStyles.Float);
         }
 
         public float ToFloat()
         {
-            return float.Parse(_number, System.Globalization.NumberStyles.Float);
+            return _number == null ? 0f : float.Parse(_number, NumberStyles.Float);
         }
 
         public int ToInt()
         {
-            return int.Parse(_number);
+            return _number == null ? 0 : int.Parse(_number);
         }
 
         public long ToLong()
         {
-            return long.Parse(_number);
+            return _number == null ? 0 : long.Parse(_number);
         }
 
         public sbyte ToSByte()
         {
-            return sbyte.Parse(_number);
+            return _number == null ? (sbyte)0 : sbyte.Parse(_number);
         }
 
         public short ToShort()
         {
-            return short.Parse(_number);
+            return _number == null ? (short)0 : short.Parse(_number);
         }
 
         public uint ToUInt()
         {
-            return uint.Parse(_number);
+            return _number == null ? (uint)0 : uint.Parse(_number);
         }
 
         public ulong ToULong()
         {
-            return ulong.Parse(_number);
+            return _number == null ? (ulong)0 : ulong.Parse(_number);
         }
 
         public ushort ToUShort()
         {
-            return ushort.Parse(_number);
+            return _number == null ? (ushort)0 : ushort.Parse(_number);
         }
         #endregion
 
         public override string ToString()
         {
-            return _number;
+            return _number ?? "0";
         }
         #endregion
 

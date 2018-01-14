@@ -38,7 +38,9 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Object; } }
+        public JsonType Category { get { return JsonType.Object; } }
+
+        public JsonDataType Type { get { return JsonDataType.Object; } }
 
         public int Count { get { return _fields.Count; } }
         #endregion
@@ -120,16 +122,6 @@ namespace Numba.Data.Json.Engine
             Add(new JsonField(name, new JsonLong(value)));
         }
 
-        public void Add(string name, JsonNull value)
-        {
-            Add(new JsonField(name, value));
-        }
-
-        public void Add(string name, JsonNumber value)
-        {
-            Add(new JsonField(name, value));
-        }
-
         public void Add(string name, sbyte value)
         {
             Add(new JsonField(name, new JsonSByte(value)));
@@ -158,16 +150,6 @@ namespace Numba.Data.Json.Engine
         public void Add(string name, ushort value)
         {
             Add(new JsonField(name, new JsonUShort(value)));
-        }
-
-        public void Add(string name, JsonObject value)
-        {
-            Add(new JsonField(name, value));
-        }
-
-        public void Add(string name, JsonArray value)
-        {
-            Add(new JsonField(name, value));
         }
         #endregion
 
@@ -264,26 +246,6 @@ namespace Numba.Data.Json.Engine
         {
             Insert(index, new JsonField(name, new JsonUShort(value)));
         }
-
-        public void Insert(int index, string name, JsonNull value)
-        {
-            Insert(index, new JsonField(name, value));
-        }
-
-        public void Insert(int index, string name, JsonNumber value)
-        {
-            Insert(index, new JsonField(name, value));
-        }
-
-        public void Insert(int index, string name, JsonObject value)
-        {
-            Insert(index, new JsonField(name, value));
-        }
-
-        public void Insert(int index, string name, JsonArray value)
-        {
-            Insert(index, new JsonField(name, value));
-        }
         #endregion
 
         public void InsertRange(int index, IEnumerable<JsonField> fields)
@@ -377,26 +339,6 @@ namespace Numba.Data.Json.Engine
         public void InsertOrAppend(int index, string name, ushort value)
         {
             InsertOrAppend(index, new JsonField(name, new JsonUShort(value)));
-        }
-
-        public void InsertOrAppend(int index, string name, JsonNull value)
-        {
-            InsertOrAppend(index, new JsonField(name, value));
-        }
-
-        public void InsertOrAppend(int index, string name, JsonNumber value)
-        {
-            InsertOrAppend(index, new JsonField(name, value));
-        }
-
-        public void InsertOrAppend(int index, string name, JsonObject value)
-        {
-            InsertOrAppend(index, new JsonField(name, value));
-        }
-
-        public void InsertOrAppend(int index, string name, JsonArray value)
-        {
-            InsertOrAppend(index, new JsonField(name, value));
         }
         #endregion
         #endregion
@@ -760,6 +702,11 @@ namespace Numba.Data.Json.Engine
             Insert(index, field);
         }
 
+        public void Replace(int index, string name, IJsonValue value)
+        {
+            Replace(index, new JsonField(name, value));
+        }
+
         public void Replace(int index, string name, bool value)
         {
             Replace(index, new JsonField(name, new JsonBool(value)));
@@ -800,16 +747,6 @@ namespace Numba.Data.Json.Engine
             Replace(index, new JsonField(name, new JsonLong(value)));
         }
 
-        public void Replace(int index, string name, JsonNull value)
-        {
-            Replace(index, new JsonField(name, value));
-        }
-
-        public void Replace(int index, string name, JsonNumber value)
-        {
-            Replace(index, new JsonField(name, value));
-        }
-
         public void Replace(int index, string name, sbyte value)
         {
             Replace(index, new JsonField(name, new JsonSByte(value)));
@@ -838,16 +775,6 @@ namespace Numba.Data.Json.Engine
         public void Replace(int index, string name, ushort value)
         {
             Replace(index, new JsonField(name, new JsonUShort(value)));
-        }
-
-        public void Replace(int index, string name, JsonObject value)
-        {
-            Replace(index, new JsonField(name, value));
-        }
-
-        public void Replace(int index, string name, JsonArray value)
-        {
-            Replace(index, new JsonField(name, value));
         }
         #endregion
 
@@ -885,8 +812,7 @@ namespace Numba.Data.Json.Engine
         {
             get
             {
-                JsonField field = GetField(fieldName);
-                return new ImplicitCastWrapper(field.Value);
+                return new ImplicitCastWrapper(GetField(fieldName).Value);
             }
             set
             {

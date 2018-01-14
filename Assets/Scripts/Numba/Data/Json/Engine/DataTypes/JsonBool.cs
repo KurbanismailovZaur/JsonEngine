@@ -31,7 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Bool; } }
+        public JsonType Category { get { return JsonType.Bool; } }
+
+        public JsonDataType Type { get { return JsonDataType.Bool; } }
 
         public bool Value { get; set; }
         #endregion

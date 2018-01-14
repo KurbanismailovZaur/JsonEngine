@@ -23,7 +23,6 @@ namespace Numba.Data.Json.Engine
         ULong,
         UShort,
         Object,
-        Array,
-        Unknown
+        Array
     }
 }

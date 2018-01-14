@@ -31,7 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Type { get { return JsonType.Null; } }
+        public JsonType Category { get { return JsonType.Null; } }
+
+        public JsonDataType Type { get { return JsonDataType.Null; } }
         #endregion
 
         #region Methods
