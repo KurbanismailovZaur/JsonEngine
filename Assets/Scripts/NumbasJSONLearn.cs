@@ -10,16 +10,23 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonObject jObject = new JsonObject();
-        jObject["name"] = 0;
-        jObject["name"] = 1;
-        jObject["name"] = true;
-        jObject.Add("age", 25);
-        jObject.Add(new JsonField("married", true));
-        jObject.Insert(1, "other", new JsonObject() { { "OTHER", "!!!" } });
+        JsonObject jObject = new JsonObject
+        {
+            { "name", "Zaur" },
+            { "age", 25 },
+            { "married", true },
+            {
+                "address",
+                new JsonObject() {
+            { "street", "Shodnenskaya" },
+            { "house", 1 } }
+            },
+            { "parents", new JsonArray() { "Papa", "Mama" } }
+        };
 
-        bool married = jObject["married"];
+        JsonArray jArray = new JsonArray() { 0, 1, 1, 2 };
+        jArray.Remove((JsonValue)new JsonInt(1));
 
-        print(jObject);
+        print(jArray);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonBool : IJsonValue, IJsonDataType<bool>
+    public class JsonBool : JsonValue, IJsonDataType<bool>
     {
         #region Entities
         #region Enums
@@ -31,9 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Bool; } }
+        public override JsonType Category { get { return JsonType.Bool; } }
 
-        public JsonDataType Type { get { return JsonDataType.Bool; } }
+        public override JsonDataType Type { get { return JsonDataType.Bool; } }
 
         public bool Value { get; set; }
         #endregion
@@ -49,14 +49,34 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonBool(value);
         }
 
+        public static implicit operator bool(JsonBool value)
+        {
+            return value.Value;
+        }
+
         public override string ToString()
         {
             return Value.ToString().ToLower();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is bool)
+            {
+                return Value.Equals((bool)obj);
+            }
+
+            if (obj is JsonBool)
+            {
+                return Value.Equals(((JsonBool)obj).Value);
+            }
+
+            return false;
+        }
+
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Value.GetHashCode();
         }
         #endregion
 

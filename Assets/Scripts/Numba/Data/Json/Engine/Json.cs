@@ -39,10 +39,10 @@ namespace Numba.Data.Json.Engine
 
         #region Methods
         #region Parse
-        public static IJsonValue Parse(string data)
+        public static JsonValue Parse(string data)
         {
             int currentIndex = -1;
-            IJsonValue value = ParseValue(data, ref currentIndex);
+            JsonValue value = ParseValue(data, ref currentIndex);
 
             if (CheckNextSymbolExisting(data, currentIndex))
             {
@@ -52,12 +52,12 @@ namespace Numba.Data.Json.Engine
             return value;
         }
 
-        public static T Parse<T>(string data) where T : IJsonValue
+        public static T Parse<T>(string data) where T : JsonValue
         {
             return (T)Parse(data);
         }
 
-        private static IJsonValue ParseValue(string data, ref int currentIndex)
+        private static JsonValue ParseValue(string data, ref int currentIndex)
         {
             char nextSymbol = GetNextSymbol(data, ref currentIndex);
 
@@ -335,39 +335,9 @@ namespace Numba.Data.Json.Engine
                     throw new JsonParseException("Incorrect json data. Can't parse field in object");
                 }
 
-                IJsonValue value = ParseValue(data, ref currentIndex);
+                JsonValue value = ParseValue(data, ref currentIndex);
 
-                #region Creating field
-                if (value is JsonString)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonString)value));
-                }
-
-                if (value is JsonNumber)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonNumber)value));
-                }
-
-                if (value is JsonNull)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonNull)value));
-                }
-
-                if (value is JsonBool)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonBool)value));
-                }
-
-                if (value is JsonObject)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonObject)value));
-                }
-
-                if (value is JsonArray)
-                {
-                    fields.Add(new JsonField(fieldName.Value, (JsonArray)value));
-                }
-                #endregion
+                fields.Add(new JsonField(fieldName.Value, value));
             }
 
             return new JsonObject(fields);

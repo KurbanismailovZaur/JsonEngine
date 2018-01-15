@@ -35,7 +35,7 @@ namespace Numba.Data.Json.Extentsions
         #endregion
 
         #region Methods
-        public static JsonArray ToJsonArray(this IEnumerable<IJsonValue> enumerable)
+        public static JsonArray ToJsonArray(this IEnumerable<JsonValue> enumerable)
         {
             return new JsonArray(enumerable);
         }

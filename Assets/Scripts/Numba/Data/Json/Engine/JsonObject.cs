@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
-    public class JsonObject : IJsonValue, IEnumerable<JsonField>
+    public class JsonObject : JsonValue, IEnumerable<JsonField>
     {
         #region Entities
         #region Enums
@@ -38,9 +38,9 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Object; } }
+        public override JsonType Category { get { return JsonType.Object; } }
 
-        public JsonDataType Type { get { return JsonDataType.Object; } }
+        public override JsonDataType Type { get { return JsonDataType.Object; } }
 
         public int Count { get { return _fields.Count; } }
         #endregion
@@ -77,79 +77,79 @@ namespace Numba.Data.Json.Engine
             _fields.Add(field);
         }
 
-        public void Add(string name, IJsonValue value)
+        public void Add(string name, JsonValue value)
         {
             Add(new JsonField(name, value));
         }
 
         public void Add(string name, bool value)
         {
-            Add(new JsonField(name, new JsonBool(value)));
+            Add(name, (JsonValue)new JsonBool(value));
         }
 
         public void Add(string name, byte value)
         {
-            Add(new JsonField(name, new JsonByte(value)));
+            Add(name, (JsonValue)new JsonByte(value));
         }
 
         public void Add(string name, char value)
         {
-            Add(new JsonField(name, new JsonChar(value)));
+            Add(name, (JsonValue)new JsonChar(value));
         }
 
         public void Add(string name, decimal value)
         {
-            Add(new JsonField(name, new JsonDecimal(value)));
+            Add(name, (JsonValue)new JsonDecimal(value));
         }
 
         public void Add(string name, double value)
         {
-            Add(new JsonField(name, new JsonDouble(value)));
+            Add(name, (JsonValue)new JsonDouble(value));
         }
 
         public void Add(string name, float value)
         {
-            Add(new JsonField(name, new JsonFloat(value)));
+            Add(name, (JsonValue)new JsonFloat(value));
         }
 
         public void Add(string name, int value)
         {
-            Add(new JsonField(name, new JsonInt(value)));
+            Add(name, (JsonValue)new JsonInt(value));
         }
 
         public void Add(string name, long value)
         {
-            Add(new JsonField(name, new JsonLong(value)));
+            Add(name, (JsonValue)new JsonLong(value));
         }
 
         public void Add(string name, sbyte value)
         {
-            Add(new JsonField(name, new JsonSByte(value)));
+            Add(name, (JsonValue)new JsonSByte(value));
         }
 
         public void Add(string name, short value)
         {
-            Add(new JsonField(name, new JsonShort(value)));
+            Add(name, (JsonValue)new JsonShort(value));
         }
 
         public void Add(string name, string value)
         {
-            Add(new JsonField(name, new JsonString(value)));
+            Add(name, (JsonValue)new JsonString(value));
         }
 
         public void Add(string name, uint value)
         {
-            Add(new JsonField(name, new JsonUInt(value)));
+            Add(name, (JsonValue)new JsonUInt(value));
         }
 
         public void Add(string name, ulong value)
         {
-            Add(new JsonField(name, new JsonULong(value)));
+            Add(name, (JsonValue)new JsonULong(value));
         }
 
         public void Add(string name, ushort value)
         {
-            Add(new JsonField(name, new JsonUShort(value)));
+            Add(name, (JsonValue)new JsonUShort(value));
         }
         #endregion
 
@@ -172,79 +172,79 @@ namespace Numba.Data.Json.Engine
             _fields.Insert(index, field);
         }
 
-        public void Insert(int index, string name, IJsonValue value)
+        public void Insert(int index, string name, JsonValue value)
         {
             Insert(index, new JsonField(name, value));
         }
 
         public void Insert(int index, string name, bool value)
         {
-            Insert(index, new JsonField(name, new JsonBool(value)));
+            Insert(index, name, (JsonValue)new JsonBool(value));
         }
 
         public void Insert(int index, string name, byte value)
         {
-            Insert(index, new JsonField(name, new JsonByte(value)));
+            Insert(index, name, (JsonValue)new JsonByte(value));
         }
 
         public void Insert(int index, string name, char value)
         {
-            Insert(index, new JsonField(name, new JsonChar(value)));
+            Insert(index, name, (JsonValue)new JsonChar(value));
         }
 
         public void Insert(int index, string name, decimal value)
         {
-            Insert(index, new JsonField(name, new JsonDecimal(value)));
+            Insert(index, name, (JsonValue)new JsonDecimal(value));
         }
 
         public void Insert(int index, string name, double value)
         {
-            Insert(index, new JsonField(name, new JsonDouble(value)));
+            Insert(index, name, (JsonValue)new JsonDouble(value));
         }
 
         public void Insert(int index, string name, float value)
         {
-            Insert(index, new JsonField(name, new JsonFloat(value)));
+            Insert(index, name, (JsonValue)new JsonFloat(value));
         }
 
         public void Insert(int index, string name, int value)
         {
-            Insert(index, new JsonField(name, new JsonInt(value)));
+            Insert(index, name, (JsonValue)new JsonInt(value));
         }
 
         public void Insert(int index, string name, long value)
         {
-            Insert(index, new JsonField(name, new JsonLong(value)));
+            Insert(index, name, (JsonValue)new JsonLong(value));
         }
 
         public void Insert(int index, string name, sbyte value)
         {
-            Insert(index, new JsonField(name, new JsonSByte(value)));
+            Insert(index, name, (JsonValue)new JsonSByte(value));
         }
 
         public void Insert(int index, string name, short value)
         {
-            Insert(index, new JsonField(name, new JsonShort(value)));
+            Insert(index, name, (JsonValue)new JsonShort(value));
         }
 
         public void Insert(int index, string name, string value)
         {
-            Insert(index, new JsonField(name, new JsonString(value)));
+            Insert(index, name, (JsonValue)new JsonString(value));
         }
 
         public void Insert(int index, string name, uint value)
         {
-            Insert(index, new JsonField(name, new JsonUInt(value)));
+            Insert(index, name, (JsonValue)new JsonUInt(value));
         }
 
         public void Insert(int index, string name, ulong value)
         {
-            Insert(index, new JsonField(name, new JsonULong(value)));
+            Insert(index, name, (JsonValue)new JsonULong(value));
         }
 
         public void Insert(int index, string name, ushort value)
         {
-            Insert(index, new JsonField(name, new JsonUShort(value)));
+            Insert(index, name, (JsonValue)new JsonUShort(value));
         }
         #endregion
 
@@ -266,79 +266,79 @@ namespace Numba.Data.Json.Engine
             }
         }
 
-        public void InsertOrAppend(int index, string name, IJsonValue value)
+        public void InsertOrAppend(int index, string name, JsonValue value)
         {
             InsertOrAppend(index, new JsonField(name, value));
         }
 
         public void InsertOrAppend(int index, string name, bool value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonBool(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonBool(value));
         }
 
         public void InsertOrAppend(int index, string name, byte value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonByte(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonByte(value));
         }
 
         public void InsertOrAppend(int index, string name, char value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonChar(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonChar(value));
         }
 
         public void InsertOrAppend(int index, string name, decimal value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonDecimal(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonDecimal(value));
         }
 
         public void InsertOrAppend(int index, string name, double value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonDouble(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonDouble(value));
         }
 
         public void InsertOrAppend(int index, string name, float value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonFloat(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonFloat(value));
         }
 
         public void InsertOrAppend(int index, string name, int value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonInt(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonInt(value));
         }
 
         public void InsertOrAppend(int index, string name, long value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonLong(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonLong(value));
         }
 
         public void InsertOrAppend(int index, string name, sbyte value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonSByte(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonSByte(value));
         }
 
         public void InsertOrAppend(int index, string name, short value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonShort(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonShort(value));
         }
 
         public void InsertOrAppend(int index, string name, string value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonString(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonString(value));
         }
 
         public void InsertOrAppend(int index, string name, uint value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonUInt(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonUInt(value));
         }
 
         public void InsertOrAppend(int index, string name, ulong value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonULong(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonULong(value));
         }
 
         public void InsertOrAppend(int index, string name, ushort value)
         {
-            InsertOrAppend(index, new JsonField(name, new JsonUShort(value)));
+            InsertOrAppend(index, name, (JsonValue)new JsonUShort(value));
         }
         #endregion
         #endregion
@@ -438,7 +438,7 @@ namespace Numba.Data.Json.Engine
         }
 
         #region Get values
-        public IJsonValue GetValue(string fieldName)
+        public JsonValue GetValue(string fieldName)
         {
             return GetField(fieldName).Value;
         }
@@ -536,7 +536,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Set
-        public void SetValue(string fieldName, IJsonValue value)
+        public void SetValue(string fieldName, JsonValue value)
         {
             GetField(fieldName).Value = value;
         }
@@ -702,79 +702,79 @@ namespace Numba.Data.Json.Engine
             Insert(index, field);
         }
 
-        public void Replace(int index, string name, IJsonValue value)
+        public void Replace(int index, string name, JsonValue value)
         {
             Replace(index, new JsonField(name, value));
         }
 
         public void Replace(int index, string name, bool value)
         {
-            Replace(index, new JsonField(name, new JsonBool(value)));
+            Replace(index, name, (JsonValue)new JsonBool(value));
         }
 
         public void Replace(int index, string name, byte value)
         {
-            Replace(index, new JsonField(name, new JsonByte(value)));
+            Replace(index, name, (JsonValue)new JsonByte(value));
         }
 
         public void Replace(int index, string name, char value)
         {
-            Replace(index, new JsonField(name, new JsonChar(value)));
+            Replace(index, name, (JsonValue)new JsonChar(value));
         }
 
         public void Replace(int index, string name, decimal value)
         {
-            Replace(index, new JsonField(name, new JsonDecimal(value)));
+            Replace(index, name, (JsonValue)new JsonDecimal(value));
         }
 
         public void Replace(int index, string name, double value)
         {
-            Replace(index, new JsonField(name, new JsonDouble(value)));
+            Replace(index, name, (JsonValue)new JsonDouble(value));
         }
 
         public void Replace(int index, string name, float value)
         {
-            Replace(index, new JsonField(name, new JsonFloat(value)));
+            Replace(index, name, (JsonValue)new JsonFloat(value));
         }
 
         public void Replace(int index, string name, int value)
         {
-            Replace(index, new JsonField(name, new JsonInt(value)));
+            Replace(index, name, (JsonValue)new JsonInt(value));
         }
 
         public void Replace(int index, string name, long value)
         {
-            Replace(index, new JsonField(name, new JsonLong(value)));
+            Replace(index, name, (JsonValue)new JsonLong(value));
         }
 
         public void Replace(int index, string name, sbyte value)
         {
-            Replace(index, new JsonField(name, new JsonSByte(value)));
+            Replace(index, name, (JsonValue)new JsonSByte(value));
         }
 
         public void Replace(int index, string name, short value)
         {
-            Replace(index, new JsonField(name, new JsonShort(value)));
+            Replace(index, name, (JsonValue)new JsonShort(value));
         }
 
         public void Replace(int index, string name, string value)
         {
-            Replace(index, new JsonField(name, new JsonString(value)));
+            Replace(index, name, (JsonValue)new JsonString(value));
         }
 
         public void Replace(int index, string name, uint value)
         {
-            Replace(index, new JsonField(name, new JsonUInt(value)));
+            Replace(index, name, (JsonValue)new JsonUInt(value));
         }
 
         public void Replace(int index, string name, ulong value)
         {
-            Replace(index, new JsonField(name, new JsonULong(value)));
+            Replace(index, name, (JsonValue)new JsonULong(value));
         }
 
         public void Replace(int index, string name, ushort value)
         {
-            Replace(index, new JsonField(name, new JsonUShort(value)));
+            Replace(index, name, (JsonValue)new JsonUShort(value));
         }
         #endregion
 
@@ -808,11 +808,11 @@ namespace Numba.Data.Json.Engine
             set { Replace(index, value); }
         }
 
-        public ImplicitCastWrapper this[string fieldName]
+        public JsonValue this[string fieldName]
         {
             get
             {
-                return new ImplicitCastWrapper(GetField(fieldName).Value);
+                return GetField(fieldName).Value;
             }
             set
             {
@@ -820,11 +820,11 @@ namespace Numba.Data.Json.Engine
 
                 if (field == null)
                 {
-                    Add(fieldName, value.Value);
+                    Add(fieldName, value);
                 }
                 else
                 {
-                    field.Value = value.Value;
+                    field.Value = value;
                 }
             }
         }

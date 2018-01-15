@@ -27,7 +27,7 @@ namespace Numba.Data.Json.Engine
         #region Fields
         private string _name;
 
-        private IJsonValue _value;
+        private JsonValue _value;
         #endregion
 
         #region Events
@@ -41,7 +41,7 @@ namespace Numba.Data.Json.Engine
             set { _name = value; }
         }
 
-        public IJsonValue Value
+        public JsonValue Value
         {
             get { return _value; }
             set { _value = value; }
@@ -49,7 +49,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Constructors
-        public JsonField(string name, IJsonValue value)
+        public JsonField(string name, JsonValue value)
         {
             _name = name;
             _value = value;
@@ -103,18 +103,6 @@ namespace Numba.Data.Json.Engine
             _value = new JsonLong(value);
         }
 
-        public JsonField(string name, JsonNull value)
-        {
-            _name = name;
-            _value = value;
-        }
-
-        public JsonField(string name, JsonNumber value)
-        {
-            _name = name;
-            _value = value;
-        }
-
         public JsonField(string name, sbyte value)
         {
             _name = name;
@@ -150,95 +138,103 @@ namespace Numba.Data.Json.Engine
             _name = name;
             _value = new JsonUShort(value);
         }
-
-        public JsonField(string name, JsonObject value)
-        {
-            _name = name;
-            _value = value;
-        }
-
-        public JsonField(string name, JsonArray value)
-        {
-            _name = name;
-            _value = value;
-        }
         #endregion
 
         #region Methods
         #region Set value
-        public void SetValue(IJsonValue value)
+        private void SetJsonValue(JsonValue value)
         {
             _value = value;
         }
 
         public void SetValue(bool value)
         {
-            _value = new JsonBool(value);
+            SetJsonValue(new JsonBool(value));
         }
 
         public void SetValue(byte value)
         {
-            _value = new JsonByte(value);
+            SetJsonValue(new JsonByte(value));
         }
 
         public void SetValue(char value)
         {
-            _value = new JsonChar(value);
+            SetJsonValue(new JsonChar(value));
         }
 
         public void SetValue(decimal value)
         {
-            _value = new JsonDecimal(value);
+            SetJsonValue(new JsonDecimal(value));
         }
 
         public void SetValue(double value)
         {
-            _value = new JsonDouble(value);
+            SetJsonValue(new JsonDouble(value));
         }
 
         public void SetValue(float value)
         {
-            _value = new JsonFloat(value);
+            SetJsonValue(new JsonFloat(value));
         }
 
         public void SetValue(int value)
         {
-            _value = new JsonInt(value);
+            SetJsonValue(new JsonInt(value));
         }
 
         public void SetValue(long value)
         {
-            _value = new JsonLong(value);
+            SetJsonValue(new JsonLong(value));
         }
 
         public void SetValue(sbyte value)
         {
-            _value = new JsonSByte(value);
+            SetJsonValue(new JsonSByte(value));
         }
 
         public void SetValue(short value)
         {
-            _value = new JsonShort(value);
+            SetJsonValue(new JsonShort(value));
         }
 
         public void SetValue(string value)
         {
-            _value = new JsonString(value);
+            SetJsonValue(new JsonString(value));
         }
 
         public void SetValue(uint value)
         {
-            _value = new JsonUInt(value);
+            SetJsonValue(new JsonUInt(value));
         }
 
         public void SetValue(ulong value)
         {
-            _value = new JsonULong(value);
+            SetJsonValue(new JsonULong(value));
         }
 
         public void SetValue(ushort value)
         {
-            _value = new JsonUShort(value);
+            SetJsonValue(new JsonUShort(value));
+        }
+
+        public void SetValue(JsonNull value)
+        {
+            SetJsonValue(value);
+        }
+
+        public void SetValue(JsonNumber value)
+        {
+            SetJsonValue(value);
+        }
+
+        public void SetValue(JsonObject value)
+        {
+            SetJsonValue(value);
+        }
+
+        public void SetValue(JsonArray value)
+        {
+            SetJsonValue(value);
         }
         #endregion
 

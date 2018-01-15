@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonNumber : IJsonValue, IJsonDataType
+    public class JsonNumber : JsonValue, IJsonDataType
     {
         #region Entities
         #region Enums
@@ -33,12 +33,17 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Number; } }
+        public override JsonType Category { get { return JsonType.Number; } }
 
-        public JsonDataType Type { get { return JsonDataType.Number; } }
+        public override JsonDataType Type { get { return JsonDataType.Number; } }
         #endregion
 
         #region Constructors
+        public JsonNumber(JsonNumber number)
+        {
+            _number = number._number;
+        }
+
         public JsonNumber(byte number)
         {
             _number = number.ToString();
@@ -210,9 +215,140 @@ namespace Numba.Data.Json.Engine.DataTypes
         }
         #endregion
 
+        #region Implicit casts
+        #region To system types
+        public static implicit operator byte(JsonNumber value)
+        {
+            return value.ToByte();
+        }
+
+        public static implicit operator decimal(JsonNumber value)
+        {
+            return value.ToDecimal();
+        }
+
+        public static implicit operator double(JsonNumber value)
+        {
+            return value.ToDouble();
+        }
+
+        public static implicit operator float(JsonNumber value)
+        {
+            return value.ToFloat();
+        }
+
+        public static implicit operator int(JsonNumber value)
+        {
+            return value.ToInt();
+        }
+
+        public static implicit operator long(JsonNumber value)
+        {
+            return value.ToLong();
+        }
+
+        public static implicit operator sbyte(JsonNumber value)
+        {
+            return value.ToSByte();
+        }
+
+        public static implicit operator short(JsonNumber value)
+        {
+            return value.ToShort();
+        }
+
+        public static implicit operator uint(JsonNumber value)
+        {
+            return value.ToUInt();
+        }
+
+        public static implicit operator ulong(JsonNumber value)
+        {
+            return value.ToULong();
+        }
+
+        public static implicit operator ushort(JsonNumber value)
+        {
+            return value.ToUShort();
+        }
+        #endregion
+
+        #region From system types
+        public static implicit operator JsonNumber(byte value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(decimal value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(double value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(float value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(int value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(long value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(sbyte value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(short value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(uint value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(ulong value)
+        {
+            return new JsonNumber(value);
+        }
+
+        public static implicit operator JsonNumber(ushort value)
+        {
+            return new JsonNumber(value);
+        }
+        #endregion
+        #endregion
+
         public override string ToString()
         {
             return _number ?? "0";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is JsonNumber)
+            {
+                return _number.Equals(((JsonNumber)obj)._number);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return _number.GetHashCode();
         }
         #endregion
 

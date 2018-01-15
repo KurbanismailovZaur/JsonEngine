@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonUShort : IJsonValue, IJsonDataType<ushort>
+    public class JsonUShort : JsonValue, IJsonDataType<ushort>
     {
         #region Entities
         #region Enums
@@ -31,9 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Number; } }
+        public override JsonType Category { get { return JsonType.Number; } }
 
-        public JsonDataType Type { get { return JsonDataType.UShort; } }
+        public override JsonDataType Type { get { return JsonDataType.UShort; } }
 
         public ushort Value { get; set; }
         #endregion
@@ -49,9 +49,34 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonUShort(value);
         }
 
+        public static implicit operator ushort(JsonUShort value)
+        {
+            return value.Value;
+        }
+
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ushort)
+            {
+                return Value.Equals((ushort)obj);
+            }
+
+            if (obj is JsonUShort)
+            {
+                return Value.Equals(((JsonUShort)obj).Value);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
         #endregion
 

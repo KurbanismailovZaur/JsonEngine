@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonChar : IJsonValue, IJsonDataType<char>
+    public class JsonChar : JsonValue, IJsonDataType<char>
     {
         #region Entities
         #region Enums
@@ -31,9 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.String; } }
+        public override JsonType Category { get { return JsonType.String; } }
 
-        public JsonDataType Type { get { return JsonDataType.Char; } }
+        public override JsonDataType Type { get { return JsonDataType.Char; } }
 
         public char Value { get; set; }
         #endregion
@@ -49,9 +49,34 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonChar(value);
         }
 
+        public static implicit operator char(JsonChar value)
+        {
+            return value.Value;
+        }
+
         public override string ToString()
         {
             return string.Format("\"{0}\"", Value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is char)
+            {
+                return Value.Equals((char)obj);
+            }
+
+            if (obj is JsonChar)
+            {
+                return Value.Equals(((JsonChar)obj).Value);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
         #endregion
 

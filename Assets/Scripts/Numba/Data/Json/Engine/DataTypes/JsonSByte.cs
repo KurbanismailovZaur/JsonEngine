@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonSByte : IJsonValue, IJsonDataType<sbyte>
+    public class JsonSByte : JsonValue, IJsonDataType<sbyte>
     {
         #region Entities
         #region Enums
@@ -31,9 +31,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Number; } }
+        public override JsonType Category { get { return JsonType.Number; } }
 
-        public JsonDataType Type { get { return JsonDataType.SByte; } }
+        public override JsonDataType Type { get { return JsonDataType.SByte; } }
 
         public sbyte Value { get; set; }
         #endregion
@@ -49,9 +49,34 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonSByte(value);
         }
 
+        public static implicit operator sbyte(JsonSByte value)
+        {
+            return value.Value;
+        }
+
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is sbyte)
+            {
+                return Value.Equals((sbyte)obj);
+            }
+
+            if (obj is JsonSByte)
+            {
+                return Value.Equals(((JsonSByte)obj).Value);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
         #endregion
 

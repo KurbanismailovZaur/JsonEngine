@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public struct JsonDecimal : IJsonValue, IJsonDataType<decimal>
+    public class JsonDecimal : JsonValue, IJsonDataType<decimal>
     {
         #region Entities
         #region Enums
@@ -33,9 +33,9 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public JsonType Category { get { return JsonType.Number; } }
+        public override JsonType Category { get { return JsonType.Number; } }
 
-        public JsonDataType Type { get { return JsonDataType.Decimal; } }
+        public override JsonDataType Type { get { return JsonDataType.Decimal; } }
 
         public decimal Value { get; set; }
         #endregion
@@ -51,9 +51,34 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonDecimal(value);
         }
 
+        public static implicit operator decimal(JsonDecimal value)
+        {
+            return value.Value;
+        }
+
         public override string ToString()
         {
             return Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is decimal)
+            {
+                return Value.Equals((decimal)obj);
+            }
+
+            if (obj is JsonDecimal)
+            {
+                return Value.Equals(((JsonDecimal)obj).Value);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
         #endregion
 
