@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonShort(value);
         }
 
-        public static implicit operator short(JsonShort value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString();

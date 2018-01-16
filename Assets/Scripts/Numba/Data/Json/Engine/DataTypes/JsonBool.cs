@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonBool(value);
         }
 
-        public static implicit operator bool(JsonBool value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString().ToLower();

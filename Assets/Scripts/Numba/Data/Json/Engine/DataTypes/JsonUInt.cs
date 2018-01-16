@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonUInt(value);
         }
 
-        public static implicit operator uint(JsonUInt value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString();

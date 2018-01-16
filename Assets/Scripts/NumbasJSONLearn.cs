@@ -10,23 +10,28 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonObject jObject = new JsonObject
-        {
-            { "name", "Zaur" },
-            { "age", 25 },
-            { "married", true },
-            {
-                "address",
-                new JsonObject() {
-            { "street", "Shodnenskaya" },
-            { "house", 1 } }
-            },
-            { "parents", new JsonArray() { "Papa", "Mama" } }
-        };
+        JsonBool jBool1 = new JsonBool(true);
+        JsonBool jBool2 = true;
 
-        JsonArray jArray = new JsonArray() { 0, 1, 1, 2 };
-        jArray.Remove((JsonValue)new JsonInt(1));
+        JsonField jField1 = new JsonField("name", new JsonString("Zaur"));
+        JsonField jFeidl2 = new JsonField("name", "Zaur");
 
-        print(jArray);
+        JsonObject jObject = new JsonObject();
+
+        jObject.Add(jField1);
+
+        jObject.Add("age", new JsonInt(25));
+        jObject.Add("age", (JsonValue)25);
+
+        JsonField jField3 = jObject[0];
+        jObject[0] = jField3;
+
+        JsonValue jValue1 = jObject["name"];
+        jObject["name"] = jValue1;
+        jObject["name"] = new JsonBool(true);
+        jObject["name"] = true;
+        jObject["age"] = 25;
+
+        print("");
     }
 }

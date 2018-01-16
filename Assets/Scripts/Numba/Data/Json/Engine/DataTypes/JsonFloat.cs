@@ -50,11 +50,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonFloat(value);
         }
 
-        public static implicit operator float(JsonFloat value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             if (float.IsInfinity(Value) || float.IsNaN(Value))

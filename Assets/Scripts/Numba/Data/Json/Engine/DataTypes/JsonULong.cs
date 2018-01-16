@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonULong(value);
         }
 
-        public static implicit operator ulong(JsonULong value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString();

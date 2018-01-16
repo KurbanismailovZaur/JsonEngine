@@ -50,11 +50,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonDouble(value);
         }
 
-        public static implicit operator double(JsonDouble value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             if (double.IsInfinity(Value) || double.IsNaN(Value))

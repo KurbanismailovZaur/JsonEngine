@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonSByte(value);
         }
 
-        public static implicit operator sbyte(JsonSByte value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString();

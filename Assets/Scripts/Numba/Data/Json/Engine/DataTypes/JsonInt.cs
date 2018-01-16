@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonInt(value);
         }
 
-        public static implicit operator int(JsonInt value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString().ToLower();

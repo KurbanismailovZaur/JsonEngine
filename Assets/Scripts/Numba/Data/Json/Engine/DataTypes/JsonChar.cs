@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonChar(value);
         }
 
-        public static implicit operator char(JsonChar value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return string.Format("\"{0}\"", Value);

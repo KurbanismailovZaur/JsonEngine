@@ -51,11 +51,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonDecimal(value);
         }
 
-        public static implicit operator decimal(JsonDecimal value)
-        {
-            return value.Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString(CultureInfo.InvariantCulture);

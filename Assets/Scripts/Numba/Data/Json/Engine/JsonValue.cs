@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Numba.Data.Json.Engine.DataTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,77 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Methods
+        #region Implicit cast from system types
+        public static implicit operator JsonValue(bool value)
+        {
+            return new JsonBool(value);
+        }
+
+        public static implicit operator JsonValue(byte value)
+        {
+            return new JsonByte(value);
+        }
+
+        public static implicit operator JsonValue(char value)
+        {
+            return new JsonChar(value);
+        }
+
+        public static implicit operator JsonValue(decimal value)
+        {
+            return new JsonDecimal(value);
+        }
+
+        public static implicit operator JsonValue(double value)
+        {
+            return new JsonDouble(value);
+        }
+
+        public static implicit operator JsonValue(float value)
+        {
+            return new JsonFloat(value);
+        }
+
+        public static implicit operator JsonValue(int value)
+        {
+            return new JsonInt(value);
+        }
+
+        public static implicit operator JsonValue(long value)
+        {
+            return new JsonLong(value);
+        }
+
+        public static implicit operator JsonValue(sbyte value)
+        {
+            return new JsonSByte(value);
+        }
+
+        public static implicit operator JsonValue(short value)
+        {
+            return new JsonShort(value);
+        }
+
+        public static implicit operator JsonValue(string value)
+        {
+            return new JsonString(value);
+        }
+
+        public static implicit operator JsonValue(uint value)
+        {
+            return new JsonUInt(value);
+        }
+
+        public static implicit operator JsonValue(ulong value)
+        {
+            return new JsonULong(value);
+        }
+
+        public static implicit operator JsonValue(ushort value)
+        {
+            return new JsonUShort(value);
+        }
+        #endregion
         #endregion
 
         #region Events handlers

@@ -49,11 +49,6 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonString(value);
         }
 
-        public static implicit operator string(JsonString value)
-        {
-            return value.Value;
-        }
-
         public static bool operator ==(JsonString thisObject, string otherObject)
         {
             return thisObject.Value == otherObject;
