@@ -1,7 +1,5 @@
 ﻿using Numba.Data.Json.Engine;
 using Numba.Data.Json.Engine.DataTypes;
-using Numba.Data.Json.Engine.Extentions;
-using Numba.Data.Json.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,23 +8,19 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonString jString = "Zaur";
-        JsonInt jInt = 25;
         JsonBool jBool = true;
+        JsonNull jNull = null;
+        JsonNumber jNumber = 3.14d;
 
-        JsonField nameField = new JsonField("name", jString);
+        JsonField jfield = new JsonField("bool", new JsonNumber(3.14m));
+        print(jfield);
 
-        JsonObject jObject = new JsonObject
-        {
-            nameField,
-            { "age", jInt },
-            { "married", jBool }
-        };
+        JsonObject jObject = new JsonObject() { jfield, { "null", jNull }, { "number", jNumber } };
+        jObject.Add("name", null);
+        jObject["surname"] = '#';
 
-        jObject.Add("values", new JsonArray() { 0, 1f, 2d, 3m, '#', "abc", new JsonObject() });
-        jObject.Insert(0, "isman", true);
-        jObject.SwapFields(0, 1);
-        //jObject.InsertOrAppend(16, null);
+        JsonArray jArray = new JsonArray();
+        jArray[2] = 4;
 
         print(jObject);
     }

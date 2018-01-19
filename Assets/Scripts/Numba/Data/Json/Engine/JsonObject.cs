@@ -1,6 +1,5 @@
 ﻿using Numba.Data.Json.Engine.DataTypes;
 using Numba.Data.Json.Engine.Exceptions;
-using Numba.Data.Json.Engine.Extentions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,12 +45,14 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Methods
+        #region Constructors
         public JsonObject() { }
 
         public JsonObject(IEnumerable<JsonField> fields)
         {
             AddRange(fields);
         }
+        #endregion
 
         #region IEnumerable<IJsonValue> interface implementation
         public IEnumerator<JsonField> GetEnumerator()
@@ -65,10 +66,13 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        #region Add
-        #region Add
         public void Add(JsonField field)
         {
+            if (field == null)
+            {
+                throw new ArgumentNullException("field");
+            }
+
             if (_fields.Any((x) => { return x.Name == field.Name; }))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
@@ -81,19 +85,27 @@ namespace Numba.Data.Json.Engine
         {
             Add(new JsonField(name, value));
         }
-        #endregion
 
         public void AddRange(IEnumerable<JsonField> fields)
         {
+            if (fields == null)
+            {
+                throw new ArgumentNullException("fields");
+            }
+
             foreach (JsonField field in fields)
             {
                 Add(field);
             }
         }
 
-        #region Insert
         public void Insert(int index, JsonField field)
         {
+            if (field == null)
+            {
+                throw new ArgumentNullException("field");
+            }
+
             if (_fields.Any((x) => { return x.Name == field.Name; }))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
@@ -106,23 +118,29 @@ namespace Numba.Data.Json.Engine
         {
             Insert(index, new JsonField(name, value));
         }
-        #endregion
 
         public void InsertRange(int index, IEnumerable<JsonField> fields)
         {
-            _fields.InsertRange(index, fields);
+            if (fields == null)
+            {
+                throw new ArgumentNullException("field");
+            }
+
+            foreach (JsonField field in fields)
+            {
+                Insert(index++, field);
+            }
         }
 
-        #region Insert or append
         public void InsertOrAppend(int index, JsonField field)
         {
             if (index > _fields.Count - 1)
             {
-                _fields.Add(field);
+                Add(field);
             }
             else
             {
-                _fields.Insert(index, field);
+                Insert(index, field);
             }
         }
 
@@ -130,20 +148,17 @@ namespace Numba.Data.Json.Engine
         {
             InsertOrAppend(index, new JsonField(name, value));
         }
-        #endregion
-        #endregion
 
-        #region Remove
         public void RemoveField(JsonField field)
         {
             _fields.Remove(field);
         }
 
-        public void RemoveField(string name)
+        public bool RemoveField(string name)
         {
             JsonField field = _fields.Find((x) => { return x.Name == name; });
 
-            _fields.Remove(field);
+            return _fields.Remove(field);
         }
 
         public void RemoveFieldAt(int index)
@@ -156,18 +171,16 @@ namespace Numba.Data.Json.Engine
             _fields.RemoveRange(index, count);
         }
 
-        public void RemoveFields(Predicate<JsonField> predicate)
+        public int RemoveAll(Predicate<JsonField> match)
         {
-            _fields.RemoveAll(predicate);
+            return _fields.RemoveAll(match);
         }
 
         public void Clear()
         {
             _fields.Clear();
         }
-        #endregion
 
-        #region Get
         public JsonField GetField(string fieldName)
         {
             JsonField field = Find((x) => { return x.Name == fieldName; });
@@ -178,6 +191,11 @@ namespace Numba.Data.Json.Engine
             }
 
             return field;
+        }
+
+        public bool HasField(string fieldName)
+        {
+            return Find((x) => { return x.Name == fieldName; }) == null ? false : true;
         }
 
         public bool Contains(JsonField field)
@@ -202,29 +220,29 @@ namespace Numba.Data.Json.Engine
             return _fields.IndexOf(field);
         }
 
-        public JsonField Find(Predicate<JsonField> predicate)
+        public JsonField Find(Predicate<JsonField> match)
         {
-            return _fields.Find(predicate);
+            return _fields.Find(match);
         }
 
-        public List<JsonField> FindAll(Predicate<JsonField> predicate)
+        public List<JsonField> FindAll(Predicate<JsonField> match)
         {
-            return _fields.FindAll(predicate);
+            return _fields.FindAll(match);
         }
 
-        public int FindIndex(Predicate<JsonField> predicate)
+        public int FindIndex(Predicate<JsonField> match)
         {
-            return _fields.FindIndex(predicate);
+            return _fields.FindIndex(match);
         }
 
-        public JsonField FindLast(Predicate<JsonField> predicate)
+        public JsonField FindLast(Predicate<JsonField> match)
         {
-            return _fields.FindLast(predicate);
+            return _fields.FindLast(match);
         }
 
-        public int FindLastIndex(Predicate<JsonField> predicate)
+        public int FindLastIndex(Predicate<JsonField> match)
         {
-            return _fields.FindLastIndex(predicate);
+            return _fields.FindLastIndex(match);
         }
 
         #region Get values
@@ -323,17 +341,15 @@ namespace Numba.Data.Json.Engine
             return GetField(fieldName).Value.AsArray();
         }
         #endregion
-        #endregion
 
         public void SetValue(string fieldName, JsonValue value)
         {
             GetField(fieldName).Value = value;
         }
 
-        #region Replace
         public void Replace(int index, JsonField field)
         {
-            if (index > _fields.Count - 1)
+            if (index > _fields.Count - 1 || index < 0)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -352,7 +368,6 @@ namespace Numba.Data.Json.Engine
         {
             Replace(index, new JsonField(name, value));
         }
-        #endregion
 
         public void SwapFields(int first, int second)
         {
@@ -364,11 +379,6 @@ namespace Numba.Data.Json.Engine
             int left = first < second ? first : second;
             int right = second > first ? second : first;
 
-            if (left > _fields.Count - 1 || right > _fields.Count - 1)
-            {
-                throw new IndexOutOfRangeException();
-            }
-
             JsonField leftField = _fields[left];
             JsonField rightField = _fields[right];
 
@@ -376,6 +386,33 @@ namespace Numba.Data.Json.Engine
             Replace(left, rightField);
             InsertOrAppend(right, leftField);
         }
+
+        public bool CheckNullField(string fieldName)
+        {
+            JsonField field = GetField(fieldName);
+
+            return field.Value.IsNull();
+        }
+
+        public override string ToString()
+        {
+            if (_fields.Count == 0)
+            {
+                return "{}";
+            }
+
+            StringBuilder builder = new StringBuilder("{");
+
+            for (int i = 0; i < _fields.Count - 1; i++)
+            {
+                builder.AppendFormat("{0}{1}", _fields[i].ToString(), ",");
+            }
+
+            builder.AppendFormat("{0}{1}", _fields[_fields.Count - 1].ToString(), "}");
+
+            return builder.ToString();
+        }
+        #endregion
 
         #region Indexers
         public JsonField this[int index]
@@ -405,36 +442,9 @@ namespace Numba.Data.Json.Engine
             }
         }
         #endregion
-
-        public bool IsNullField(string fieldName)
-        {
-            JsonField field = GetField(fieldName);
-
-            return field.Value.IsNull();
-        }
-
-        public override string ToString()
-        {
-            if (_fields.Count == 0)
-            {
-                return "{}";
-            }
-
-            StringBuilder builder = new StringBuilder("{");
-
-            for (int i = 0; i < _fields.Count - 1; i++)
-            {
-                builder.AppendFormat("{0}{1}", _fields[i].ToString(), ",");
-            }
-
-            builder.AppendFormat("{0}{1}", _fields[_fields.Count - 1].ToString(), "}");
-
-            return builder.ToString();
-        }
         #endregion
 
         #region Event Handlers
-        #endregion
         #endregion
     }
 }

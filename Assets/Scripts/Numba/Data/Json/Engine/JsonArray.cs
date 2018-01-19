@@ -1,5 +1,4 @@
 ﻿using Numba.Data.Json.Engine.DataTypes;
-using Numba.Data.Json.Engine.Extentions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,54 +64,55 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        #region Add
-        #region Add
         public void Add(JsonValue value)
         {
             _values.Add(value);
         }
-        #endregion
 
         public void AddRange(IEnumerable<JsonValue> values)
         {
+            if (values == null)
+            {
+                throw new ArgumentNullException("values");
+            }
+
             foreach (JsonValue value in values)
             {
-                _values.Add(value ?? new JsonNull());
+                Add(value ?? new JsonNull());
             }
         }
 
-        #region Insert
         public void Insert(int index, JsonValue value)
         {
             _values.Insert(index, value);
         }
-        #endregion
 
         public void InsertRange(int index, IEnumerable<JsonValue> values)
         {
+            if (values == null)
+            {
+                throw new ArgumentNullException("values");
+            }
+
             foreach (JsonValue value in values)
             {
                 _values.Insert(index++, value ?? new JsonNull());
             }
         }
-        #endregion
 
-        #region Remove
-        #region Remove
-        public void Remove(JsonValue value)
+        public bool Remove(JsonValue value)
         {
-            _values.Remove(value);
+            return _values.Remove(value);
         }
-        #endregion
 
         public void RemoveAt(int index)
         {
             _values.RemoveAt(index);
         }
 
-        public void RemoveAll(Predicate<JsonValue> predicate)
+        public int RemoveAll(Predicate<JsonValue> predicate)
         {
-            _values.RemoveAll(predicate);
+            return _values.RemoveAll(predicate);
         }
 
         public void RemoveRange(int index, int count)
@@ -124,10 +124,7 @@ namespace Numba.Data.Json.Engine
         {
             _values.Clear();
         }
-        #endregion
 
-        #region Get
-        #region Find
         public JsonValue Find(Predicate<JsonValue> predicate)
         {
             return _values.Find(predicate);
@@ -152,19 +149,11 @@ namespace Numba.Data.Json.Engine
         {
             return _values.FindLastIndex(predicate);
         }
-        #endregion
 
         public bool Contains(JsonValue value)
         {
             return _values.Contains(value);
         }
-
-        public JsonValue this[int index]
-        {
-            get { return _values[index]; }
-            set { _values[index] = value; }
-        }
-        #endregion
 
         public override string ToString()
         {
@@ -183,6 +172,14 @@ namespace Numba.Data.Json.Engine
             builder.AppendFormat("{0}{1}", _values[_values.Count - 1].ToString(), "]");
 
             return builder.ToString();
+        }
+        #endregion
+
+        #region Indexers
+        public JsonValue this[int index]
+        {
+            get { return _values[index]; }
+            set { _values[index] = value; }
         }
         #endregion
 

@@ -52,7 +52,7 @@ namespace Numba.Data.Json.Engine
         public JsonField(string name, JsonValue value)
         {
             _name = name;
-            _value = value;
+            _value = value ?? new JsonNull();
         }
         #endregion
 
