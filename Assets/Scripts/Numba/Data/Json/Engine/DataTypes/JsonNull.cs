@@ -42,19 +42,19 @@ namespace Numba.Data.Json.Engine.DataTypes
             return "null";
         }
 
-        public static bool operator ==(JsonNull jsonNull, object o)
+        public static bool operator ==(JsonNull jsonNull, object obj)
         {
-            return o is JsonNull;
+            return obj is JsonNull || obj == null;
         }
 
-        public static bool operator !=(JsonNull jsonNull, object o)
+        public static bool operator !=(JsonNull jsonNull, object obj)
         {
-            return !(o is JsonNull);
+            return !(obj is JsonNull || obj == null);
         }
 
         public override bool Equals(object obj)
         {
-            return obj == null || obj is JsonNull;
+            return obj is JsonNull || obj == null;
         }
 
         public override int GetHashCode()

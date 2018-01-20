@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
-    public class JsonField
+    public class JsonWrap
     {
         #region Entities
         #region Enums
@@ -25,8 +25,6 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Fields
-        private string _name;
-
         private JsonValue _value;
         #endregion
 
@@ -35,39 +33,25 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value ?? string.Empty; }
-        }
-
-        public JsonValue Value
-        {
-            get { return _value; }
-            set { _value = value ?? new JsonNull(); }
-        }
         #endregion
 
         #region Constructors
-        public JsonField(string name, JsonValue value)
+        private JsonWrap() : this(new JsonNull()) { }
+
+        public JsonWrap(JsonValue value)
         {
-            _name = name;
             _value = value ?? new JsonNull();
         }
         #endregion
 
         #region Methods
-        #region Set value
         public void SetValue(JsonValue value)
         {
             _value = value ?? new JsonNull();
         }
         #endregion
 
-        public override string ToString()
-        {
-            return string.Format("\"{0}\":{1}", _name, _value.ToString());
-        }
+        #region Indexers
         #endregion
 
         #region Events handlers

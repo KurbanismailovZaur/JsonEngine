@@ -66,7 +66,7 @@ namespace Numba.Data.Json.Engine
 
         public void Add(JsonValue value)
         {
-            _values.Add(value);
+            _values.Add(value ?? new JsonNull());
         }
 
         public void AddRange(IEnumerable<JsonValue> values)
@@ -78,13 +78,13 @@ namespace Numba.Data.Json.Engine
 
             foreach (JsonValue value in values)
             {
-                Add(value ?? new JsonNull());
+                Add(value);
             }
         }
 
         public void Insert(int index, JsonValue value)
         {
-            _values.Insert(index, value);
+            _values.Insert(index, value ?? new JsonNull());
         }
 
         public void InsertRange(int index, IEnumerable<JsonValue> values)
@@ -96,13 +96,13 @@ namespace Numba.Data.Json.Engine
 
             foreach (JsonValue value in values)
             {
-                _values.Insert(index++, value ?? new JsonNull());
+                _values.Insert(index++, value);
             }
         }
 
         public bool Remove(JsonValue value)
         {
-            return _values.Remove(value);
+            return _values.Remove(value ?? new JsonNull());
         }
 
         public void RemoveAt(int index)

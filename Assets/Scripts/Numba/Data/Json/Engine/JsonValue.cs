@@ -34,6 +34,7 @@ namespace Numba.Data.Json.Engine
         #region Behaviour
         #region Properties
         public abstract JsonType Category { get; }
+
         public abstract JsonDataType Type { get; }
         #endregion
 

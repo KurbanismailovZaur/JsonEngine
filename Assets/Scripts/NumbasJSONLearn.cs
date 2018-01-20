@@ -8,20 +8,18 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonBool jBool = true;
-        JsonNull jNull = null;
-        JsonNumber jNumber = 3.14d;
+        JsonObject jObject = new JsonObject();
+        jObject.Add("name", "Zaur");
+        jObject.InsertOrAppend(2, "age", 25);
+        jObject[2] = new JsonField("married", true);
+        jObject["married"] = null;
 
-        JsonField jfield = new JsonField("bool", new JsonNumber(3.14m));
-        print(jfield);
+        JsonArray jArray = new JsonArray() { 0, 1, '#', "Name", jObject};
+        jArray.Remove(jObject);
 
-        JsonObject jObject = new JsonObject() { jfield, { "null", jNull }, { "number", jNumber } };
-        jObject.Add("name", null);
-        jObject["surname"] = '#';
+        List<object> ints = new List<object>() { 0, null };
+        //ints.Remove(0);
 
-        JsonArray jArray = new JsonArray();
-        jArray[2] = 4;
-
-        print(jObject);
+        print(jArray.Count);
     }
 }
