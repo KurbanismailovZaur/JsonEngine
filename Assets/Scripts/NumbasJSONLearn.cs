@@ -8,18 +8,17 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonObject jObject = new JsonObject();
-        jObject.Add("name", "Zaur");
-        jObject.InsertOrAppend(2, "age", 25);
-        jObject[2] = new JsonField("married", true);
-        jObject["married"] = null;
+        JsonObject jObject = new JsonObject() { { "name", "Zaur" } };
+        string name = jObject.GetString("name");
 
-        JsonArray jArray = new JsonArray() { 0, 1, '#', "Name", jObject};
-        jArray.Remove(jObject);
+        JsonArray jArray = new JsonArray() { 0, 1f, 2d, 3m, '#', "Numba" };
+        char symbol = jArray.GetChar(4);
 
-        List<object> ints = new List<object>() { 0, null };
-        //ints.Remove(0);
+        JsonWrap jWrap = new JsonObject() { { "name", "Zaur" } };
+        string wrapName = jWrap["name"][0];
+        //JsonWrap jWrap = new JsonArray() { new JsonObject() { { "name", "Zaur" } }, 1, 2, 3m };
+        //jWrap[0] = '#';
 
-        print(jArray.Count);
+        print(symbol);
     }
 }
