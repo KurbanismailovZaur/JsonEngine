@@ -46,6 +46,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonDecimal(string jsonDecimalData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonDecimalData).ToDecimal();
+        }
+
         public static implicit operator JsonDecimal(decimal value)
         {
             return new JsonDecimal(value);

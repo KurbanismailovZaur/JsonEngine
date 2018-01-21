@@ -44,6 +44,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonBool(string jsonBoolData)
+        {
+            Value = Json.Parse<JsonBool>(jsonBoolData).Value;
+        }
+
         public static implicit operator JsonBool(bool value)
         {
             return new JsonBool(value);

@@ -40,6 +40,12 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region Methods
         #region Constructors
         private JsonNull() { }
+
+        public JsonNull(string jsonNullData)
+        {
+            // Just check on null data in string
+            Json.Parse<JsonNull>(jsonNullData);
+        }
         #endregion
 
         public override string ToString()

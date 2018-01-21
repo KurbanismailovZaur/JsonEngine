@@ -45,6 +45,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonFloat(string jsonFloatData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonFloatData).ToFloat();
+        }
+
         public static implicit operator JsonFloat(float value)
         {
             return new JsonFloat(value);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
@@ -39,9 +40,16 @@ namespace Numba.Data.Json.Engine.DataTypes
         #endregion
 
         #region Methods
-        public JsonString(string value)
+        public JsonString(string value, bool parse = false)
         {
-            Value = value.Replace("\"", "\\\"");
+            if (!parse)
+            {
+                Value = value.Replace("\"", "\\\"");
+            }
+            else
+            {
+                Value = Json.Parse<JsonString>(value).Value;
+            }
         }
 
         public static implicit operator JsonString(string value)

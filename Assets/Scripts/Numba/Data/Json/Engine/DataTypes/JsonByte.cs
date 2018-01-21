@@ -43,6 +43,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonByte(string jsonByteData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonByteData).ToByte();
+        }
+
         public static implicit operator JsonByte(byte value)
         {
             return new JsonByte(value);

@@ -44,6 +44,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonInt(string jsonIntData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonIntData).ToInt();
+        }
+
         public static implicit operator JsonInt(int value)
         {
             return new JsonInt(value);

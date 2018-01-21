@@ -98,6 +98,11 @@ namespace Numba.Data.Json.Engine.DataTypes
         {
             _number = number.ToString();
         }
+
+        public JsonNumber(string jsonNumberData)
+        {
+            _number = Json.Parse<JsonNumber>(jsonNumberData)._number;
+        }
         #endregion
 
         #region Methods

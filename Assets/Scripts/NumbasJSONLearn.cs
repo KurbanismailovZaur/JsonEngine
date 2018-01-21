@@ -8,7 +8,14 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonWrap jWrap = new JsonObject(@"{""name"":""Zaur"",""age"":25,""car"":{""brand"":""BMW"",""model"":""X6"",""owners"":[""Zemfira"",[""Ulia"", ""Alexandra""]]}}");
-        print(jWrap["car"]["owners"][1][0]);
+        string s = new JsonString("\"Hello Numba\"", true).Value;
+        bool b = new JsonBool("true").Value;
+        int i = new JsonInt("1234567890").Value;
+        char c = new JsonChar("\"#\"").Value;
+        float f = new JsonFloat("3.14").Value;
+        JsonNull nul = new JsonNull("null");
+        JsonNumber num = new JsonNumber("1.234567890");
+
+        print(num);
     }
 }

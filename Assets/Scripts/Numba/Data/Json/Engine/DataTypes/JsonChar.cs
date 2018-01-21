@@ -44,6 +44,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonChar(string jsonCharData)
+        {
+            Value = Json.Parse<JsonString>(jsonCharData).Value[0];
+        }
+
         public static implicit operator JsonChar(char value)
         {
             return new JsonChar(value);

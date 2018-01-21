@@ -44,6 +44,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonShort(string jsonShortData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonShortData).ToShort();
+        }
+
         public static implicit operator JsonShort(short value)
         {
             return new JsonShort(value);

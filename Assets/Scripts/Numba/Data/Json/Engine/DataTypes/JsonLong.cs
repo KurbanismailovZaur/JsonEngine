@@ -44,6 +44,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonLong(string jsonLongData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonLongData).ToLong();
+        }
+
         public static implicit operator JsonLong(long value)
         {
             return new JsonLong(value);

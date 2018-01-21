@@ -45,6 +45,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             Value = value;
         }
 
+        public JsonDouble(string jsonDoubleData)
+        {
+            Value = Json.Parse<JsonNumber>(jsonDoubleData).ToDouble();
+        }
+
         public static implicit operator JsonDouble(double value)
         {
             return new JsonDouble(value);
