@@ -272,7 +272,7 @@ namespace Numba.Data.Json.Engine
             {
                 currentIndex += 3;
 
-                return new JsonNull();
+                return JsonNull.value;
             }
 
             throw new JsonParseException("Incorrect json data. Can't parse null");

@@ -38,7 +38,7 @@ namespace Numba.Data.Json.Engine
         public JsonValue Value
         {
             get { return _value; }
-            set { _value = value ?? new JsonNull(); }
+            set { _value = value ?? JsonNull.value; }
         }
 
         public JsonType Category { get { return _value.Category; } }
@@ -64,18 +64,18 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Constructors
-        private JsonWrap() : this(new JsonNull()) { }
+        private JsonWrap() { }
 
-        public JsonWrap(JsonValue value)
+        private JsonWrap(JsonValue value)
         {
-            SetWrappedValue(value);
+            _value = value;
         }
         #endregion
 
         #region Methods
         public void SetWrappedValue(JsonValue value)
         {
-            _value = value ?? new JsonNull();
+            _value = value ?? JsonNull.value;
         }
 
         #region Implicit cast from system types and JsonValue
@@ -487,6 +487,7 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
+        #region Common method for jsonObject and JsonArray
         public IEnumerator GetEnumerator()
         {
             if (_value is JsonObject || _value is JsonArray)
@@ -497,8 +498,378 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" does not implement \"IEnumerable\" or \"IEnumerable<T>\" interface", _value.GetType().Name));
         }
 
+        public void RemoveAt(int index)
+        {
+            if (_value is JsonObject)
+            {
+                ((JsonObject)_value).RemoveAt(index);
+                return;
+            }
+
+            if (_value is JsonObject)
+            {
+                ((JsonArray)_value).RemoveAt(index);
+                return;
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public void RemoveRange(int index, int count)
+        {
+            if (_value is JsonObject)
+            {
+                ((JsonObject)_value).RemoveRange(index, count);
+                return;
+            }
+
+            if (_value is JsonArray)
+            {
+                ((JsonArray)_value).RemoveRange(index, count);
+                return;
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public void Clear()
+        {
+            if (_value is JsonObject)
+            {
+                ((JsonObject)_value).Clear();
+                return;
+            }
+
+            if (_value is JsonArray)
+            {
+                ((JsonArray)_value).Clear();
+                return;
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        #region Get values
+        public JsonValue GetValue(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetValue(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value)[index];
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public bool GetBool(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetBool(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetBool(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public byte GetByte(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetByte(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetByte(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public char GetChar(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetChar(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetChar(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public decimal GetDecimal(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetDecimal(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetDecimal(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public double GetDouble(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetDouble(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetDouble(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public float GetFloat(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetFloat(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetFloat(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public int GetInt(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetInt(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetInt(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public long GetLong(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetLong(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetLong(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public JsonNull GetNull(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetNull(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetNull(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public JsonNumber GetNumber(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetNumber(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetNumber(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public sbyte GetSByte(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetSByte(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetSByte(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public short GetShort(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetShort(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetShort(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public string GetString(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetString(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetString(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public uint GetUInt(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetUInt(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetUInt(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public ulong GetULong(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetULong(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetULong(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public ushort GetUShort(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetUShort(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetUShort(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public JsonObject GetObject(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetObject(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetObject(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public JsonArray GetArray(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).GetArray(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                return ((JsonArray)_value).GetArray(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+        #endregion
+
+        public void Swap(int first, int second)
+        {
+            if (_value is JsonObject)
+            {
+                ((JsonObject)_value).SwapFields(first, second);
+                return;
+            }
+
+            if (_value is JsonArray)
+            {
+                ((JsonArray)_value).SwapValues(first, second);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        public bool CheckNull(int index)
+        {
+            if (_value is JsonObject)
+            {
+                return ((JsonObject)_value).CheckNull(index);
+            }
+
+            if (_value is JsonArray)
+            {
+                ((JsonArray)_value).CheckNull(index);
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+        #endregion
+
         #region JsonObject
-        public void AddField(JsonField field)
+        public void Add(JsonField field)
         {
             if (_value is JsonObject)
             {
@@ -509,12 +880,12 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void AddField(string name, JsonValue value)
+        public void Add(string name, JsonValue value)
         {
-            AddField(new JsonField(name, value));
+            Add(new JsonField(name, value));
         }
 
-        public void AddFields(IEnumerable<JsonField> fields)
+        public void AddRange(IEnumerable<JsonField> fields)
         {
             if (_value is JsonObject)
             {
@@ -525,7 +896,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void InsertField(int index, JsonField field)
+        public void Insert(int index, JsonField field)
         {
             if (_value is JsonObject)
             {
@@ -536,12 +907,12 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void InsertField(int index, string name, JsonValue value)
+        public void Insert(int index, string name, JsonValue value)
         {
-            InsertField(index, new JsonField(name, value));
+            Insert(index, new JsonField(name, value));
         }
 
-        public void InsertFields(int index, IEnumerable<JsonField> fields)
+        public void InsertRange(int index, IEnumerable<JsonField> fields)
         {
             if (_value is JsonObject)
             {
@@ -552,7 +923,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void InsertOrAppendField(int index, JsonField field)
+        public void InsertOrAppend(int index, JsonField field)
         {
             if (_value is JsonObject)
             {
@@ -563,9 +934,9 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void InsertOrAppendField(int index, string name, JsonValue value)
+        public void InsertOrAppend(int index, string name, JsonValue value)
         {
-            InsertOrAppendField(index, new JsonField(name, value));
+            InsertOrAppend(index, new JsonField(name, value));
         }
 
         public bool RemoveField(JsonField field)
@@ -578,49 +949,16 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public bool RemoveField(string name)
+        public bool RemoveField(string fieldName)
         {
-            return RemoveField(GetField(name));
+            return RemoveField(GetField(fieldName));
         }
 
-        public void RemoveFieldAt(int index)
-        {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).RemoveAt(index);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
-        }
-
-        public void RemoveFieldsRange(int index, int count)
-        {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).RemoveRange(index, count);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
-        }
-
-        public int RemoveAllFields(Predicate<JsonField> match)
+        public int RemoveAll(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
                 return ((JsonObject)_value).RemoveAll(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
-        }
-
-        public void ClearFields()
-        {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).Clear();
-                return;
             }
 
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
@@ -656,7 +994,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public bool ContainsField(JsonField field)
+        public bool Contains(JsonField field)
         {
             if (_value is JsonObject)
             {
@@ -686,7 +1024,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonField FindField(Predicate<JsonField> match)
+        public JsonField Find(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
@@ -696,7 +1034,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public List<JsonField> FindAllFields(Predicate<JsonField> match)
+        public List<JsonField> FindAll(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
@@ -706,7 +1044,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public int FindFieldIndex(Predicate<JsonField> match)
+        public int FindIndex(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
@@ -716,7 +1054,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonField FindLastField(Predicate<JsonField> match)
+        public JsonField FindLast(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
@@ -726,7 +1064,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public int FindLastFieldIndex(Predicate<JsonField> match)
+        public int FindLastIndex(Predicate<JsonField> match)
         {
             if (_value is JsonObject)
             {
@@ -736,7 +1074,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public bool AnyField(Func<JsonField, bool> predicate)
+        public bool Any(Func<JsonField, bool> predicate)
         {
             if (_value is JsonObject)
             {
@@ -746,7 +1084,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public bool AllFields(Func<JsonField, bool> predicate)
+        public bool All(Func<JsonField, bool> predicate)
         {
             if (_value is JsonObject)
             {
@@ -757,7 +1095,7 @@ namespace Numba.Data.Json.Engine
         }
 
         #region Get values
-        public JsonValue GetFieldValue(string fieldName)
+        public JsonValue GetValue(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -767,7 +1105,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public bool GetFieldBool(string fieldName)
+        public bool GetBool(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -777,7 +1115,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public byte GetFieldByte(string fieldName)
+        public byte GetByte(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -787,7 +1125,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public char GetFieldChar(string fieldName)
+        public char GetChar(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -797,7 +1135,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public decimal GetFieldDecimal(string fieldName)
+        public decimal GetDecimal(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -807,7 +1145,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public double GetFieldDouble(string fieldName)
+        public double GetDouble(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -817,7 +1155,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public float GetFieldFloat(string fieldName)
+        public float GetFloat(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -827,7 +1165,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public int GetFieldInt(string fieldName)
+        public int GetInt(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -837,7 +1175,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public long GetFieldLong(string fieldName)
+        public long GetLong(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -847,7 +1185,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonNull GetFieldNull(string fieldName)
+        public JsonNull GetNull(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -857,7 +1195,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonNumber GetFieldNumber(string fieldName)
+        public JsonNumber GetNumber(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -867,7 +1205,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public sbyte GetFieldSByte(string fieldName)
+        public sbyte GetSByte(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -877,7 +1215,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public short GetFieldShort(string fieldName)
+        public short GetShort(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -887,7 +1225,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public string GetFieldString(string fieldName)
+        public string GetString(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -897,7 +1235,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public uint GetFieldUInt(string fieldName)
+        public uint GetUInt(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -907,7 +1245,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public ulong GetFieldULong(string fieldName)
+        public ulong GetULong(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -917,7 +1255,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public ushort GetFieldUShort(string fieldName)
+        public ushort GetUShort(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -927,7 +1265,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonObject GetFieldObject(string fieldName)
+        public JsonObject GetObject(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -937,7 +1275,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public JsonArray GetFieldArray(string fieldName)
+        public JsonArray GetArray(string fieldName)
         {
             if (_value is JsonObject)
             {
@@ -948,7 +1286,7 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        public void ReplaceField(int index, JsonField field)
+        public void Replace(int index, JsonField field)
         {
             if (_value is JsonObject)
             {
@@ -959,27 +1297,16 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
         }
 
-        public void ReplaceField(int index, string name, JsonValue value)
+        public void Replace(int index, string name, JsonValue value)
         {
-            ReplaceField(index, new JsonField(name, value));
+            Replace(index, new JsonField(name, value));
         }
 
-        public void SwapFields(int first, int second)
+        public bool CheckNull(string fieldName)
         {
             if (_value is JsonObject)
             {
-                ((JsonObject)_value).SwapFields(first, second);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
-        }
-
-        public bool CheckFieldOnNull(string fieldName)
-        {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).CheckOnNull(fieldName);
+                return ((JsonObject)_value).CheckNull(fieldName);
             }
 
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
@@ -987,7 +1314,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region JsonArray
-        public void AddValue(JsonValue value)
+        public void Add(JsonValue value)
         {
             if (_value is JsonArray)
             {
@@ -998,7 +1325,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void AddValues(IEnumerable<JsonValue> values)
+        public void AddRange(IEnumerable<JsonValue> values)
         {
             if (_value is JsonArray)
             {
@@ -1009,7 +1336,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void InsertValue(int index, JsonValue value)
+        public void Insert(int index, JsonValue value)
         {
             if (_value is JsonArray)
             {
@@ -1020,7 +1347,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void InsertValues(int index, IEnumerable<JsonValue> values)
+        public void InsertRange(int index, IEnumerable<JsonValue> values)
         {
             if (_value is JsonArray)
             {
@@ -1031,7 +1358,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void InsertOrAppendValue(int index, JsonValue value)
+        public void InsertOrAppend(int index, JsonValue value)
         {
             if (_value is JsonArray)
             {
@@ -1052,44 +1379,11 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void RemoveValueAt(int index)
-        {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).RemoveAt(index);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
-        }
-
-        public int RemoveAllValues(Predicate<JsonValue> predicate)
+        public int RemoveAll(Predicate<JsonValue> predicate)
         {
             if (_value is JsonArray)
             {
                 return ((JsonArray)_value).RemoveAll(predicate);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
-        }
-
-        public void RemoveValuesRange(int index, int count)
-        {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).RemoveRange(index, count);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
-        }
-
-        public void ClearValues()
-        {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).Clear();
-                return;
             }
 
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
@@ -1115,7 +1409,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public JsonValue FindValue(Predicate<JsonValue> match)
+        public JsonValue Find(Predicate<JsonValue> match)
         {
             if (_value is JsonArray)
             {
@@ -1125,7 +1419,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public List<JsonValue> FindAllValues(Predicate<JsonValue> match)
+        public List<JsonValue> FindAll(Predicate<JsonValue> match)
         {
             if (_value is JsonArray)
             {
@@ -1135,7 +1429,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public int FindValueIndex(Predicate<JsonValue> match)
+        public int FindIndex(Predicate<JsonValue> match)
         {
             if (_value is JsonArray)
             {
@@ -1145,7 +1439,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public JsonValue FindLastValue(Predicate<JsonValue> match)
+        public JsonValue FindLast(Predicate<JsonValue> match)
         {
             if (_value is JsonArray)
             {
@@ -1155,7 +1449,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public int FindLastValueIndex(Predicate<JsonValue> match)
+        public int FindLastIndex(Predicate<JsonValue> match)
         {
             if (_value is JsonArray)
             {
@@ -1165,7 +1459,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public bool AnyValue(Func<JsonValue, bool> predicate)
+        public bool Any(Func<JsonValue, bool> predicate)
         {
             if (_value is JsonArray)
             {
@@ -1175,7 +1469,7 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public bool AllValues(Func<JsonValue, bool> predicate)
+        public bool All(Func<JsonValue, bool> predicate)
         {
             if (_value is JsonArray)
             {
@@ -1185,24 +1479,12 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
 
-        public void SwapValues(int first, int second)
+        public void Replace(int index, JsonValue value)
         {
             if (_value is JsonArray)
             {
-                ((JsonArray)_value).SwapValues(first, second);
+                ((JsonArray)_value)[index] = value;
             }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
-        }
-
-        public bool CheckOnNull(int index)
-        {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).CheckOnNull(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
         }
         #endregion
 
@@ -1215,13 +1497,39 @@ namespace Numba.Data.Json.Engine
         #region Indexers
         public JsonWrap this[int index]
         {
-            get { return new JsonWrap(((JsonArray)_value)[index]); }
-            set { ((JsonArray)_value)[index] = value; }
+            get
+            {
+                if (_value is JsonObject)
+                {
+                    return ((JsonObject)_value)[index];
+                }
+
+                if (_value is JsonArray)
+                {
+                    return ((JsonArray)_value)[index];
+                }
+
+                throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            }
+            set
+            {
+                if (_value is JsonObject)
+                {
+                    ((JsonObject)_value)[index] = value;
+                }
+
+                if (_value is JsonArray)
+                {
+                    ((JsonArray)_value)[index] = value;
+                }
+
+                throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            }
         }
 
         public JsonWrap this[string fieldName]
         {
-            get { return new JsonWrap(GetFieldValue(fieldName)); }
+            get { return new JsonWrap(GetValue(fieldName)); }
             set { GetField(fieldName).Value = value; }
         }
         #endregion

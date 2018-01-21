@@ -44,7 +44,7 @@ namespace Numba.Data.Json.Engine
         public JsonValue Value
         {
             get { return _value; }
-            set { _value = value ?? new JsonNull(); }
+            set { _value = value ?? JsonNull.value; }
         }
         #endregion
 
@@ -52,7 +52,7 @@ namespace Numba.Data.Json.Engine
         public JsonField(string name, JsonValue value)
         {
             _name = name;
-            _value = value ?? new JsonNull();
+            _value = value ?? JsonNull.value;
         }
         #endregion
 
@@ -60,7 +60,7 @@ namespace Numba.Data.Json.Engine
         #region Set value
         public void SetValue(JsonValue value)
         {
-            _value = value ?? new JsonNull();
+            _value = value ?? JsonNull.value;
         }
         #endregion
 

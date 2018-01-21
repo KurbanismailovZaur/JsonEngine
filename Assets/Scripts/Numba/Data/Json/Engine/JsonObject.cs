@@ -50,6 +50,11 @@ namespace Numba.Data.Json.Engine
         {
             AddRange(fields);
         }
+
+        public JsonObject(string jsonObjectData)
+        {
+            _fields = Json.Parse<JsonObject>(jsonObjectData)._fields;
+        }
         #endregion
 
         #region IEnumerable<IJsonValue> interface implementation
@@ -179,7 +184,7 @@ namespace Numba.Data.Json.Engine
 
         public JsonField GetField(string fieldName)
         {
-            JsonField field = Find((x) => { return x.Name == fieldName; });
+            JsonField field = Find(x => x.Name == fieldName);
 
             if (field == null)
             {
@@ -196,7 +201,7 @@ namespace Numba.Data.Json.Engine
 
         public bool HasField(string fieldName)
         {
-            return Any((x) => { return x.Name == fieldName; });
+            return Any(x => x.Name == fieldName);
         }
 
         public bool Contains(JsonField field)
@@ -211,7 +216,7 @@ namespace Numba.Data.Json.Engine
 
         public int IndexOf(string name)
         {
-            return FindIndex((x) => { return x.Name == name; });
+            return FindIndex(x => x.Name == name);
         }
 
         public JsonField Find(Predicate<JsonField> match)
@@ -266,9 +271,19 @@ namespace Numba.Data.Json.Engine
         }
 
         #region Get values
+        public JsonValue GetValue(int index)
+        {
+            return GetFieldAt(index).Value;
+        }
+
         public JsonValue GetValue(string fieldName)
         {
             return GetField(fieldName).Value;
+        }
+
+        public bool GetBool(int index)
+        {
+            return ((JsonBool)GetFieldAt(index).Value).Value;
         }
 
         public bool GetBool(string fieldName)
@@ -276,9 +291,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonBool)GetField(fieldName).Value).Value;
         }
 
+        public byte GetByte(int index)
+        {
+            return ((JsonByte)GetFieldAt(index).Value).Value;
+        }
+
         public byte GetByte(string fieldName)
         {
             return ((JsonByte)GetField(fieldName).Value).Value;
+        }
+
+        public char GetChar(int index)
+        {
+            return ((JsonChar)GetFieldAt(index).Value).Value;
         }
 
         public char GetChar(string fieldName)
@@ -286,9 +311,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonChar)GetField(fieldName).Value).Value;
         }
 
+        public decimal GetDecimal(int index)
+        {
+            return ((JsonDecimal)GetFieldAt(index).Value).Value;
+        }
+
         public decimal GetDecimal(string fieldName)
         {
             return ((JsonDecimal)GetField(fieldName).Value).Value;
+        }
+
+        public double GetDouble(int index)
+        {
+            return ((JsonDouble)GetFieldAt(index).Value).Value;
         }
 
         public double GetDouble(string fieldName)
@@ -296,9 +331,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonDouble)GetField(fieldName).Value).Value;
         }
 
+        public float GetFloat(int index)
+        {
+            return ((JsonFloat)GetFieldAt(index).Value).Value;
+        }
+
         public float GetFloat(string fieldName)
         {
             return ((JsonFloat)GetField(fieldName).Value).Value;
+        }
+
+        public int GetInt(int index)
+        {
+            return ((JsonInt)GetFieldAt(index).Value).Value;
         }
 
         public int GetInt(string fieldName)
@@ -306,9 +351,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonInt)GetField(fieldName).Value).Value;
         }
 
+        public long GetLong(int index)
+        {
+            return ((JsonLong)GetFieldAt(index).Value).Value;
+        }
+
         public long GetLong(string fieldName)
         {
             return ((JsonLong)GetField(fieldName).Value).Value;
+        }
+
+        public JsonNull GetNull(int index)
+        {
+            return (JsonNull)GetFieldAt(index).Value;
         }
 
         public JsonNull GetNull(string fieldName)
@@ -316,9 +371,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonNull)GetField(fieldName).Value);
         }
 
+        public JsonNumber GetNumber(int index)
+        {
+            return (JsonNumber)GetFieldAt(index).Value;
+        }
+
         public JsonNumber GetNumber(string fieldName)
         {
             return ((JsonNumber)GetField(fieldName).Value);
+        }
+
+        public sbyte GetSByte(int index)
+        {
+            return ((JsonSByte)GetFieldAt(index).Value).Value;
         }
 
         public sbyte GetSByte(string fieldName)
@@ -326,9 +391,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonSByte)GetField(fieldName).Value).Value;
         }
 
+        public short GetShort(int index)
+        {
+            return ((JsonShort)GetFieldAt(index).Value).Value;
+        }
+
         public short GetShort(string fieldName)
         {
             return ((JsonShort)GetField(fieldName).Value).Value;
+        }
+
+        public string GetString(int index)
+        {
+            return ((JsonString)GetFieldAt(index).Value).Value;
         }
 
         public string GetString(string fieldName)
@@ -336,9 +411,19 @@ namespace Numba.Data.Json.Engine
             return ((JsonString)GetField(fieldName).Value).Value;
         }
 
+        public uint GetUInt(int index)
+        {
+            return ((JsonUInt)GetFieldAt(index).Value).Value;
+        }
+
         public uint GetUInt(string fieldName)
         {
             return ((JsonUInt)GetField(fieldName).Value).Value;
+        }
+
+        public ulong GetULong(int index)
+        {
+            return ((JsonULong)GetFieldAt(index).Value).Value;
         }
 
         public ulong GetULong(string fieldName)
@@ -346,14 +431,29 @@ namespace Numba.Data.Json.Engine
             return ((JsonULong)GetField(fieldName).Value).Value;
         }
 
+        public ushort GetUShort(int index)
+        {
+            return ((JsonUShort)GetFieldAt(index).Value).Value;
+        }
+
         public ushort GetUShort(string fieldName)
         {
             return ((JsonUShort)GetField(fieldName).Value).Value;
         }
 
+        public JsonObject GetObject(int index)
+        {
+            return (JsonObject)GetFieldAt(index).Value;
+        }
+
         public JsonObject GetObject(string fieldName)
         {
             return ((JsonObject)GetField(fieldName).Value);
+        }
+
+        public JsonArray GetArray(int index)
+        {
+            return (JsonArray)GetFieldAt(index).Value;
         }
 
         public JsonArray GetArray(string fieldName)
@@ -391,7 +491,12 @@ namespace Numba.Data.Json.Engine
             InsertOrAppend(right, leftField);
         }
 
-        public bool CheckOnNull(string fieldName)
+        public bool CheckNull(int index)
+        {
+            return GetFieldAt(index).Value is JsonNull;
+        }
+
+        public bool CheckNull(string fieldName)
         {
             return GetField(fieldName).Value is JsonNull;
         }
@@ -419,16 +524,16 @@ namespace Numba.Data.Json.Engine
         #region Indexers
         public JsonValue this[int index]
         {
-            get { return GetFieldAt(index).Value; }
+            get { return GetValue(index); }
             set { GetFieldAt(index).Value = value; }
         }
 
         public JsonValue this[string fieldName]
         {
-            get { return GetField(fieldName).Value; }
+            get { return GetValue(fieldName); }
             set
             {
-                JsonField field = Find((x) => { return x.Name == fieldName; });
+                JsonField field = Find(x => x.Name == fieldName);
 
                 if (field == null)
                 {

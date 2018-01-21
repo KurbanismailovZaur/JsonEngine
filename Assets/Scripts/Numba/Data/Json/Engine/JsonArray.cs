@@ -50,6 +50,11 @@ namespace Numba.Data.Json.Engine
         {
             _values.AddRange(enumerable);
         }
+
+        public JsonArray(string jsonArrayData)
+        {
+            _values = Json.Parse<JsonArray>(jsonArrayData)._values;
+        }
         #endregion
 
         #region IEnumerable<JsonValue> interface implementation
@@ -66,7 +71,7 @@ namespace Numba.Data.Json.Engine
 
         public void Add(JsonValue value)
         {
-            _values.Add(value ?? new JsonNull());
+            _values.Add(value ?? JsonNull.value);
         }
 
         public void AddRange(IEnumerable<JsonValue> values)
@@ -84,7 +89,7 @@ namespace Numba.Data.Json.Engine
 
         public void Insert(int index, JsonValue value)
         {
-            _values.Insert(index, value ?? new JsonNull());
+            _values.Insert(index, value ?? JsonNull.value);
         }
 
         public void InsertRange(int index, IEnumerable<JsonValue> values)
@@ -114,7 +119,7 @@ namespace Numba.Data.Json.Engine
 
         public bool Remove(JsonValue value)
         {
-            return _values.Remove(value ?? new JsonNull());
+            return _values.Remove(value ?? JsonNull.value);
         }
 
         public void RemoveAt(int index)
@@ -302,7 +307,7 @@ namespace Numba.Data.Json.Engine
             _values[second] = firstValue;
         }
 
-        public bool CheckOnNull(int index)
+        public bool CheckNull(int index)
         {
             return _values[index] is JsonNull;
         }

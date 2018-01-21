@@ -24,6 +24,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         #endregion
 
         #region Fields
+        public static readonly JsonNull value = new JsonNull();
         #endregion
 
         #region Events
@@ -37,6 +38,10 @@ namespace Numba.Data.Json.Engine.DataTypes
         #endregion
 
         #region Methods
+        #region Constructors
+        private JsonNull() { }
+        #endregion
+
         public override string ToString()
         {
             return "null";
