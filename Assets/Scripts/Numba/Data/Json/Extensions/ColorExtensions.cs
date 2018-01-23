@@ -34,25 +34,26 @@ namespace Numba.Data.Json.Extensions
         #region Properties
         #endregion
 
+        #region Constructors
+        #endregion
+
         #region Methods
         public static JsonObject ToJsonObject(this Color color)
         {
-            return new JsonObject() { { "r", color.r }, { "g", color.g }, { "b", color.b }, { "a", color.a } };
-        }
-
-        public static JsonArray ToJsonArray(this IEnumerable<Color> colors)
-        {
-            JsonArray jsonColors = new JsonArray();
-            foreach (Color color in colors)
+            return new JsonObject()
             {
-                jsonColors.Add(color.ToJsonObject());
-            }
-
-            return jsonColors;
+                { "r", color.r },
+                { "g", color.g },
+                { "b", color.b },
+                { "a", color.a }
+            };
         }
         #endregion
 
-        #region Event Handlers
+        #region Indexers
+        #endregion
+
+        #region Events handlers
         #endregion
         #endregion
     }

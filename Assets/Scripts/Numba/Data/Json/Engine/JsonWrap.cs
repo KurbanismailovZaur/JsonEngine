@@ -66,7 +66,7 @@ namespace Numba.Data.Json.Engine
         #region Constructors
         private JsonWrap() { }
 
-        private JsonWrap(JsonValue value)
+        public JsonWrap(JsonValue value)
         {
             _value = value;
         }
@@ -247,12 +247,24 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        private void CheckCastTo<T>(string exceptionMessage)
+        private void CastToAndInvoke<T>(Action action)
         {
             if (!(_value is T))
             {
-                throw new JsonInvalidCastException(exceptionMessage);
+                throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"{1}\"", _value.GetType().Name, typeof(T).Name));
             }
+
+            action.Invoke();
+        }
+
+        private T2 CastToAndInvoke<T1, T2>(Func<T2> func)
+        {
+            if (!(_value is T1))
+            {
+                throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"{1}\"", _value.GetType().Name, typeof(T1).Name));
+            }
+
+            return func.Invoke();
         }
 
         private void CastToObjectOrArrayAndInvoke(Action objectAction, Action arrayAction)
@@ -263,7 +275,7 @@ namespace Numba.Data.Json.Engine
                 return;
             }
 
-            if (_value is JsonObject)
+            if (_value is JsonArray)
             {
                 arrayAction.Invoke();
                 return;
@@ -279,7 +291,7 @@ namespace Numba.Data.Json.Engine
                 return objectFunc.Invoke();
             }
 
-            if (_value is JsonObject)
+            if (_value is JsonArray)
             {
                 return arrayFunc.Invoke();
             }
@@ -291,164 +303,118 @@ namespace Numba.Data.Json.Engine
         #region Set number
         public void SetNumber(JsonNumber number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(byte number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(decimal number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(double number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(float number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(int number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(long number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(sbyte number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(short number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(uint number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(ulong number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
 
         public void SetNumber(ushort number)
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            ((JsonNumber)_value).SetNumber(number);
+            CastToAndInvoke<JsonNumber>(() => { ((JsonNumber)_value).SetNumber(number); });
         }
         #endregion
 
         public byte NumberToByte()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToByte();
+            return CastToAndInvoke<JsonNumber, byte>(() => { return ((JsonNumber)_value).ToByte(); });
         }
 
         public decimal NumberToDecimal()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToDecimal();
+            return CastToAndInvoke<JsonNumber, decimal>(() => { return ((JsonNumber)_value).ToDecimal(); });
         }
 
         public double NumberToDouble()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToDouble();
+            return CastToAndInvoke<JsonNumber, double>(() => { return ((JsonNumber)_value).ToDouble(); });
         }
 
         public float NumberToFloat()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToFloat();
+            return CastToAndInvoke<JsonNumber, float>(() => { return ((JsonNumber)_value).ToFloat(); });
         }
 
         public int NumberToInt()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToInt();
+            return CastToAndInvoke<JsonNumber, int>(() => { return ((JsonNumber)_value).ToInt(); });
         }
 
         public long NumberToLong()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToLong();
+            return CastToAndInvoke<JsonNumber, long>(() => { return ((JsonNumber)_value).ToLong(); });
         }
 
         public sbyte NumberToSByte()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToSByte();
+            return CastToAndInvoke<JsonNumber, sbyte>(() => { return ((JsonNumber)_value).ToSByte(); });
         }
 
         public short NumberToShort()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToShort();
+            return CastToAndInvoke<JsonNumber, short>(() => { return ((JsonNumber)_value).ToShort(); });
         }
 
         public uint NumberToUInt()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToUInt();
+            return CastToAndInvoke<JsonNumber, uint>(() => { return ((JsonNumber)_value).ToUInt(); });
         }
 
         public ulong NumberToULong()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToULong();
+            return CastToAndInvoke<JsonNumber, ulong>(() => { return ((JsonNumber)_value).ToULong(); });
         }
 
         public ushort NumberToUShort()
         {
-            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
-
-            return ((JsonNumber)_value).ToUShort();
+            return CastToAndInvoke<JsonNumber, ushort>(() => { return ((JsonNumber)_value).ToUShort(); });
         }
         #endregion
 
@@ -589,9 +555,7 @@ namespace Numba.Data.Json.Engine
         #region JsonObject
         public void Add(JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            ((JsonObject)_value).Add(field);
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Add(field); });
         }
 
         public void Add(string name, JsonValue value)
@@ -601,16 +565,12 @@ namespace Numba.Data.Json.Engine
 
         public void AddRange(IEnumerable<JsonField> fields)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            ((JsonObject)_value).AddRange(fields);
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).AddRange(fields); });
         }
 
         public void Insert(int index, JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            ((JsonObject)_value).Insert(index, field);
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Insert(index, field); });
         }
 
         public void Insert(int index, string name, JsonValue value)
@@ -620,16 +580,12 @@ namespace Numba.Data.Json.Engine
 
         public void InsertRange(int index, IEnumerable<JsonField> fields)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            ((JsonObject)_value).InsertRange(index, fields);
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).InsertRange(index, fields); });
         }
 
         public void InsertOrAppend(int index, JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            ((JsonObject)_value).InsertOrAppend(index, field);
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).InsertOrAppend(index, field); });
         }
 
         public void InsertOrAppend(int index, string name, JsonValue value)
@@ -639,9 +595,7 @@ namespace Numba.Data.Json.Engine
 
         public bool RemoveField(JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).Remove(field);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).Remove(field); });
         }
 
         public bool RemoveField(string fieldName)
@@ -651,246 +605,174 @@ namespace Numba.Data.Json.Engine
 
         public int RemoveAll(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).RemoveAll(match);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).RemoveAll(match); });
         }
 
         public JsonField GetField(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetField(fieldName);
+            return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).GetField(fieldName); });
         }
 
         public JsonField GetFieldAt(int index)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetFieldAt(index);
+            return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).GetFieldAt(index); });
         }
 
         public bool HasField(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).HasField(fieldName);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).HasField(fieldName); });
         }
 
         public bool Contains(JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).Contains(field);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).Contains(field); });
         }
 
         public int IndexOfField(JsonField field)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).IndexOf(field);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).IndexOf(field); });
         }
 
         public int IndexOfField(string name)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).IndexOf(name);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).IndexOf(name); });
         }
 
         public JsonField Find(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).Find(match);
+            return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).Find(match); });
         }
 
         public List<JsonField> FindAll(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).FindAll(match);
+            return CastToAndInvoke<JsonObject, List<JsonField>>(() => { return ((JsonObject)_value).FindAll(match); });
         }
 
         public int FindIndex(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).FindIndex(match);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).FindIndex(match); });
         }
 
         public JsonField FindLast(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).FindLast(match);
+            return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).FindLast(match); });
         }
 
         public int FindLastIndex(Predicate<JsonField> match)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).FindLastIndex(match);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).FindLastIndex(match); });
         }
 
         public bool Any(Func<JsonField, bool> predicate)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).Any(predicate);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).Any(predicate); });
         }
 
         public bool All(Func<JsonField, bool> predicate)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).All(predicate);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).All(predicate); });
         }
 
         #region Get values
         public JsonValue GetValue(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetValue(fieldName);
+            return CastToAndInvoke<JsonObject, JsonValue>(() => { return ((JsonObject)_value).GetValue(fieldName); });
         }
 
         public bool GetBool(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetBool(fieldName);
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).GetBool(fieldName); });
         }
 
         public byte GetByte(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetByte(fieldName);
+            return CastToAndInvoke<JsonObject, byte>(() => { return ((JsonObject)_value).GetByte(fieldName); });
         }
 
         public char GetChar(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetChar(fieldName);
+            return CastToAndInvoke<JsonObject, char>(() => { return ((JsonObject)_value).GetChar(fieldName); });
         }
 
         public decimal GetDecimal(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetDecimal(fieldName);
+            return CastToAndInvoke<JsonObject, decimal>(() => { return ((JsonObject)_value).GetDecimal(fieldName); });
         }
 
         public double GetDouble(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetDouble(fieldName);
+            return CastToAndInvoke<JsonObject, double>(() => { return ((JsonObject)_value).GetDouble(fieldName); });
         }
 
         public float GetFloat(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetFloat(fieldName);
+            return CastToAndInvoke<JsonObject, float>(() => { return ((JsonObject)_value).GetFloat(fieldName); });
         }
 
         public int GetInt(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetInt(fieldName);
+            return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).GetInt(fieldName); });
         }
 
         public long GetLong(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetLong(fieldName);
+            return CastToAndInvoke<JsonObject, long>(() => { return ((JsonObject)_value).GetLong(fieldName); });
         }
 
         public JsonNull GetNull(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetNull(fieldName);
+            return CastToAndInvoke<JsonObject, JsonNull>(() => { return ((JsonObject)_value).GetNull(fieldName); });
         }
 
         public JsonNumber GetNumber(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetNumber(fieldName);
+            return CastToAndInvoke<JsonObject, JsonNumber>(() => { return ((JsonObject)_value).GetNumber(fieldName); });
         }
 
         public sbyte GetSByte(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetSByte(fieldName);
+            return CastToAndInvoke<JsonObject, sbyte>(() => { return ((JsonObject)_value).GetSByte(fieldName); });
         }
 
         public short GetShort(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetShort(fieldName);
+            return CastToAndInvoke<JsonObject, short>(() => { return ((JsonObject)_value).GetShort(fieldName); });
         }
 
         public string GetString(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetString(fieldName);
+            return CastToAndInvoke<JsonObject, string>(() => { return ((JsonObject)_value).GetString(fieldName); });
         }
 
         public uint GetUInt(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetUInt(fieldName);
+            return CastToAndInvoke<JsonObject, uint>(() => { return ((JsonObject)_value).GetUInt(fieldName); });
         }
 
         public ulong GetULong(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetULong(fieldName);
+            return CastToAndInvoke<JsonObject, ulong>(() => { return ((JsonObject)_value).GetULong(fieldName); });
         }
 
         public ushort GetUShort(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetUShort(fieldName);
+            return CastToAndInvoke<JsonObject, ushort>(() => { return ((JsonObject)_value).GetUShort(fieldName); });
         }
 
         public JsonObject GetObject(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetObject(fieldName);
+            return CastToAndInvoke<JsonObject, JsonObject>(() => { return ((JsonObject)_value).GetObject(fieldName); });
         }
 
         public JsonArray GetArray(string fieldName)
         {
-            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
-
-            return ((JsonObject)_value).GetArray(fieldName);
+            return CastToAndInvoke<JsonObject, JsonArray>(() => { return ((JsonObject)_value).GetArray(fieldName); });
         }
         #endregion
 
         public void Replace(int index, JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).Replace(index, field);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Replace(index, field); });
         }
 
         public void Replace(int index, string name, JsonValue value)
@@ -900,187 +782,94 @@ namespace Numba.Data.Json.Engine
 
         public bool CheckNull(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).CheckNull(fieldName);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(fieldName); });
         }
         #endregion
 
         #region JsonArray
         public void Add(JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).Add(value);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Add(value); });
         }
 
         public void AddRange(IEnumerable<JsonValue> values)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).AddRange(values);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).AddRange(values); });
         }
 
         public void Insert(int index, JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).Insert(index, value);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Insert(index, value); });
         }
 
         public void InsertRange(int index, IEnumerable<JsonValue> values)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).InsertRange(index, values);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).InsertRange(index, values); });
         }
 
         public void InsertOrAppend(int index, JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).InsertOrAppend(index, value);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).InsertOrAppend(index, value); });
         }
 
         public bool RemoveValue(JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).Remove(value);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Remove(value); });
         }
 
         public int RemoveAll(Predicate<JsonValue> predicate)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).RemoveAll(predicate);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).RemoveAll(predicate); });
         }
 
         public bool Contains(JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).Contains(value);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Contains(value); });
         }
 
         public int IndexOfValue(JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).IndexOf(value);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).IndexOf(value); });
         }
 
         public JsonValue Find(Predicate<JsonValue> match)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).Find(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, JsonValue>(() => { return ((JsonArray)_value).Find(match); });
         }
 
         public List<JsonValue> FindAll(Predicate<JsonValue> match)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).FindAll(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, List<JsonValue>>(() => { return ((JsonArray)_value).FindAll(match); });
         }
 
         public int FindIndex(Predicate<JsonValue> match)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).FindIndex(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).FindIndex(match); });
         }
 
         public JsonValue FindLast(Predicate<JsonValue> match)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).FindLast(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, JsonValue>(() => { return ((JsonArray)_value).FindLast(match); });
         }
 
         public int FindLastIndex(Predicate<JsonValue> match)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).FindLastIndex(match);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).FindLastIndex(match); });
         }
 
         public bool Any(Func<JsonValue, bool> predicate)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).Any(predicate);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Any(predicate); });
         }
 
         public bool All(Func<JsonValue, bool> predicate)
         {
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).All(predicate);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonArray\"", _value.GetType().Name));
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).All(predicate); });
         }
 
         public void Replace(int index, JsonValue value)
         {
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value)[index] = value;
-            }
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value)[index] = value; });
         }
         #endregion
 
@@ -1095,31 +884,11 @@ namespace Numba.Data.Json.Engine
         {
             get
             {
-                if (_value is JsonObject)
-                {
-                    return ((JsonObject)_value)[index];
-                }
-
-                if (_value is JsonArray)
-                {
-                    return ((JsonArray)_value)[index];
-                }
-
-                throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+                return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value)[index]; }, () => { return ((JsonArray)_value)[index]; });
             }
             set
             {
-                if (_value is JsonObject)
-                {
-                    ((JsonObject)_value)[index] = value;
-                }
-
-                if (_value is JsonArray)
-                {
-                    ((JsonArray)_value)[index] = value;
-                }
-
-                throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+                CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value)[index] = value; }, () => { ((JsonArray)_value)[index] = value; });
             }
         }
 

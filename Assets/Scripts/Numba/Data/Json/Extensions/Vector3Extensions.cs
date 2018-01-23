@@ -34,22 +34,25 @@ namespace Numba.Data.Json.Extensions
         #region Properties
         #endregion
 
+        #region Constructors
+        #endregion
+
         #region Methods
-        public static JsonObject ToJsonObject(this Vector3 vector)
+        public static JsonObject ToJsonObject(this Vector3 vector3)
         {
-            return new JsonObject() { { "x", vector.x }, { "y", vector.y }, { "z", vector.z } };
-        }
-
-        public static JsonArray ToJsonArray(this IEnumerable<Vector3> vectors)
-        {
-            JsonArray jsonVectors = new JsonArray();
-            foreach (Vector3 vector in vectors)
+            return new JsonObject()
             {
-                jsonVectors.Add(vector.ToJsonObject());
-            }
-
-            return jsonVectors;
+                { "x", vector3.x },
+                { "y", vector3.y },
+                { "z", vector3.z }
+            };
         }
+        #endregion
+
+        #region Indexers
+        #endregion
+
+        #region Events handlers
         #endregion
         #endregion
     }

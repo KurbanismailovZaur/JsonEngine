@@ -34,22 +34,26 @@ namespace Numba.Data.Json.Extensions
         #region Properties
         #endregion
 
+        #region Constructors
+        #endregion
+
         #region Methods
         public static JsonObject ToJsonObject(this Quaternion quaternion)
         {
-            return new JsonObject() { { "x", quaternion.x }, { "y", quaternion.y }, { "z", quaternion.z }, { "w", quaternion.w } };
-        }
-
-        public static JsonArray ToJsonArray(this IEnumerable<Quaternion> quaternions)
-        {
-            JsonArray jsonQuaternions = new JsonArray();
-            foreach (Quaternion quaternion in quaternions)
+            return new JsonObject()
             {
-                jsonQuaternions.Add(quaternion.ToJsonObject());
-            }
+                { "x", quaternion.x },
+                { "y", quaternion.y },
+                { "z", quaternion.z },
+                { "w", quaternion.w }
+            };
+        } 
+        #endregion
 
-            return jsonQuaternions;
-        }
+        #region Indexers
+        #endregion
+
+        #region Events handlers
         #endregion
         #endregion
     }
