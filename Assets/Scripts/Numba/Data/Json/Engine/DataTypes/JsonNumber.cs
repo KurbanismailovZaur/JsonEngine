@@ -41,7 +41,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region Constructors
         public JsonNumber(JsonNumber number)
         {
-            _number = number._number;
+            _number = number == null ? "0" : number._number;
         }
 
         public JsonNumber(byte number)
@@ -107,6 +107,11 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Methods
         #region Set number
+        public void SetNumber(JsonNumber number)
+        {
+            _number = number == null ? "0" : number._number;
+        }
+
         public void SetNumber(byte number)
         {
             _number = number.ToString();

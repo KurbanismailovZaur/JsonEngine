@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -44,12 +45,112 @@ namespace Numba.Data.Json.Engine.DataTypes
         {
             if (!parse)
             {
-                Value = value.Replace("\"", "\\\"");
+                StringBuilder builder = new StringBuilder(value);
+                CheckString(builder);
+
+                Value = builder.ToString();
             }
             else
             {
                 Value = Json.Parse<JsonString>(value).Value;
             }
+        }
+
+        private  void CheckString(StringBuilder builder)
+        {
+            for (int i = 0; i < builder.Length; i++)
+            {
+                if (builder[i] == '\\')
+                {
+                    if (i + 1 == builder.Length)
+                    {
+                        throw new Exception("Backslash is no have control sequence symbol");
+                    }
+
+                    switch (builder[i + 1])
+                    {
+                        case '"':
+                        case '\\':
+                        case '/':
+                        case 'b':
+                        case 'f':
+                        case 'n':
+                        case 'r':
+                        case 't':
+                            i += 1;
+                            continue;
+                        case 'u':
+                            if (i + 5 > builder.Length - 1)
+                            {
+                                throw new Exception("The 'u' control symbol no have 4 symbols at the right");
+                            }
+
+                            if (!IsHexString(builder.ToString(i + 2, 4)))
+                            {
+                                throw new Exception("The 'u' control symbol no have 4 hexodecimal digits at the right");
+                            }
+
+                            i += 5;
+                            continue;
+                        default:
+                            throw new Exception("Not allowed control sequence");
+                    }
+                }
+                else if (builder[i] == '"')
+                {
+                    if (i - 1 < 0)
+                    {
+                        throw new Exception("Quotes no have backslash");
+                    }
+
+                    if (builder[i - 1] != '\\')
+                    {
+                        throw new Exception("Quotes no have backslash");
+                    }
+                    else
+                    {
+                        int backslashCount = 0;
+                        for (int j = i - 1; j >= 0; j--)
+                        {
+                            if (builder[j] == '\\')
+                            {
+                                backslashCount += 1;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (backslashCount % 2 == 0)
+                        {
+                            throw new Exception("Quotes no have backslash");
+                        }
+                    }
+                }
+                else if (char.IsControl(builder[i]))
+                {
+                    throw new Exception("Escape sequences are not supported");
+                }
+            }
+        }
+
+        private bool IsHexChar(char c)
+        {
+            return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+        }
+
+        private bool IsHexString(string s)
+        {
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!IsHexChar(s[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public static implicit operator JsonString(string value)

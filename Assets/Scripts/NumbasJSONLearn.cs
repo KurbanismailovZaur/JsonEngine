@@ -16,6 +16,15 @@ public class NumbasJSONLearn : MonoBehaviour
         JsonNull nul = new JsonNull("null");
         JsonNumber num = new JsonNumber("1.234567890");
 
-        print(num);
+        JsonObject jObject = new JsonObject()
+        {
+            { "name", "Zaur" },
+            { "age", 25 }
+        };
+
+        JsonWrap jWrap = jObject;
+        jWrap.Swap(0, 1);
+
+        print(jWrap);
     }
 }

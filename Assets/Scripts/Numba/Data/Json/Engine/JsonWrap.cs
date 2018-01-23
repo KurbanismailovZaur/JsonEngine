@@ -73,11 +73,6 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Methods
-        public void SetWrappedValue(JsonValue value)
-        {
-            _value = value ?? JsonNull.value;
-        }
-
         #region Implicit cast from system types and JsonValue
         public static implicit operator JsonWrap(JsonValue value)
         {
@@ -252,238 +247,208 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        #region JsonNumber
-        #region Set number
-        public void SetNumber(byte number)
+        private void CheckCastTo<T>(string exceptionMessage)
         {
-            if (_value is JsonNumber)
+            if (!(_value is T))
             {
-                ((JsonNumber)_value).SetNumber(number);
+                throw new JsonInvalidCastException(exceptionMessage);
+            }
+        }
+
+        private void CastToObjectOrArrayAndInvoke(Action objectAction, Action arrayAction)
+        {
+            if (_value is JsonObject)
+            {
+                objectAction.Invoke();
                 return;
             }
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            if (_value is JsonObject)
+            {
+                arrayAction.Invoke();
+                return;
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        private T CastToObjectOrArrayAndInvoke<T>(Func<T> objectFunc, Func<T> arrayFunc)
+        {
+            if (_value is JsonObject)
+            {
+                return objectFunc.Invoke();
+            }
+
+            if (_value is JsonObject)
+            {
+                return arrayFunc.Invoke();
+            }
+
+            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+        }
+
+        #region JsonNumber
+        #region Set number
+        public void SetNumber(JsonNumber number)
+        {
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+
+            ((JsonNumber)_value).SetNumber(number);
+        }
+
+        public void SetNumber(byte number)
+        {
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(decimal number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(double number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(float number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(int number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(long number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(sbyte number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(short number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(uint number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(ulong number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
 
         public void SetNumber(ushort number)
         {
-            if (_value is JsonNumber)
-            {
-                ((JsonNumber)_value).SetNumber(number);
-                return;
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            ((JsonNumber)_value).SetNumber(number);
         }
         #endregion
 
         public byte NumberToByte()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToByte();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToByte();
         }
 
         public decimal NumberToDecimal()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToDecimal();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToDecimal();
         }
 
         public double NumberToDouble()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToDouble();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToDouble();
         }
 
         public float NumberToFloat()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToFloat();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToFloat();
         }
 
         public int NumberToInt()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToInt();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToInt();
         }
 
         public long NumberToLong()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToLong();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToLong();
         }
 
         public sbyte NumberToSByte()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToSByte();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToSByte();
         }
 
         public short NumberToShort()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToShort();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToShort();
         }
 
         public uint NumberToUInt()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToUInt();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToUInt();
         }
 
         public ulong NumberToULong()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToULong();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToULong();
         }
 
         public ushort NumberToUShort()
         {
-            if (_value is JsonNumber)
-            {
-                return ((JsonNumber)_value).ToUShort();
-            }
+            CheckCastTo<JsonNumber>(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonNumber\"", _value.GetType().Name));
+            return ((JsonNumber)_value).ToUShort();
         }
         #endregion
 
@@ -500,384 +465,133 @@ namespace Numba.Data.Json.Engine
 
         public void RemoveAt(int index)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).RemoveAt(index);
-                return;
-            }
-
-            if (_value is JsonObject)
-            {
-                ((JsonArray)_value).RemoveAt(index);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).RemoveAt(index); }, () => { ((JsonArray)_value).RemoveAt(index); });
         }
 
         public void RemoveRange(int index, int count)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).RemoveRange(index, count);
-                return;
-            }
-
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).RemoveRange(index, count);
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).RemoveRange(index, count); }, () => { ((JsonArray)_value).RemoveRange(index, count); });
         }
 
         public void Clear()
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).Clear();
-                return;
-            }
-
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).Clear();
-                return;
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).Clear(); }, () => { ((JsonArray)_value).Clear(); });
         }
 
         #region Get values
         public JsonValue GetValue(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetValue(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value)[index];
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetValue(index); }, () => { return ((JsonArray)_value)[index]; });
         }
 
         public bool GetBool(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetBool(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetBool(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetBool(index); }, () => { return ((JsonArray)_value).GetBool(index); });
         }
 
         public byte GetByte(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetByte(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetByte(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetByte(index); }, () => { return ((JsonArray)_value).GetByte(index); });
         }
 
         public char GetChar(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetChar(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetChar(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetChar(index); }, () => { return ((JsonArray)_value).GetChar(index); });
         }
 
         public decimal GetDecimal(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetDecimal(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetDecimal(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetDecimal(index); }, () => { return ((JsonArray)_value).GetDecimal(index); });
         }
 
         public double GetDouble(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetDouble(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetDouble(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetDouble(index); }, () => { return ((JsonArray)_value).GetDouble(index); });
         }
 
         public float GetFloat(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetFloat(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetFloat(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetFloat(index); }, () => { return ((JsonArray)_value).GetFloat(index); });
         }
 
         public int GetInt(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetInt(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetInt(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetInt(index); }, () => { return ((JsonArray)_value).GetInt(index); });
         }
 
         public long GetLong(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetLong(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetLong(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetLong(index); }, () => { return ((JsonArray)_value).GetLong(index); });
         }
 
         public JsonNull GetNull(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetNull(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetNull(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetNull(index); }, () => { return ((JsonArray)_value).GetNull(index); });
         }
 
         public JsonNumber GetNumber(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetNumber(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetNumber(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetNumber(index); }, () => { return ((JsonArray)_value).GetNumber(index); });
         }
 
         public sbyte GetSByte(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetSByte(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetSByte(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetSByte(index); }, () => { return ((JsonArray)_value).GetSByte(index); });
         }
 
         public short GetShort(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetShort(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetShort(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetShort(index); }, () => { return ((JsonArray)_value).GetShort(index); });
         }
 
         public string GetString(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetString(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetString(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetString(index); }, () => { return ((JsonArray)_value).GetString(index); });
         }
 
         public uint GetUInt(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetUInt(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetUInt(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetUInt(index); }, () => { return ((JsonArray)_value).GetUInt(index); });
         }
 
         public ulong GetULong(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetULong(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetULong(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetULong(index); }, () => { return ((JsonArray)_value).GetULong(index); });
         }
 
         public ushort GetUShort(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetUShort(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetUShort(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetUShort(index); }, () => { return ((JsonArray)_value).GetUShort(index); });
         }
 
         public JsonObject GetObject(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetObject(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetObject(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetObject(index); }, () => { return ((JsonArray)_value).GetObject(index); });
         }
 
         public JsonArray GetArray(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetArray(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                return ((JsonArray)_value).GetArray(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetArray(index); }, () => { return ((JsonArray)_value).GetArray(index); });
         }
         #endregion
 
         public void Swap(int first, int second)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).SwapFields(first, second);
-                return;
-            }
-
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).SwapValues(first, second);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).SwapFields(first, second); }, () => { ((JsonArray)_value).SwapValues(first, second); });
         }
 
         public bool CheckNull(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).CheckNull(index);
-            }
-
-            if (_value is JsonArray)
-            {
-                ((JsonArray)_value).CheckNull(index);
-            }
-
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not be casted to \"JsonObject\" or \"JsonArray\"", _value.GetType().Name));
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).CheckNull(index); }, () => { return ((JsonArray)_value).CheckNull(index); });
         }
         #endregion
 
         #region JsonObject
         public void Add(JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).Add(field);
-                return;
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            ((JsonObject)_value).Add(field);
         }
 
         public void Add(string name, JsonValue value)
@@ -887,24 +601,16 @@ namespace Numba.Data.Json.Engine
 
         public void AddRange(IEnumerable<JsonField> fields)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).AddRange(fields);
-                return;
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            ((JsonObject)_value).AddRange(fields);
         }
 
         public void Insert(int index, JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).Insert(index, field);
-                return;
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            ((JsonObject)_value).Insert(index, field);
         }
 
         public void Insert(int index, string name, JsonValue value)
@@ -914,24 +620,16 @@ namespace Numba.Data.Json.Engine
 
         public void InsertRange(int index, IEnumerable<JsonField> fields)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).InsertRange(index, fields);
-                return;
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            ((JsonObject)_value).InsertRange(index, fields);
         }
 
         public void InsertOrAppend(int index, JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                ((JsonObject)_value).InsertOrAppend(index, field);
-                return;
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            ((JsonObject)_value).InsertOrAppend(index, field);
         }
 
         public void InsertOrAppend(int index, string name, JsonValue value)
@@ -941,12 +639,9 @@ namespace Numba.Data.Json.Engine
 
         public bool RemoveField(JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).Remove(field);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).Remove(field);
         }
 
         public bool RemoveField(string fieldName)
@@ -956,333 +651,234 @@ namespace Numba.Data.Json.Engine
 
         public int RemoveAll(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).RemoveAll(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).RemoveAll(match);
         }
 
         public JsonField GetField(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetField(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetField(fieldName);
         }
 
         public JsonField GetFieldAt(int index)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetFieldAt(index);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetFieldAt(index);
         }
 
         public bool HasField(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).HasField(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).HasField(fieldName);
         }
 
         public bool Contains(JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).Contains(field);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).Contains(field);
         }
 
         public int IndexOfField(JsonField field)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).IndexOf(field);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).IndexOf(field);
         }
 
         public int IndexOfField(string name)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).IndexOf(name);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).IndexOf(name);
         }
 
         public JsonField Find(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).Find(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).Find(match);
         }
 
         public List<JsonField> FindAll(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).FindAll(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).FindAll(match);
         }
 
         public int FindIndex(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).FindIndex(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).FindIndex(match);
         }
 
         public JsonField FindLast(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).FindLast(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).FindLast(match);
         }
 
         public int FindLastIndex(Predicate<JsonField> match)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).FindLastIndex(match);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).FindLastIndex(match);
         }
 
         public bool Any(Func<JsonField, bool> predicate)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).Any(predicate);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).Any(predicate);
         }
 
         public bool All(Func<JsonField, bool> predicate)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).All(predicate);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).All(predicate);
         }
 
         #region Get values
         public JsonValue GetValue(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetValue(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetValue(fieldName);
         }
 
         public bool GetBool(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetBool(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetBool(fieldName);
         }
 
         public byte GetByte(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetByte(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetByte(fieldName);
         }
 
         public char GetChar(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetChar(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetChar(fieldName);
         }
 
         public decimal GetDecimal(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetDecimal(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetDecimal(fieldName);
         }
 
         public double GetDouble(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetDouble(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetDouble(fieldName);
         }
 
         public float GetFloat(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetFloat(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetFloat(fieldName);
         }
 
         public int GetInt(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetInt(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetInt(fieldName);
         }
 
         public long GetLong(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetLong(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetLong(fieldName);
         }
 
         public JsonNull GetNull(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetNull(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetNull(fieldName);
         }
 
         public JsonNumber GetNumber(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetNumber(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetNumber(fieldName);
         }
 
         public sbyte GetSByte(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetSByte(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetSByte(fieldName);
         }
 
         public short GetShort(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetShort(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetShort(fieldName);
         }
 
         public string GetString(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetString(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetString(fieldName);
         }
 
         public uint GetUInt(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetUInt(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetUInt(fieldName);
         }
 
         public ulong GetULong(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetULong(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetULong(fieldName);
         }
 
         public ushort GetUShort(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetUShort(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetUShort(fieldName);
         }
 
         public JsonObject GetObject(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetObject(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetObject(fieldName);
         }
 
         public JsonArray GetArray(string fieldName)
         {
-            if (_value is JsonObject)
-            {
-                return ((JsonObject)_value).GetArray(fieldName);
-            }
+            CheckCastTo<JsonObject>(string.Format("\"{0}\" can not be casted to \"JsonObject\"", _value.GetType().Name));
 
-            throw new JsonInvalidCastException(string.Format("\"{0}\" can not cast to \"JsonObject\"", _value.GetType().Name));
+            return ((JsonObject)_value).GetArray(fieldName);
         }
         #endregion
 
