@@ -25,7 +25,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Fields
-        private string _name;
+        private JsonString _name;
 
         private JsonValue _value;
         #endregion
@@ -35,7 +35,7 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public string Name
+        public JsonString Name
         {
             get { return _name; }
             set { _name = value ?? string.Empty; }
@@ -49,7 +49,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Constructors
-        public JsonField(string name, JsonValue value)
+        public JsonField(JsonString name, JsonValue value)
         {
             _name = name;
             _value = value ?? JsonNull.value;
@@ -58,15 +58,11 @@ namespace Numba.Data.Json.Engine
 
         #region Methods
         #region Set value
-        public void SetValue(JsonValue value)
-        {
-            _value = value ?? JsonNull.value;
-        }
         #endregion
 
         public override string ToString()
         {
-            return string.Format("\"{0}\":{1}", _name, _value.ToString());
+            return string.Format("{0}:{1}", _name, _value.ToString());
         }
         #endregion
 

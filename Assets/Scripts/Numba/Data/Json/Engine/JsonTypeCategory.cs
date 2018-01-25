@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
-    public enum JsonType
+    public enum JsonTypeCategory
     {
         String,
         Number,

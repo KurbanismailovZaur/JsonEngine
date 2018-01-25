@@ -41,7 +41,7 @@ namespace Numba.Data.Json.Engine
             set { _value = value ?? JsonNull.value; }
         }
 
-        public JsonType Category { get { return _value.Category; } }
+        public JsonTypeCategory Category { get { return _value.Category; } }
 
         public JsonDataType Type { get { return _value.Type; } }
 
@@ -68,7 +68,7 @@ namespace Numba.Data.Json.Engine
 
         public JsonWrap(JsonValue value)
         {
-            _value = value;
+            _value = value ?? JsonNull.value;
         }
         #endregion
 

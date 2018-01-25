@@ -31,7 +31,7 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public override JsonType Category { get { return JsonType.String; } }
+        public override JsonTypeCategory Category { get { return JsonTypeCategory.String; } }
 
         public override JsonDataType Type { get { return JsonDataType.Char; } }
 

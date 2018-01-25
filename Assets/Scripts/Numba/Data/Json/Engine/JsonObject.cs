@@ -35,7 +35,7 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
-        public override JsonType Category { get { return JsonType.Object; } }
+        public override JsonTypeCategory Category { get { return JsonTypeCategory.Object; } }
 
         public override JsonDataType Type { get { return JsonDataType.Object; } }
 
@@ -76,7 +76,7 @@ namespace Numba.Data.Json.Engine
                 throw new ArgumentNullException("field");
             }
 
-            if (HasField(field.Name))
+            if (HasField(field.Name.Value))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
             }
@@ -109,7 +109,7 @@ namespace Numba.Data.Json.Engine
                 throw new ArgumentNullException("field");
             }
 
-            if (HasField(field.Name))
+            if (HasField(field.Name.Value))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
             }

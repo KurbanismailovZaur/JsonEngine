@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Numba.Data.Json.Engine.DataTypes.Exceptions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +33,7 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
-        public override JsonType Category { get { return JsonType.String; } }
+        public override JsonTypeCategory Category { get { return JsonTypeCategory.String; } }
 
         public override JsonDataType Type { get { return JsonDataType.String; } }
 
@@ -64,7 +64,7 @@ namespace Numba.Data.Json.Engine.DataTypes
                 {
                     if (i + 1 == builder.Length)
                     {
-                        throw new Exception("Backslash is no have control sequence symbol");
+                        throw new JsonStringFormatException("Backslash is no have escape sequence symbol");
                     }
 
                     switch (builder[i + 1])
@@ -82,30 +82,30 @@ namespace Numba.Data.Json.Engine.DataTypes
                         case 'u':
                             if (i + 5 > builder.Length - 1)
                             {
-                                throw new Exception("The 'u' control symbol no have 4 symbols at the right");
+                                throw new JsonStringFormatException("The 'u' escape symbol no have 4 symbols at the right");
                             }
 
                             if (!IsHexString(builder.ToString(i + 2, 4)))
                             {
-                                throw new Exception("The 'u' control symbol no have 4 hexodecimal digits at the right");
+                                throw new JsonStringFormatException("The 'u' escape symbol no have 4 hexodecimal digits at the right");
                             }
 
                             i += 5;
                             continue;
                         default:
-                            throw new Exception("Not allowed control sequence");
+                            throw new JsonStringFormatException("Not allowed escape sequence");
                     }
                 }
                 else if (builder[i] == '"')
                 {
                     if (i - 1 < 0)
                     {
-                        throw new Exception("Quotes no have backslash");
+                        throw new JsonStringFormatException("Quotes no have backslash");
                     }
 
                     if (builder[i - 1] != '\\')
                     {
-                        throw new Exception("Quotes no have backslash");
+                        throw new JsonStringFormatException("Quotes no have backslash");
                     }
                     else
                     {
@@ -124,13 +124,13 @@ namespace Numba.Data.Json.Engine.DataTypes
 
                         if (backslashCount % 2 == 0)
                         {
-                            throw new Exception("Quotes no have backslash");
+                            throw new JsonStringFormatException("Quotes no have backslash");
                         }
                     }
                 }
                 else if (char.IsControl(builder[i]))
                 {
-                    throw new Exception("Escape sequences are not supported");
+                    throw new JsonStringFormatException("Escape sequences are not supported");
                 }
             }
         }

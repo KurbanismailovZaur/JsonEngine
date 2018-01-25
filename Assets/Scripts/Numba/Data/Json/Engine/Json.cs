@@ -372,11 +372,11 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        public static JsonType GetSupposedType(string data)
+        public static JsonTypeCategory GetSupposedType(string data)
         {
             if (string.IsNullOrEmpty(data))
             {
-                return JsonType.Unknown;
+                return JsonTypeCategory.Unknown;
             }
 
             int currentIndex = -1;
@@ -384,30 +384,30 @@ namespace Numba.Data.Json.Engine
 
             if (nextSymbol == '"')
             {
-                return JsonType.String;
+                return JsonTypeCategory.String;
             }
             else if (nextSymbol == '-' || char.IsDigit(nextSymbol))
             {
-                return JsonType.Number;
+                return JsonTypeCategory.Number;
             }
             else if (nextSymbol == 'n')
             {
-                return JsonType.Null;
+                return JsonTypeCategory.Null;
             }
             else if (nextSymbol == 't' || nextSymbol == 'f')
             {
-                return JsonType.Bool;
+                return JsonTypeCategory.Bool;
             }
             else if (nextSymbol == '{')
             {
-                return JsonType.Object;
+                return JsonTypeCategory.Object;
             }
             else if (nextSymbol == '[')
             {
-                return JsonType.Array;
+                return JsonTypeCategory.Array;
             }
 
-            return JsonType.Unknown;
+            return JsonTypeCategory.Unknown;
         }
         #endregion
 
