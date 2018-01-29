@@ -247,6 +247,98 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
+        #region As
+        public bool AsBool()
+        {
+            return ((JsonBool)_value).Value;
+        }
+
+        public byte AsByte()
+        {
+            return ((JsonByte)_value).Value;
+        }
+
+        public char AsChar()
+        {
+            return ((JsonChar)_value).Value;
+        }
+
+        public decimal AsDecimal()
+        {
+            return ((JsonDecimal)_value).Value;
+        }
+
+        public double AsDouble()
+        {
+            return ((JsonDouble)_value).Value;
+        }
+
+        public float AsFloat()
+        {
+            return ((JsonFloat)_value).Value;
+        }
+
+        public int AsInt()
+        {
+            return ((JsonInt)_value).Value;
+        }
+
+        public long AsLong()
+        {
+            return ((JsonLong)_value).Value;
+        }
+
+        public JsonNull AsNull()
+        {
+            return ((JsonNull)_value);
+        }
+
+        public JsonNumber AsNumber()
+        {
+            return ((JsonNumber)_value);
+        }
+
+        public SByte AsSByte()
+        {
+            return ((JsonSByte)_value).Value;
+        }
+
+        public short AsShort()
+        {
+            return ((JsonShort)_value).Value;
+        }
+
+        public string AsString()
+        {
+            return ((JsonString)_value).Value;
+        }
+
+        public uint AsUInt()
+        {
+            return ((JsonUInt)_value).Value;
+        }
+
+        public ulong AsULong()
+        {
+            return ((JsonULong)_value).Value;
+        }
+
+        public ushort AsUShort()
+        {
+            return ((JsonUShort)_value).Value;
+        }
+
+        public JsonObject AsObject()
+        {
+            return ((JsonObject)_value);
+        }
+
+        public JsonArray AsArray()
+        {
+            return ((JsonArray)_value);
+        }
+        #endregion
+
         private void CastToAndInvoke<T>(Action action)
         {
             if (!(_value is T))
@@ -418,7 +510,6 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
-        #region Common method for jsonObject and JsonArray
         public IEnumerator GetEnumerator()
         {
             if (_value is JsonObject || _value is JsonArray)
@@ -429,168 +520,45 @@ namespace Numba.Data.Json.Engine
             throw new JsonInvalidCastException(string.Format("\"{0}\" does not implement \"IEnumerable\" or \"IEnumerable<T>\" interface", _value.GetType().Name));
         }
 
-        public void RemoveAt(int index)
-        {
-            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).RemoveAt(index); }, () => { ((JsonArray)_value).RemoveAt(index); });
-        }
-
-        public void RemoveRange(int index, int count)
-        {
-            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).RemoveRange(index, count); }, () => { ((JsonArray)_value).RemoveRange(index, count); });
-        }
-
-        public void Clear()
-        {
-            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).Clear(); }, () => { ((JsonArray)_value).Clear(); });
-        }
-
-        #region Get values
-        public JsonValue GetValue(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetValue(index); }, () => { return ((JsonArray)_value)[index]; });
-        }
-
-        public bool GetBool(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetBool(index); }, () => { return ((JsonArray)_value).GetBool(index); });
-        }
-
-        public byte GetByte(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetByte(index); }, () => { return ((JsonArray)_value).GetByte(index); });
-        }
-
-        public char GetChar(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetChar(index); }, () => { return ((JsonArray)_value).GetChar(index); });
-        }
-
-        public decimal GetDecimal(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetDecimal(index); }, () => { return ((JsonArray)_value).GetDecimal(index); });
-        }
-
-        public double GetDouble(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetDouble(index); }, () => { return ((JsonArray)_value).GetDouble(index); });
-        }
-
-        public float GetFloat(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetFloat(index); }, () => { return ((JsonArray)_value).GetFloat(index); });
-        }
-
-        public int GetInt(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetInt(index); }, () => { return ((JsonArray)_value).GetInt(index); });
-        }
-
-        public long GetLong(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetLong(index); }, () => { return ((JsonArray)_value).GetLong(index); });
-        }
-
-        public JsonNull GetNull(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetNull(index); }, () => { return ((JsonArray)_value).GetNull(index); });
-        }
-
-        public JsonNumber GetNumber(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetNumber(index); }, () => { return ((JsonArray)_value).GetNumber(index); });
-        }
-
-        public sbyte GetSByte(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetSByte(index); }, () => { return ((JsonArray)_value).GetSByte(index); });
-        }
-
-        public short GetShort(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetShort(index); }, () => { return ((JsonArray)_value).GetShort(index); });
-        }
-
-        public string GetString(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetString(index); }, () => { return ((JsonArray)_value).GetString(index); });
-        }
-
-        public uint GetUInt(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetUInt(index); }, () => { return ((JsonArray)_value).GetUInt(index); });
-        }
-
-        public ulong GetULong(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetULong(index); }, () => { return ((JsonArray)_value).GetULong(index); });
-        }
-
-        public ushort GetUShort(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetUShort(index); }, () => { return ((JsonArray)_value).GetUShort(index); });
-        }
-
-        public JsonObject GetObject(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetObject(index); }, () => { return ((JsonArray)_value).GetObject(index); });
-        }
-
-        public JsonArray GetArray(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetArray(index); }, () => { return ((JsonArray)_value).GetArray(index); });
-        }
-        #endregion
-
-        public void Swap(int first, int second)
-        {
-            CastToObjectOrArrayAndInvoke(() => { ((JsonObject)_value).SwapFields(first, second); }, () => { ((JsonArray)_value).SwapValues(first, second); });
-        }
-
-        public bool CheckNull(int index)
-        {
-            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).CheckNull(index); }, () => { return ((JsonArray)_value).CheckNull(index); });
-        }
-        #endregion
-
         #region JsonObject
-        public void Add(JsonField field)
+        public void AddField(JsonField field)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Add(field); });
         }
 
-        public void Add(string name, JsonValue value)
+        public void AddField(string name, JsonValue value)
         {
-            Add(new JsonField(name, value));
+            AddField(new JsonField(name, value));
         }
 
-        public void AddRange(IEnumerable<JsonField> fields)
+        public void AddFieldsRange(IEnumerable<JsonField> fields)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).AddRange(fields); });
         }
 
-        public void Insert(int index, JsonField field)
+        public void InsertField(int index, JsonField field)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Insert(index, field); });
         }
 
-        public void Insert(int index, string name, JsonValue value)
+        public void InsertField(int index, string name, JsonValue value)
         {
-            Insert(index, new JsonField(name, value));
+            InsertField(index, new JsonField(name, value));
         }
 
-        public void InsertRange(int index, IEnumerable<JsonField> fields)
+        public void InsertFieldsRange(int index, IEnumerable<JsonField> fields)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).InsertRange(index, fields); });
         }
 
-        public void InsertOrAppend(int index, JsonField field)
+        public void InsertOrAppendField(int index, JsonField field)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).InsertOrAppend(index, field); });
         }
 
-        public void InsertOrAppend(int index, string name, JsonValue value)
+        public void InsertOrAppendField(int index, string name, JsonValue value)
         {
-            InsertOrAppend(index, new JsonField(name, value));
+            InsertOrAppendField(index, new JsonField(name, value));
         }
 
         public bool RemoveField(JsonField field)
@@ -603,7 +571,17 @@ namespace Numba.Data.Json.Engine
             return RemoveField(GetField(fieldName));
         }
 
-        public int RemoveAll(Predicate<JsonField> match)
+        public void RemoveFieldAt(int index)
+        {
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).RemoveAt(index); });
+        }
+
+        public void RemoveFieldsRange(int index, int count)
+        {
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).RemoveRange(index, count); });
+        }
+
+        public int RemoveAllFields(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).RemoveAll(match); });
         }
@@ -618,12 +596,12 @@ namespace Numba.Data.Json.Engine
             return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).GetFieldAt(index); });
         }
 
-        public bool HasField(string fieldName)
+        public bool HasFieldWithNane(string fieldName)
         {
-            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).HasField(fieldName); });
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).HasFieldWithName(fieldName); });
         }
 
-        public bool Contains(JsonField field)
+        public bool ContainsField(JsonField field)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).Contains(field); });
         }
@@ -638,176 +616,291 @@ namespace Numba.Data.Json.Engine
             return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).IndexOf(name); });
         }
 
-        public JsonField Find(Predicate<JsonField> match)
+        public JsonField FindField(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).Find(match); });
         }
 
-        public List<JsonField> FindAll(Predicate<JsonField> match)
+        public List<JsonField> FindAllFields(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, List<JsonField>>(() => { return ((JsonObject)_value).FindAll(match); });
         }
 
-        public int FindIndex(Predicate<JsonField> match)
+        public int FindFieldIndex(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).FindIndex(match); });
         }
 
-        public JsonField FindLast(Predicate<JsonField> match)
+        public JsonField FindLastField(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, JsonField>(() => { return ((JsonObject)_value).FindLast(match); });
         }
 
-        public int FindLastIndex(Predicate<JsonField> match)
+        public int FindLastFieldIndex(Predicate<JsonField> match)
         {
             return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).FindLastIndex(match); });
         }
 
-        public bool Any(Func<JsonField, bool> predicate)
+        public bool AnyField(Func<JsonField, bool> predicate)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).Any(predicate); });
         }
 
-        public bool All(Func<JsonField, bool> predicate)
+        public bool AllFields(Func<JsonField, bool> predicate)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).All(predicate); });
         }
 
+        public void SwapFields(int first, int second)
+        {
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).SwapFields(first, second); });
+        }
+
+        public void SwapFields(string first, string second)
+        {
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).SwapFields(first, second); });
+        }
+
+        public bool CheckFieldNull(int index)
+        {
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(index); });
+        }
+
         #region Get values
-        public JsonValue GetValue(string fieldName)
+        public JsonValue GetFieldValue(string fieldName)
         {
             return CastToAndInvoke<JsonObject, JsonValue>(() => { return ((JsonObject)_value).GetValue(fieldName); });
         }
 
-        public bool GetBool(string fieldName)
+        public JsonValue GetFieldValue(int index)
+        {
+            return CastToAndInvoke<JsonObject, JsonValue>(() => { return ((JsonObject)_value).GetValue(index); });
+        }
+
+        public bool GetFieldBool(string fieldName)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).GetBool(fieldName); });
         }
 
-        public byte GetByte(string fieldName)
+        public bool GetFieldBool(int index)
+        {
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).GetBool(index); });
+        }
+
+        public byte GetFieldByte(string fieldName)
         {
             return CastToAndInvoke<JsonObject, byte>(() => { return ((JsonObject)_value).GetByte(fieldName); });
         }
 
-        public char GetChar(string fieldName)
+        public byte GetFieldByte(int index)
+        {
+            return CastToAndInvoke<JsonByte, byte>(() => { return ((JsonObject)_value).GetByte(index); });
+        }
+
+        public char GetFieldChar(string fieldName)
         {
             return CastToAndInvoke<JsonObject, char>(() => { return ((JsonObject)_value).GetChar(fieldName); });
         }
 
-        public decimal GetDecimal(string fieldName)
+        public char GetFieldChar(int index)
+        {
+            return CastToAndInvoke<JsonChar, char>(() => { return ((JsonObject)_value).GetChar(index); });
+        }
+
+        public decimal GetFieldDecimal(string fieldName)
         {
             return CastToAndInvoke<JsonObject, decimal>(() => { return ((JsonObject)_value).GetDecimal(fieldName); });
         }
 
-        public double GetDouble(string fieldName)
+        public decimal GetFieldDecimal(int index)
+        {
+            return CastToAndInvoke<JsonDecimal, decimal>(() => { return ((JsonObject)_value).GetDecimal(index); });
+        }
+
+        public double GetFieldDouble(string fieldName)
         {
             return CastToAndInvoke<JsonObject, double>(() => { return ((JsonObject)_value).GetDouble(fieldName); });
         }
 
-        public float GetFloat(string fieldName)
+        public double GetFieldDouble(int index)
+        {
+            return CastToAndInvoke<JsonDouble, double>(() => { return ((JsonObject)_value).GetDouble(index); });
+        }
+
+        public float GetFieldFloat(string fieldName)
         {
             return CastToAndInvoke<JsonObject, float>(() => { return ((JsonObject)_value).GetFloat(fieldName); });
         }
 
-        public int GetInt(string fieldName)
+        public float GetFieldFloat(int index)
+        {
+            return CastToAndInvoke<JsonFloat, float>(() => { return ((JsonObject)_value).GetFloat(index); });
+        }
+
+        public int GetFieldInt(string fieldName)
         {
             return CastToAndInvoke<JsonObject, int>(() => { return ((JsonObject)_value).GetInt(fieldName); });
         }
 
-        public long GetLong(string fieldName)
+        public int GetFieldInt(int index)
+        {
+            return CastToAndInvoke<JsonInt, int>(() => { return ((JsonObject)_value).GetInt(index); });
+        }
+
+        public long GetFieldLong(string fieldName)
         {
             return CastToAndInvoke<JsonObject, long>(() => { return ((JsonObject)_value).GetLong(fieldName); });
         }
 
-        public JsonNull GetNull(string fieldName)
+        public long GetFieldLong(int index)
+        {
+            return CastToAndInvoke<JsonLong, long>(() => { return ((JsonObject)_value).GetLong(index); });
+        }
+
+        public JsonNull GetFieldNull(string fieldName)
         {
             return CastToAndInvoke<JsonObject, JsonNull>(() => { return ((JsonObject)_value).GetNull(fieldName); });
         }
 
-        public JsonNumber GetNumber(string fieldName)
+        public JsonNull GetFieldNull(int index)
+        {
+            return CastToAndInvoke<JsonNull, JsonNull>(() => { return ((JsonObject)_value).GetNull(index); });
+        }
+
+        public JsonNumber GetFieldNumber(string fieldName)
         {
             return CastToAndInvoke<JsonObject, JsonNumber>(() => { return ((JsonObject)_value).GetNumber(fieldName); });
         }
 
-        public sbyte GetSByte(string fieldName)
+        public JsonNumber GetFieldNumber(int index)
+        {
+            return CastToAndInvoke<JsonNumber, JsonNumber>(() => { return ((JsonObject)_value).GetNumber(index); });
+        }
+
+        public sbyte GetFieldSByte(string fieldName)
         {
             return CastToAndInvoke<JsonObject, sbyte>(() => { return ((JsonObject)_value).GetSByte(fieldName); });
         }
 
-        public short GetShort(string fieldName)
+        public sbyte GetFieldSByte(int index)
+        {
+            return CastToAndInvoke<JsonSByte, sbyte>(() => { return ((JsonObject)_value).GetSByte(index); });
+        }
+
+        public short GetFieldShort(string fieldName)
         {
             return CastToAndInvoke<JsonObject, short>(() => { return ((JsonObject)_value).GetShort(fieldName); });
         }
 
-        public string GetString(string fieldName)
+        public short GetFieldShort(int index)
+        {
+            return CastToAndInvoke<JsonShort, short>(() => { return ((JsonObject)_value).GetShort(index); });
+        }
+
+        public string GetFieldString(string fieldName)
         {
             return CastToAndInvoke<JsonObject, string>(() => { return ((JsonObject)_value).GetString(fieldName); });
         }
 
-        public uint GetUInt(string fieldName)
+        public string GetFieldString(int index)
+        {
+            return CastToAndInvoke<JsonString, string>(() => { return ((JsonObject)_value).GetString(index); });
+        }
+
+        public uint GetFieldUInt(string fieldName)
         {
             return CastToAndInvoke<JsonObject, uint>(() => { return ((JsonObject)_value).GetUInt(fieldName); });
         }
 
-        public ulong GetULong(string fieldName)
+        public uint GetFieldUInt(int index)
+        {
+            return CastToAndInvoke<JsonUInt, uint>(() => { return ((JsonObject)_value).GetUInt(index); });
+        }
+
+        public ulong GetFieldULong(string fieldName)
         {
             return CastToAndInvoke<JsonObject, ulong>(() => { return ((JsonObject)_value).GetULong(fieldName); });
         }
 
-        public ushort GetUShort(string fieldName)
+        public ulong GetFieldULong(int index)
+        {
+            return CastToAndInvoke<JsonULong, ulong>(() => { return ((JsonObject)_value).GetULong(index); });
+        }
+
+        public ushort GetFieldUShort(string fieldName)
         {
             return CastToAndInvoke<JsonObject, ushort>(() => { return ((JsonObject)_value).GetUShort(fieldName); });
         }
 
-        public JsonObject GetObject(string fieldName)
+        public ushort GetFieldUShort(int index)
+        {
+            return CastToAndInvoke<JsonUShort, ushort>(() => { return ((JsonObject)_value).GetUShort(index); });
+        }
+
+        public JsonObject GetFieldObject(string fieldName)
         {
             return CastToAndInvoke<JsonObject, JsonObject>(() => { return ((JsonObject)_value).GetObject(fieldName); });
         }
 
-        public JsonArray GetArray(string fieldName)
+        public JsonObject GetFieldObject(int index)
+        {
+            return CastToAndInvoke<JsonObject, JsonObject>(() => { return ((JsonObject)_value).GetObject(index); });
+        }
+
+        public JsonArray GetFieldArray(string fieldName)
         {
             return CastToAndInvoke<JsonObject, JsonArray>(() => { return ((JsonObject)_value).GetArray(fieldName); });
         }
+
+        public JsonArray GetFieldArray(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonArray>(() => { return ((JsonObject)_value).GetArray(index); });
+        }
         #endregion
 
-        public void Replace(int index, JsonField field)
+        public void ReplaceField(int index, JsonField field)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Replace(index, field); });
         }
 
-        public void Replace(int index, string name, JsonValue value)
+        public void ReplaceField(int index, string name, JsonValue value)
         {
-            Replace(index, new JsonField(name, value));
+            ReplaceField(index, new JsonField(name, value));
         }
 
-        public bool CheckNull(string fieldName)
+        public bool CheckFieldNull(string fieldName)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(fieldName); });
+        }
+
+        public void ClearFields()
+        {
+            CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Clear(); });
         }
         #endregion
 
         #region JsonArray
-        public void Add(JsonValue value)
+        public void AddValue(JsonValue value)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Add(value); });
         }
 
-        public void AddRange(IEnumerable<JsonValue> values)
+        public void AddValuesRange(IEnumerable<JsonValue> values)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).AddRange(values); });
         }
 
-        public void Insert(int index, JsonValue value)
+        public void InsertValue(int index, JsonValue value)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Insert(index, value); });
         }
 
-        public void InsertRange(int index, IEnumerable<JsonValue> values)
+        public void InsertValueRange(int index, IEnumerable<JsonValue> values)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).InsertRange(index, values); });
         }
 
-        public void InsertOrAppend(int index, JsonValue value)
+        public void InsertOrAppendValue(int index, JsonValue value)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).InsertOrAppend(index, value); });
         }
@@ -817,12 +910,22 @@ namespace Numba.Data.Json.Engine
             return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Remove(value); });
         }
 
-        public int RemoveAll(Predicate<JsonValue> predicate)
+        public void RemoveValueAt(int index)
+        {
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).RemoveAt(index); });
+        }
+
+        public void RemoveValuesRange(int index, int count)
+        {
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).RemoveRange(index, count); });
+        }
+
+        public int RemoveAllValues(Predicate<JsonValue> predicate)
         {
             return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).RemoveAll(predicate); });
         }
 
-        public bool Contains(JsonValue value)
+        public bool ContainsValue(JsonValue value)
         {
             return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Contains(value); });
         }
@@ -832,44 +935,156 @@ namespace Numba.Data.Json.Engine
             return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).IndexOf(value); });
         }
 
-        public JsonValue Find(Predicate<JsonValue> match)
+        public JsonValue FindValue(Predicate<JsonValue> match)
         {
             return CastToAndInvoke<JsonArray, JsonValue>(() => { return ((JsonArray)_value).Find(match); });
         }
 
-        public List<JsonValue> FindAll(Predicate<JsonValue> match)
+        public List<JsonValue> FindAllValues(Predicate<JsonValue> match)
         {
             return CastToAndInvoke<JsonArray, List<JsonValue>>(() => { return ((JsonArray)_value).FindAll(match); });
         }
 
-        public int FindIndex(Predicate<JsonValue> match)
+        public int FindValueIndex(Predicate<JsonValue> match)
         {
             return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).FindIndex(match); });
         }
 
-        public JsonValue FindLast(Predicate<JsonValue> match)
+        public JsonValue FindLastValue(Predicate<JsonValue> match)
         {
             return CastToAndInvoke<JsonArray, JsonValue>(() => { return ((JsonArray)_value).FindLast(match); });
         }
 
-        public int FindLastIndex(Predicate<JsonValue> match)
+        public int FindLastValueIndex(Predicate<JsonValue> match)
         {
             return CastToAndInvoke<JsonArray, int>(() => { return ((JsonArray)_value).FindLastIndex(match); });
         }
 
-        public bool Any(Func<JsonValue, bool> predicate)
+        public bool AnyValue(Func<JsonValue, bool> predicate)
         {
             return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).Any(predicate); });
         }
 
-        public bool All(Func<JsonValue, bool> predicate)
+        public bool AllValues(Func<JsonValue, bool> predicate)
         {
             return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).All(predicate); });
         }
 
-        public void Replace(int index, JsonValue value)
+        public void ReplaceValue(int index, JsonValue value)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value)[index] = value; });
+        }
+
+        public void SwapValues(int first, int second)
+        {
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).SwapValues(first, second); });
+        }
+
+        public bool CheckValueNull(int index)
+        {
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonArray)_value).CheckNull(index); });
+        }
+
+        #region Get values
+        public JsonValue GetValue(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonValue>(() => { return ((JsonArray)_value)[index]; });
+        }
+
+        public bool GetBool(int index)
+        {
+            return CastToAndInvoke<JsonArray, bool>(() => { return ((JsonBool)((JsonArray)_value)[index]).Value; });
+        }
+
+        public byte GetByte(int index)
+        {
+            return CastToAndInvoke<JsonArray, byte>(() => { return ((JsonByte)((JsonArray)_value)[index]).Value; });
+        }
+
+        public char GetChar(int index)
+        {
+            return CastToAndInvoke<JsonArray, char>(() => { return ((JsonChar)((JsonArray)_value)[index]).Value; });
+        }
+
+        public decimal GetDecimal(int index)
+        {
+            return CastToAndInvoke<JsonArray, decimal>(() => { return ((JsonDecimal)((JsonArray)_value)[index]).Value; });
+        }
+
+        public double GetDouble(int index)
+        {
+            return CastToAndInvoke<JsonArray, double>(() => { return ((JsonDouble)((JsonArray)_value)[index]).Value; });
+        }
+
+        public float GetFloat(int index)
+        {
+            return CastToObjectOrArrayAndInvoke(() => { return ((JsonObject)_value).GetFloat(index); }, () => { return ((JsonArray)_value).GetFloat(index); });
+        }
+
+        public int GetInt(int index)
+        {
+            return CastToAndInvoke<JsonArray, int>(() => { return ((JsonInt)((JsonArray)_value)[index]).Value; });
+        }
+
+        public long GetLong(int index)
+        {
+            return CastToAndInvoke<JsonArray, long>(() => { return ((JsonLong)((JsonArray)_value)[index]).Value; });
+        }
+
+        public JsonNull GetNull(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonNull>(() => { return ((JsonNull)((JsonArray)_value)[index]); });
+        }
+
+        public JsonNumber GetNumber(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonNumber>(() => { return ((JsonNumber)((JsonArray)_value)[index]); });
+        }
+
+        public sbyte GetSByte(int index)
+        {
+            return CastToAndInvoke<JsonArray, sbyte>(() => { return ((JsonSByte)((JsonArray)_value)[index]).Value; });
+        }
+
+        public short GetShort(int index)
+        {
+            return CastToAndInvoke<JsonArray, short>(() => { return ((JsonShort)((JsonArray)_value)[index]).Value; });
+        }
+
+        public string GetString(int index)
+        {
+            return CastToAndInvoke<JsonArray, string>(() => { return ((JsonString)((JsonArray)_value)[index]).Value; });
+        }
+
+        public uint GetUInt(int index)
+        {
+            return CastToAndInvoke<JsonArray, uint>(() => { return ((JsonUInt)((JsonArray)_value)[index]).Value; });
+        }
+
+        public ulong GetULong(int index)
+        {
+            return CastToAndInvoke<JsonArray, ulong>(() => { return ((JsonULong)((JsonArray)_value)[index]).Value; });
+        }
+
+        public ushort GetUShort(int index)
+        {
+            return CastToAndInvoke<JsonArray, ushort>(() => { return ((JsonUShort)((JsonArray)_value)[index]).Value; });
+        }
+
+        public JsonObject GetObject(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonObject>(() => { return ((JsonObject)((JsonArray)_value)[index]); });
+        }
+
+        public JsonArray GetArray(int index)
+        {
+            return CastToAndInvoke<JsonArray, JsonArray>(() => { return ((JsonArray)((JsonArray)_value)[index]); });
+        }
+        #endregion
+
+        public void ClearValues()
+        {
+            CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Clear(); });
         }
         #endregion
 
@@ -894,7 +1109,7 @@ namespace Numba.Data.Json.Engine
 
         public JsonWrap this[string fieldName]
         {
-            get { return new JsonWrap(GetValue(fieldName)); }
+            get { return new JsonWrap(GetFieldValue(fieldName)); }
             set { GetField(fieldName).Value = value; }
         }
         #endregion

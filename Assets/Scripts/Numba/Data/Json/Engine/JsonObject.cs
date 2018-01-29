@@ -76,7 +76,7 @@ namespace Numba.Data.Json.Engine
                 throw new ArgumentNullException("field");
             }
 
-            if (HasField(field.Name.Value))
+            if (HasFieldWithName(field.Name.Value))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
             }
@@ -109,7 +109,7 @@ namespace Numba.Data.Json.Engine
                 throw new ArgumentNullException("field");
             }
 
-            if (HasField(field.Name.Value))
+            if (HasFieldWithName(field.Name.Value))
             {
                 throw new ArgumentException(string.Format("Field with name \"{0}\" already existed", field.Name));
             }
@@ -199,7 +199,7 @@ namespace Numba.Data.Json.Engine
             return _fields[index];
         }
 
-        public bool HasField(string fieldName)
+        public bool HasFieldWithName(string fieldName)
         {
             return Any(x => x.Name == fieldName);
         }
@@ -489,6 +489,52 @@ namespace Numba.Data.Json.Engine
             RemoveAt(right);
             Replace(left, rightField);
             InsertOrAppend(right, leftField);
+        }
+
+        public void SwapFields(string first, string second)
+        {
+            if (first == second)
+            {
+                return;
+            }
+
+            JsonField firstField = GetField(first);
+            JsonField secondField = GetField(second);
+
+            JsonValue firstValue = firstField.Value;
+            firstField.Value = secondField.Value;
+
+            secondField.Value = firstValue;
+        }
+
+        public void SwapValues(int first, int second)
+        {
+            if (first == second)
+            {
+                return;
+            }
+            
+            JsonValue firstValue = _fields[first].Value;
+            JsonValue secondValue = _fields[second].Value;
+
+            GetFieldAt(first).Value = secondValue;
+            GetFieldAt(second).Value = firstValue;
+        }
+
+        public void SwapValues(string first, string second)
+        {
+            if (first == second)
+            {
+                return;
+            }
+
+            JsonField firstField = GetField(first);
+            JsonField secondField = GetField(second);
+
+            JsonValue firstValue = firstField.Value;
+
+            firstField.Value = secondField.Value;
+            secondField.Value = firstValue;
         }
 
         public bool CheckNull(int index)
