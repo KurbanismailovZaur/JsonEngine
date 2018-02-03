@@ -44,28 +44,9 @@ namespace Numba.Data.Json.Engine
         public JsonTypeCategory Category { get { return _value.Category; } }
 
         public JsonDataType Type { get { return _value.Type; } }
-
-        public int Count
-        {
-            get
-            {
-                if (_value is JsonObject)
-                {
-                    return ((JsonObject)_value).Count;
-                }
-                else if (_value is JsonArray)
-                {
-                    return ((JsonArray)_value).Count;
-                }
-
-                throw new JsonInvalidCastException(string.Format("\"{0}\" does not have property with name \"Count\"", _value.GetType().Name));
-            }
-        }
         #endregion
 
         #region Constructors
-        private JsonWrap() { }
-
         public JsonWrap(JsonValue value)
         {
             _value = value ?? JsonNull.value;
@@ -521,6 +502,14 @@ namespace Numba.Data.Json.Engine
         }
 
         #region JsonObject
+        public int FieldsCount
+        {
+            get
+            {
+                return CastToAndInvoke<JsonObject, int>(() => ((JsonObject)_value).Count);
+            }
+        }
+
         public void AddField(JsonField field)
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Add(field); });
@@ -664,6 +653,11 @@ namespace Numba.Data.Json.Engine
         public bool CheckFieldNull(int index)
         {
             return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(index); });
+        }
+
+        public bool CheckFieldNull(string fieldName)
+        {
+            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(fieldName); });
         }
 
         #region Get values
@@ -868,11 +862,6 @@ namespace Numba.Data.Json.Engine
             ReplaceField(index, new JsonField(name, value));
         }
 
-        public bool CheckFieldNull(string fieldName)
-        {
-            return CastToAndInvoke<JsonObject, bool>(() => { return ((JsonObject)_value).CheckNull(fieldName); });
-        }
-
         public void ClearFields()
         {
             CastToAndInvoke<JsonObject>(() => { ((JsonObject)_value).Clear(); });
@@ -880,6 +869,14 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region JsonArray
+        public int ValuesCount
+        {
+            get
+            {
+                return CastToAndInvoke<JsonArray, int>(() => ((JsonArray)_value).Count);
+            }
+        }
+
         public void AddValue(JsonValue value)
         {
             CastToAndInvoke<JsonArray>(() => { ((JsonArray)_value).Add(value); });

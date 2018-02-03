@@ -8,14 +8,11 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonWrap jWrap = new JsonWrap(new JsonObject());
-        jWrap.AddField("name", "Zaur");
+        string jsonData = "{\"name\":\"Zaur\",\"age\":25,\"cars\":[\"Audi\",\"Jaguar\"]}";
 
-        // Rename HasField to HasFieldWithName
-        print(jWrap.HasFieldWithNane("name"));
+        JsonObject jObject = Json.Parse<JsonObject>(jsonData);
+        int age = jObject.GetNumber("age").ToInt();
 
-        jWrap = new JsonArray() { 0, 1f, 2d, 3m, '4', "5" };
-
-        print(jWrap.GetDecimal(3));
+        print(age);
     }
 }
