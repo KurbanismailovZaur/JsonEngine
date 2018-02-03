@@ -8,11 +8,6 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        string jsonData = "{\"name\":\"Zaur\",\"age\":25,\"cars\":[\"Audi\",\"Jaguar\"]}";
-
-        JsonObject jObject = Json.Parse<JsonObject>(jsonData);
-        int age = jObject.GetNumber("age").ToInt();
-
-        print(age);
+        JsonBool jBool = new JsonBool(true);
     }
 }

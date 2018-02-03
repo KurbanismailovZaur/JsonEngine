@@ -6,7 +6,10 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public class JsonString : JsonValue, IJsonDataType<string>
+    /// <summary>
+    /// Represent string wrapper.
+    /// </summary>
+    public class JsonString : JsonValue
     {
         #region Entities
         #region Enums
@@ -33,14 +36,27 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public override JsonTypeCategory Category { get { return JsonTypeCategory.String; } }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public override JsonDataType Type { get { return JsonDataType.String; } }
 
+        /// <summary>
+        /// Wrapped value.
+        /// </summary>
         public string Value { get; set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initialize object with string value or parse it (if parse == true).
+        /// </summary>
+        /// <param name="value">Initialize value.</param>
         public JsonString(string value, bool parse = false)
         {
             if (!parse)
@@ -178,11 +194,20 @@ namespace Numba.Data.Json.Engine.DataTypes
             return !(thisObject.Value == otherObject.Value);
         }
 
+        /// <summary>
+        /// Convert string value to json string representation.
+        /// </summary>
+        /// <returns>Json representation of this object.</returns>
         public override string ToString()
         {
             return Value == null ? "null" : string.Format("\"{0}\"", Value);
         }
 
+        /// <summary>
+        /// Compare with other object.
+        /// </summary>
+        /// <param name="obj">Object to compare with</param>
+        /// <returns>True if other object is string or JsonString and have same value, otherwise returns false.</returns>
         public override bool Equals(object obj)
         {
             if (obj is string)

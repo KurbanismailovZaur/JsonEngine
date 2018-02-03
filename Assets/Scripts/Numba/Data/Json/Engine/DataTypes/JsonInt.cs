@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public class JsonInt : JsonValue, IJsonDataType<int>
+    /// <summary>
+    /// Represent int wrapper.
+    /// </summary>
+    public class JsonInt : JsonValue
     {
         #region Entities
         #region Enums
@@ -31,19 +34,36 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public override JsonTypeCategory Category { get { return JsonTypeCategory.Number; } }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public override JsonDataType Type { get { return JsonDataType.Int; } }
 
+        /// <summary>
+        /// Wrapped value.
+        /// </summary>
         public int Value { get; set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initialize object with int value.
+        /// </summary>
+        /// <param name="value">Initialize value.</param>
         public JsonInt(int value)
         {
             Value = value;
         }
 
+        /// <summary>
+        /// Parse string data as int value.
+        /// </summary>
+        /// <param name="jsonBoolData">String for parsing.</param>
         public JsonInt(string jsonIntData)
         {
             Value = Json.Parse<JsonNumber>(jsonIntData).ToInt();
@@ -54,11 +74,20 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonInt(value);
         }
 
+        /// <summary>
+        /// Convert int value to json string representation.
+        /// </summary>
+        /// <returns>Json representation of this object.</returns>
         public override string ToString()
         {
             return Value.ToString().ToLower();
         }
 
+        /// <summary>
+        /// Compare with other object.
+        /// </summary>
+        /// <param name="obj">Object to compare with</param>
+        /// <returns>True if other object is int or JsonInt and have same value, otherwise returns false.</returns>
         public override bool Equals(object obj)
         {
             if (obj is int)

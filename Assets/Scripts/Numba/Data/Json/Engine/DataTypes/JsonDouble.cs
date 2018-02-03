@@ -5,7 +5,10 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public class JsonDouble : JsonValue, IJsonDataType<double>
+    /// <summary>
+    /// Represent double wrapper.
+    /// </summary>
+    public class JsonDouble : JsonValue
     {
         #region Entities
         #region Enums
@@ -32,19 +35,36 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public override JsonTypeCategory Category { get { return JsonTypeCategory.Number; } }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public override JsonDataType Type { get { return JsonDataType.Double; } }
 
+        /// <summary>
+        /// Wrapped value.
+        /// </summary>
         public double Value { get; set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initialize object with double value.
+        /// </summary>
+        /// <param name="value">Initialize value.</param>
         public JsonDouble(double value)
         {
             Value = value;
         }
 
+        /// <summary>
+        /// Parse string data as double value.
+        /// </summary>
+        /// <param name="jsonBoolData">String for parsing.</param>
         public JsonDouble(string jsonDoubleData)
         {
             Value = Json.Parse<JsonNumber>(jsonDoubleData).ToDouble();
@@ -55,6 +75,10 @@ namespace Numba.Data.Json.Engine.DataTypes
             return new JsonDouble(value);
         }
 
+        /// <summary>
+        /// Convert double value to json string representation.
+        /// </summary>
+        /// <returns>Json representation of this object.</returns>
         public override string ToString()
         {
             if (double.IsInfinity(Value) || double.IsNaN(Value))
@@ -65,6 +89,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             return Value.ToString("R", CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Compare with other object.
+        /// </summary>
+        /// <param name="obj">Object to compare with</param>
+        /// <returns>True if other object is double or JsonDouble and have same value, otherwise returns false.</returns>
         public override bool Equals(object obj)
         {
             if (obj is double)

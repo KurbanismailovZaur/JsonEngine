@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine.DataTypes
 {
-    public class JsonNull : JsonValue, IJsonDataType
+    /// <summary>
+    /// Represent null value wrapper.
+    /// </summary>
+    public class JsonNull : JsonValue
     {
         #region Entities
         #region Enums
@@ -24,6 +27,9 @@ namespace Numba.Data.Json.Engine.DataTypes
         #endregion
 
         #region Fields
+        /// <summary>
+        /// Represent null value.
+        /// </summary>
         public static readonly JsonNull value = new JsonNull();
         #endregion
 
@@ -32,8 +38,14 @@ namespace Numba.Data.Json.Engine.DataTypes
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public override JsonTypeCategory Category { get { return JsonTypeCategory.Null; } }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public override JsonDataType Type { get { return JsonDataType.Null; } }
         #endregion
 
@@ -41,6 +53,10 @@ namespace Numba.Data.Json.Engine.DataTypes
         #region Constructors
         private JsonNull() { }
 
+        /// <summary>
+        /// Parse string data as null value.
+        /// </summary>
+        /// <param name="jsonBoolData">String for parsing.</param>
         public JsonNull(string jsonNullData)
         {
             // Just check on null data in string
@@ -48,6 +64,10 @@ namespace Numba.Data.Json.Engine.DataTypes
         }
         #endregion
 
+        /// <summary>
+        /// Convert null value to json string representation.
+        /// </summary>
+        /// <returns>Json representation of this object.</returns>
         public override string ToString()
         {
             return "null";
@@ -63,6 +83,11 @@ namespace Numba.Data.Json.Engine.DataTypes
             return !(obj is JsonNull || obj == null);
         }
 
+        /// <summary>
+        /// Compare with other object.
+        /// </summary>
+        /// <param name="obj">Object to compare with</param>
+        /// <returns>True if other object is JsonNull or equals null, otherwise returns false.</returns>
         public override bool Equals(object obj)
         {
             return obj is JsonNull || obj == null;
