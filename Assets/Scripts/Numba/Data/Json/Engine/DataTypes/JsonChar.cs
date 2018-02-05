@@ -63,7 +63,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as char value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonCharData">String for parsing.</param>
         public JsonChar(string jsonCharData)
         {
             Value = Json.Parse<JsonString>(jsonCharData).Value[0];

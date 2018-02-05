@@ -9,5 +9,6 @@ public class NumbasJSONLearn : MonoBehaviour
     private void Start()
     {
         JsonBool jBool = new JsonBool(true);
+        JsonObject jObject = Json.Parse<JsonObject>("");
     }
 }

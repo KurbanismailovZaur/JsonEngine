@@ -63,7 +63,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as long value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonLongData">String for parsing.</param>
         public JsonLong(string jsonLongData)
         {
             Value = Json.Parse<JsonNumber>(jsonLongData).ToLong();

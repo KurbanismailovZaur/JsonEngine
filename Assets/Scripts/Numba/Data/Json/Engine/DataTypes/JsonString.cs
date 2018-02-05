@@ -57,6 +57,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// Initialize object with string value or parse it (if parse == true).
         /// </summary>
         /// <param name="value">Initialize value.</param>
+        /// <param name="parse">Indicates to perform parsing instead.</param>
         public JsonString(string value, bool parse = false)
         {
             if (!parse)

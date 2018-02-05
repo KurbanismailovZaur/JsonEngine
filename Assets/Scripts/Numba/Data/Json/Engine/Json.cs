@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
+    /// <summary>
+    /// This class helps you work with json data.
+    /// </summary>
     public static class Json
     {
         #region Entities
@@ -39,6 +42,11 @@ namespace Numba.Data.Json.Engine
 
         #region Methods
         #region Parse
+        /// <summary>
+        /// Parse json data to structures.
+        /// </summary>
+        /// <param name="data">Json data.</param>
+        /// <returns>Parsed to structures json data.</returns>
         public static JsonValue Parse(string data)
         {
             int currentIndex = -1;
@@ -52,6 +60,12 @@ namespace Numba.Data.Json.Engine
             return value;
         }
 
+        /// <summary>
+        /// Parse json data to structures.
+        /// </summary>
+        /// <typeparam name="T">Json type (JsonBool, JsonFloat, JsonObject or other).</typeparam>
+        /// <param name="data">Json data.</param>
+        /// <returns>Parsed to structures json data.</returns>
         public static T Parse<T>(string data) where T : JsonValue
         {
             return (T)Parse(data);
@@ -372,6 +386,11 @@ namespace Numba.Data.Json.Engine
         }
         #endregion
 
+        /// <summary>
+        /// Try to detect what category data encoded in string.
+        /// </summary>
+        /// <param name="data">Json data.</param>
+        /// <returns>Category of the data encoded to string.</returns>
         public static JsonTypeCategory GetSupposedType(string data)
         {
             if (string.IsNullOrEmpty(data))

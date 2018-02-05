@@ -158,7 +158,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as JsonNumber value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonNumberData">String for parsing.</param>
         public JsonNumber(string jsonNumberData)
         {
             _number = Json.Parse<JsonNumber>(jsonNumberData)._number;

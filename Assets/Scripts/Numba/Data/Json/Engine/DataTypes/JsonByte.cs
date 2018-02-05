@@ -62,7 +62,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as byte value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonByteData">String for parsing.</param>
         public JsonByte(string jsonByteData)
         {
             Value = Json.Parse<JsonNumber>(jsonByteData).ToByte();

@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
+    /// <summary>
+    /// Represent dynamically sized array of json type (JsonBool, JsonFloat, JsonObject or other) data.
+    /// </summary>
     public class JsonArray : JsonValue, IEnumerable<JsonValue>
     {
         #region Entities
@@ -27,7 +30,7 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Fields
-        private List<JsonValue> _values = new List<JsonValue>();
+        private List<JsonValue> _values;
         #endregion
 
         #region Events
@@ -35,22 +38,55 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public override JsonTypeCategory Category { get { return JsonTypeCategory.Array; } }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public override JsonDataType Type { get { return JsonDataType.Array; } }
 
+        /// <summary>
+        /// Count of elements in array.
+        /// </summary>
         public int Count { get { return _values.Count; } }
         #endregion
 
         #region Methods
         #region Constructors
-        public JsonArray() { }
+        /// <summary>
+        /// Create empty array.
+        /// </summary>
+        public JsonArray()
+        {
+            _values = new List<JsonValue>();
+        }
 
+        /// <summary>
+        /// Create array with specific capacity.
+        /// </summary>
+        /// <param name="capacity"></param>
+        public JsonArray(int capacity)
+        {
+            _values = new List<JsonValue>(capacity);
+        }
+
+        /// <summary>
+        /// Create array and initialize it with enumerable.
+        /// </summary>
+        /// <param name="enumerable"></param>
         public JsonArray(IEnumerable<JsonValue> enumerable)
         {
+            _values = new List<JsonValue>();
             _values.AddRange(enumerable);
         }
 
+        /// <summary>
+        /// Parse string data as JsonArray value.
+        /// </summary>
+        /// <param name="jsonArrayData">String for parsing.</param>
         public JsonArray(string jsonArrayData)
         {
             _values = Json.Parse<JsonArray>(jsonArrayData)._values;
@@ -58,22 +94,38 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region IEnumerable<JsonValue> interface implementation
+        /// <summary>
+        /// Get enumerator for this array.
+        /// </summary>
+        /// <returns>JsonValue Enumerator for this array.</returns>
         public IEnumerator<JsonValue> GetEnumerator()
         {
             return _values.GetEnumerator();
         }
 
+        /// <summary>
+        /// Get enumerator for this array.
+        /// </summary>
+        /// <returns>Enumerator for this array.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _values.GetEnumerator();
         }
         #endregion
 
+        /// <summary>
+        /// Add element to end of array.
+        /// </summary>
+        /// <param name="value">Element to add.</param>
         public void Add(JsonValue value)
         {
             _values.Add(value ?? JsonNull.value);
         }
 
+        /// <summary>
+        /// Add elements to end of array.
+        /// </summary>
+        /// <param name="values">Elements to add.</param>
         public void AddRange(IEnumerable<JsonValue> values)
         {
             if (values == null)
@@ -87,11 +139,21 @@ namespace Numba.Data.Json.Engine
             }
         }
 
+        /// <summary>
+        /// Insert an element in array at a specific index.
+        /// </summary>
+        /// <param name="index">Index to insert.</param>
+        /// <param name="value">Element to insert.</param>
         public void Insert(int index, JsonValue value)
         {
             _values.Insert(index, value ?? JsonNull.value);
         }
 
+        /// <summary>
+        /// Insert an element in array at a specific index.
+        /// </summary>
+        /// <param name="index">Index to insert.</param>
+        /// <param name="values">Element to insert.</param>
         public void InsertRange(int index, IEnumerable<JsonValue> values)
         {
             if (values == null)
@@ -105,6 +167,11 @@ namespace Numba.Data.Json.Engine
             }
         }
 
+        /// <summary>
+        /// Insert element in array at a specific index.
+        /// </summary>
+        /// <param name="index">Index to insert.</param>
+        /// <param name="value">Element to insert.</param>
         public void InsertOrAppend(int index, JsonValue value)
         {
             if (index > _values.Count)
@@ -117,66 +184,128 @@ namespace Numba.Data.Json.Engine
             }
         }
 
+        /// <summary>
+        /// Remove element from array.
+        /// </summary>
+        /// <param name="value">Element to remove.</param>
+        /// <returns></returns>
         public bool Remove(JsonValue value)
         {
             return _values.Remove(value ?? JsonNull.value);
         }
 
+        /// <summary>
+        /// Remove element at a specific position.
+        /// </summary>
+        /// <param name="index">Element index.</param>
         public void RemoveAt(int index)
         {
             _values.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Remove elements range from array start from specific index.
+        /// </summary>
+        /// <param name="index">Index from which start removing.</param>
+        /// <param name="count">Count to remove.</param>
         public void RemoveRange(int index, int count)
         {
             _values.RemoveRange(index, count);
         }
 
+        /// <summary>
+        /// Remove all element which satisfy the condition.
+        /// </summary>
+        /// <param name="predicate">Condition.</param>
+        /// <returns>Removed count.</returns>
         public int RemoveAll(Predicate<JsonValue> predicate)
         {
             return _values.RemoveAll(predicate);
         }
 
+        /// <summary>
+        /// Clear all elements.
+        /// </summary>
         public void Clear()
         {
             _values.Clear();
         }
 
+        /// <summary>
+        /// Check if an element exists.
+        /// </summary>
+        /// <param name="value">Element to check.</param>
+        /// <returns>True if contaions.</returns>
         public bool Contains(JsonValue value)
         {
             return _values.Contains(value);
         }
 
+        /// <summary>
+        /// Find index of specific element.
+        /// </summary>
+        /// <param name="value">Element by which need find index.</param>
+        /// <returns>Index of element.</returns>
         public int IndexOf(JsonValue value)
         {
             return _values.IndexOf(value);
         }
 
+        /// <summary>
+        /// Find element by condition.
+        /// </summary>
+        /// <param name="match">Condition to find.</param>
+        /// <returns>Finded element.</returns>
         public JsonValue Find(Predicate<JsonValue> match)
         {
             return _values.Find(match);
         }
 
+        /// <summary>
+        /// Find all elements by condition.
+        /// </summary>
+        /// <param name="match">Condition to find.</param>
+        /// <returns>Finded elements.</returns>
         public List<JsonValue> FindAll(Predicate<JsonValue> match)
         {
             return _values.FindAll(match);
         }
 
+        /// <summary>
+        /// Find index of element by condition.
+        /// </summary>
+        /// <param name="match">Condition to find.</param>
+        /// <returns>Index of matched element.</returns>
         public int FindIndex(Predicate<JsonValue> match)
         {
             return _values.FindIndex(match);
         }
 
+        /// <summary>
+        /// Find last element by condition.
+        /// </summary>
+        /// <param name="match">Condition to find.</param>
+        /// <returns>Finded element.</returns>
         public JsonValue FindLast(Predicate<JsonValue> match)
         {
             return _values.FindLast(match);
         }
 
+        /// <summary>
+        /// Find index of last finded element.
+        /// </summary>
+        /// <param name="match">Condition to find.</param>
+        /// <returns>Index of finded element.</returns>
         public int FindLastIndex(Predicate<JsonValue> match)
         {
             return _values.FindLastIndex(match);
         }
 
+        /// <summary>
+        /// Check if any element satisfy to condition.
+        /// </summary>
+        /// <param name="predicate">Condition to check.</param>
+        /// <returns>True of any element satisfy to condition.</returns>
         public bool Any(Func<JsonValue, bool> predicate)
         {
             foreach (JsonValue value in _values)
@@ -190,6 +319,11 @@ namespace Numba.Data.Json.Engine
             return false;
         }
 
+        /// <summary>
+        /// Check if all elements satisfy to condition.
+        /// </summary>
+        /// <param name="predicate">Condition to check.</param>
+        /// <returns>True if all element satisfy to condition.</returns>
         public bool All(Func<JsonValue, bool> predicate)
         {
             foreach (JsonValue value in _values)

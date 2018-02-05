@@ -63,7 +63,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as short value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonShortData">String for parsing.</param>
         public JsonShort(string jsonShortData)
         {
             Value = Json.Parse<JsonNumber>(jsonShortData).ToShort();

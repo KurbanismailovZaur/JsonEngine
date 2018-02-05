@@ -64,7 +64,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as float value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonFloatData">String for parsing.</param>
         public JsonFloat(string jsonFloatData)
         {
             Value = Json.Parse<JsonNumber>(jsonFloatData).ToFloat();

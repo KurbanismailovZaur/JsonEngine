@@ -56,7 +56,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as null value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonNullData">String for parsing.</param>
         public JsonNull(string jsonNullData)
         {
             // Just check on null data in string

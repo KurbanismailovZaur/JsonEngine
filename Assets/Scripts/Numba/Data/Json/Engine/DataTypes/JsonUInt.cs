@@ -63,7 +63,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as uint value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonUIntData">String for parsing.</param>
         public JsonUInt(string jsonUIntData)
         {
             Value = Json.Parse<JsonNumber>(jsonUIntData).ToUInt();

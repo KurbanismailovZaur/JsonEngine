@@ -65,7 +65,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         /// <summary>
         /// Parse string data as decimal value.
         /// </summary>
-        /// <param name="jsonBoolData">String for parsing.</param>
+        /// <param name="jsonDecimalData">String for parsing.</param>
         public JsonDecimal(string jsonDecimalData)
         {
             Value = Json.Parse<JsonNumber>(jsonDecimalData).ToDecimal();
