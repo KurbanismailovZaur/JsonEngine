@@ -75,7 +75,7 @@ namespace Numba.Data.Json.Engine.DataTypes
         }
 
         /// <summary>
-        /// Convert ushort value to json string representation.
+        /// Convert ushort value to json representation.
         /// </summary>
         /// <returns>Json representation of this object.</returns>
         public override string ToString()

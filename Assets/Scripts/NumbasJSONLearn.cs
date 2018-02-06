@@ -10,5 +10,6 @@ public class NumbasJSONLearn : MonoBehaviour
     {
         JsonBool jBool = new JsonBool(true);
         JsonObject jObject = Json.Parse<JsonObject>("");
+        JsonWrap jWrap = 1;
     }
 }

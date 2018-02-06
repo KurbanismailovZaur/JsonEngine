@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
+    /// <summary>
+    /// Represent field in JsonObject class. Used only with JsonObject.
+    /// </summary>
     public class JsonField
     {
         #region Entities
@@ -35,12 +38,18 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Name of this field.
+        /// </summary>
         public JsonString Name
         {
             get { return _name; }
             set { _name = value ?? string.Empty; }
         }
 
+        /// <summary>
+        /// Value associated with this field.
+        /// </summary>
         public JsonValue Value
         {
             get { return _value; }
@@ -49,6 +58,11 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Create JsonField with specifics name and value.
+        /// </summary>
+        /// <param name="name">Name of field.</param>
+        /// <param name="value">Value associated with this field.</param>
         public JsonField(JsonString name, JsonValue value)
         {
             _name = name;
@@ -57,9 +71,10 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Methods
-        #region Set value
-        #endregion
-
+        /// <summary>
+        /// Convert field to json string representation.
+        /// </summary>
+        /// <returns>String representation of this object.</returns>
         public override string ToString()
         {
             return string.Format("{0}:{1}", _name, _value.ToString());

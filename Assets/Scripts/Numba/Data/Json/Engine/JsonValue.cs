@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Numba.Data.Json.Engine
 {
+    /// <summary>
+    /// Base class for any json data type.
+    /// </summary>
     public abstract class JsonValue
     {
         #region Entities
@@ -33,8 +36,14 @@ namespace Numba.Data.Json.Engine
 
         #region Behaviour
         #region Properties
+        /// <summary>
+        /// Returns category for this object.
+        /// </summary>
         public abstract JsonTypeCategory Category { get; }
 
+        /// <summary>
+        /// Returns type for this object.
+        /// </summary>
         public abstract JsonDataType Type { get; }
         #endregion
 

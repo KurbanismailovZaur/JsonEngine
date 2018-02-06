@@ -95,9 +95,9 @@ namespace Numba.Data.Json.Engine
 
         #region IEnumerable<JsonValue> interface implementation
         /// <summary>
-        /// Get enumerator for this array.
+        /// Get JsonValue enumerator for this array.
         /// </summary>
-        /// <returns>JsonValue Enumerator for this array.</returns>
+        /// <returns>JsonValue enumerator for this array.</returns>
         public IEnumerator<JsonValue> GetEnumerator()
         {
             return _values.GetEnumerator();
@@ -168,10 +168,10 @@ namespace Numba.Data.Json.Engine
         }
 
         /// <summary>
-        /// Insert element in array at a specific index.
+        /// Insert element in array at a specific index or append if index more than elements count.
         /// </summary>
         /// <param name="index">Index to insert.</param>
-        /// <param name="value">Element to insert.</param>
+        /// <param name="value">Element to insert or add.</param>
         public void InsertOrAppend(int index, JsonValue value)
         {
             if (index > _values.Count)
@@ -338,97 +338,192 @@ namespace Numba.Data.Json.Engine
         }
 
         #region Get values
+        /// <summary>
+        /// Get casted to bool element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public bool GetBool(int index)
         {
             return ((JsonBool)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to byte element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public byte GetByte(int index)
         {
             return ((JsonByte)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to char element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public char GetChar(int index)
         {
             return ((JsonChar)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to decimal element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public decimal GetDecimal(int index)
         {
             return ((JsonDecimal)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to double element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public double GetDouble(int index)
         {
             return ((JsonDouble)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to float element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public float GetFloat(int index)
         {
             return ((JsonFloat)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to int element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public int GetInt(int index)
         {
             return ((JsonInt)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to long element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public long GetLong(int index)
         {
             return ((JsonLong)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to JsonNull element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public JsonNull GetNull(int index)
         {
             return ((JsonNull)_values[index]);
         }
 
+        /// <summary>
+        /// Get casted to JsonNumber element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public JsonNumber GetNumber(int index)
         {
             return ((JsonNumber)_values[index]);
         }
 
+        /// <summary>
+        /// Get casted to sbyte element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public sbyte GetSByte(int index)
         {
             return ((JsonSByte)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to short element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public short GetShort(int index)
         {
             return ((JsonShort)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to string element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public string GetString(int index)
         {
             return ((JsonString)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to uint element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public uint GetUInt(int index)
         {
             return ((JsonUInt)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to ulong element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public ulong GetULong(int index)
         {
             return ((JsonULong)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to ushort element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public ushort GetUShort(int index)
         {
             return ((JsonUShort)_values[index]).Value;
         }
 
+        /// <summary>
+        /// Get casted to JsonObject element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public JsonObject GetObject(int index)
         {
             return ((JsonObject)_values[index]);
         }
 
+        /// <summary>
+        /// Get casted to JsonArray element at index.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public JsonArray GetArray(int index)
         {
             return ((JsonArray)_values[index]);
         }
         #endregion
 
+        /// <summary>
+        /// Swap two values by indexes.
+        /// </summary>
+        /// <param name="first">First index.</param>
+        /// <param name="second">Second index.</param>
         public void SwapValues(int first, int second)
         {
             if (first == second)
@@ -441,11 +536,20 @@ namespace Numba.Data.Json.Engine
             _values[second] = firstValue;
         }
 
+        /// <summary>
+        /// Check element on equality JsonNull.
+        /// </summary>
+        /// <param name="index">Element index.</param>
+        /// <returns></returns>
         public bool CheckNull(int index)
         {
             return _values[index] is JsonNull;
         }
 
+        /// <summary>
+        /// Convert array to json string representation.
+        /// </summary>
+        /// <returns>String representation of this object.</returns>
         public override string ToString()
         {
             if (_values.Count == 0)
@@ -467,6 +571,11 @@ namespace Numba.Data.Json.Engine
         #endregion
 
         #region Indexers
+        /// <summary>
+        /// Get or set element at specific index.
+        /// </summary>
+        /// <param name="index">Index to get or set.</param>
+        /// <returns>Element at specific position.</returns>
         public JsonValue this[int index]
         {
             get { return _values[index]; }
