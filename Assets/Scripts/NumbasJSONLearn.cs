@@ -8,15 +8,7 @@ public class NumbasJSONLearn : MonoBehaviour
 {
     private void Start()
     {
-        JsonObject jObject = new JsonObject()
-        {
-            { "float", "NaN" },
-            { "double", "Infinity" }
-        };
-
-        print(jObject.GetFloat("float"));
-        print(jObject.GetDouble("double"));
-
-        print(jObject.GetFloat("double"));
+        JsonArray jArray = new JsonArray() { "Infinity" };
+        print(jArray.GetFloat(0));
     }
 }

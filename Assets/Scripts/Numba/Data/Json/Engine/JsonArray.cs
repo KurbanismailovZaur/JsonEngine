@@ -385,7 +385,14 @@ namespace Numba.Data.Json.Engine
         /// <returns></returns>
         public double GetDouble(int index)
         {
-            return ((JsonDouble)_values[index]).Value;
+            if (_values[index].Type == JsonDataType.String)
+            {
+                return ((JsonDouble)(JsonString)_values[index]).Value;
+            }
+            else
+            {
+                return ((JsonDouble)_values[index]).Value;
+            }
         }
 
         /// <summary>
@@ -395,7 +402,14 @@ namespace Numba.Data.Json.Engine
         /// <returns></returns>
         public float GetFloat(int index)
         {
-            return ((JsonFloat)_values[index]).Value;
+            if (_values[index].Type == JsonDataType.String)
+            {
+                return ((JsonFloat)(JsonString)_values[index]).Value;
+            }
+            else
+            {
+                return ((JsonFloat)_values[index]).Value;
+            }
         }
 
         /// <summary>
