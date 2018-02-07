@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Numba.Data.Json.Engine.Exceptions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
@@ -73,6 +74,29 @@ namespace Numba.Data.Json.Engine.DataTypes
         public static implicit operator JsonFloat(float value)
         {
             return new JsonFloat(value);
+        }
+
+        public static implicit operator JsonFloat(string value)
+        {
+            if (value == "Infinity")
+            {
+                return new JsonFloat(float.PositiveInfinity);
+            }
+            else if (value == "-Infinity")
+            {
+                return new JsonFloat(float.NegativeInfinity);
+            }
+            else if (value == "NaN")
+            {
+                return new JsonFloat(float.NaN);
+            }
+
+            throw new JsonInvalidCastException(string.Format("String value \"{0}\" can not be casted to float. Supported string values: NaN, Infinity, -Infinity.", value));
+        }
+
+        public static implicit operator JsonFloat(JsonString value)
+        {
+            return value.Value;
         }
 
         /// <summary>

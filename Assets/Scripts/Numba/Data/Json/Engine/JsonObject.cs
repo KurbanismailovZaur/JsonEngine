@@ -535,6 +535,18 @@ namespace Numba.Data.Json.Engine
             return ((JsonDecimal)GetField(fieldName).Value).Value;
         }
 
+        private double GetDouble(JsonValue value)
+        {
+            if (value.Type == JsonDataType.String)
+            {
+                return ((JsonDouble)(JsonString)value).Value;
+            }
+            else
+            {
+                return ((JsonDouble)value).Value;
+            }
+        }
+
         /// <summary>
         /// Get casted to double value from field by field index.
         /// </summary>
@@ -542,7 +554,9 @@ namespace Numba.Data.Json.Engine
         /// <returns>Field value.</returns>
         public double GetDouble(int index)
         {
-            return ((JsonDouble)GetFieldAt(index).Value).Value;
+            JsonValue value = GetFieldAt(index).Value;
+
+            return GetDouble(value);
         }
 
         /// <summary>
@@ -552,7 +566,21 @@ namespace Numba.Data.Json.Engine
         /// <returns>Field value.</returns>
         public double GetDouble(string fieldName)
         {
-            return ((JsonDouble)GetField(fieldName).Value).Value;
+            JsonValue value = GetField(fieldName).Value;
+
+            return GetDouble(value);
+        }
+
+        private float GetFloat(JsonValue value)
+        {
+            if (value.Type == JsonDataType.String)
+            {
+                return ((JsonFloat)(JsonString)value).Value;
+            }
+            else
+            {
+                return ((JsonFloat)value).Value;
+            }
         }
 
         /// <summary>
@@ -562,7 +590,9 @@ namespace Numba.Data.Json.Engine
         /// <returns>Field value.</returns>
         public float GetFloat(int index)
         {
-            return ((JsonFloat)GetFieldAt(index).Value).Value;
+            JsonValue value = GetFieldAt(index).Value;
+
+            return GetFloat(value);
         }
 
         /// <summary>
@@ -572,7 +602,9 @@ namespace Numba.Data.Json.Engine
         /// <returns>Field value.</returns>
         public float GetFloat(string fieldName)
         {
-            return ((JsonFloat)GetField(fieldName).Value).Value;
+            JsonValue value = GetField(fieldName).Value;
+
+            return GetFloat(value);
         }
 
         /// <summary>
